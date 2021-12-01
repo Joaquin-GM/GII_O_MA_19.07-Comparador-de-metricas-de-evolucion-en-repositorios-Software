@@ -1,0 +1,12 @@
+@import "addons.scss";
+@import "MyTheme.scss";
+@import "designs.scss";
+
+/* This file prefixes all rules with the theme name to avoid causing conflicts with other themes. */
+/* The actual styles should be defined in MyTheme.scss */
+.MyTheme {
+  @include vaadin-app-shell-template;
+  @include vaadin-crud-template;
+  @include addons;
+  @include MyTheme;
+}

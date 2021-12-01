@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+.appName {
+	font-size: 3em;
+	vertical-align: middle;
+	padding-top: 18px;
+	margin-left: 40px;
+}
+
+#Authors {
+	vertical-align: bottom;
+	white-space: pre-line;
+}
+
+.errorMessage {
+	color: red;
+}
+
+.metricEvaluation {
+	font-weight: bold;
+	padding-right: 18px;
+}
+
+.metricEvaluationGood {
+	color:green;
+}
+
+.metricEvaluationWarning {
+	color:orange;
+}
+
+.metricEvaluationBad{
+	color:red;
+}
+
+.MetricConfigTip {
+	font-size: small;
+}
