@@ -1,7 +1,7 @@
 ---
 name: TFG - memory
-about: Describe this issue template's purpose here.
-title: ''
+about: Template for new issue related to the project memory
+title: "[MEMORY ISSUE]"
 labels: project memory
 assignees: Joaquin-GM
 
