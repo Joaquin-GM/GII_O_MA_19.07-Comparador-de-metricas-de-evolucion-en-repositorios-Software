@@ -334,7 +334,7 @@
   {%
     \noindent\LARGE
     Presentado por \@author{}\\ 
-    en Universidad de Burgos --- \@date{}\\
+    Universidad de Burgos \\ \@date{}\\
     Tutor: \@tutor{}\\
   }%
   \end{center}%
@@ -343,15 +343,23 @@
   }
 \makeatother
 
-\newcommand{\nombre}{Nombre del alumno} %%% cambio de comando
+\newcommand{\nombre}{Joaquín García Molina} %%% cambio de comando
 
 % Datos de portada
-\title{título del TFG}
+\title{GII\_O\_MA\_19.07 \\Comparador de métricas de evolución en repositorios Software}
 \author{\nombre}
-\tutor{nombre tutor}
+\tutor{Carlos López Nozal}
 \date{\today}
 
+
+
 \begin{document}
+
+% Otras variables para la memoria
+\newcommand{\dniAlumno}{76441581-T}
+\newcommand{\titulo}{GII\_O\_MA\_19.07 \\Comparador de métricas de evolución en repositorios Software}
+\newcommand{\tutorPrincipal}{Carlos López Nozal}
+\newcommand{\coTutor}{Carlos López Nozal ??}
 
 \maketitle
 
@@ -365,11 +373,11 @@
 
 \noindent\includegraphics[width=\textwidth]{cabecera}\vspace{1cm}
 
-\noindent D. nombre tutor, profesor del departamento de nombre departamento, área de nombre área.
+\noindent D. \tutorPrincipal, profesor del departamento de nombre departamento, área de nombre área.
 
 \noindent Expone:
 
-\noindent Que el alumno D. \nombre, con DNI dni, ha realizado el Trabajo final de Grado en Ingeniería Informática titulado título de TFG. 
+\noindent Que el alumno D. \nombre, con DNI \dniAlumno, ha realizado el Trabajo final de Grado en Ingeniería Informática titulado \titulo. 
 
 \noindent Y que dicho trabajo ha sido realizado por el alumno bajo la dirección del que suscribe, en virtud de lo cual se autoriza su presentación y defensa.
 
@@ -383,14 +391,14 @@ En Burgos, {\large \today}
 \begin{minipage}{0.45\textwidth}
 \begin{flushleft} %\large
 Vº. Bº. del Tutor:\\[2cm]
-D. nombre tutor
+D. \tutorPrincipal
 \end{flushleft}
 \end{minipage}
 \hfill
 \begin{minipage}{0.45\textwidth}
 \begin{flushleft} %\large
 Vº. Bº. del co-tutor:\\[2cm]
-D. nombre co-tutor
+D. \coTutor
 \end{flushleft}
 \end{minipage}
 \hfill
