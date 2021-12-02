@@ -4,11 +4,12 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/745c3cea58574491b488ebf7ee2e5aa2)](https://www.codacy.com/manual/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software&amp;utm_campaign=Badge_Coverage)
 [![Coverage Report](https://gitlab.com/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software/badges/master/coverage.svg)](https://mlb0029.gitlab.io/comparador-de-metricas-de-evolucion-en-repositorios-software)
 
-![Poster](https://gitlab.com/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software/blob/master/MemoriaProyecto/Poster.png)
+![Poster](https://gitlab.com/uploads/-/system/project/avatar/8593412/LOGOAPP.png?width=64)
 
-# Evaluación de la actividad de un proyecto software
+# GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software 
 
-Aplicación Java que toma como entrada un conjunto de direcciones de repositorios públicos o privados y calcula  medidas de la evolución que permiten comparar los repositorios.
+Aplicación Java desarrollada empelada el framework Vaadin que toma como entrada un conjunto de direcciones de repositorios públicos o privados y calcula  medidas de la evolución que permiten comparar los repositorios. Versión actualizada de la aplicación original:
+[comparador-de-metricas-de-evolucion-en-repositorios-software](https://gitlab.com/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software)
 
 ## Metricas de evolución
 
