@@ -40,7 +40,7 @@ public class MainAppView extends VerticalLayout {
 	
 	private Image logoImage = new Image("images/LOGOAPP.png", "Logo Evolution Metrics Gauge");
 	
-	private Label appNameLabel = new Label("Evolution Metrics Gauge");
+	private Label appNameLabel = new Label("Evolution Metrics Gauge testing");
 	
 	private Button connectionButton = new Button();
 	
