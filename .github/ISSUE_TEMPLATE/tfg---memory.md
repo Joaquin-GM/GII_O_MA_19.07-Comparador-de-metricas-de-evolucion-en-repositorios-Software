@@ -1,7 +1,7 @@
 ---
 name: TFG - memory
 about: Template for new issue related to the project memory
-title: "[MEMORY ISSUE]"
+title: 'Memoria - '
 labels: project memory
 assignees: Joaquin-GM
 
