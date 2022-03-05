@@ -4,12 +4,25 @@
 
 
 A continuación se van a detallar los objetivos perseguidos con la realización del proyecto así como los de la aplicación Web sobra la que se trabaja,
+\section{Objetivos generales}
+El objetivo principal del presente TFG es realizar mejoras y extender la funcionalidad que tiene el software \textit{\textbf{Evolution Metrics Gauge}}, un software para calcular métricas de control \footnote{También llamadas métricas de proceso o métricas de evolución} sobre distintos repositorios.
+En esta nueva iteración se pretende:
 
+\begin{itemize}
+	\tightlist
+	\item Permitir leer repositorios de GitHub además de GitLab.
+	\item Introducir nuevas métricas a las ya evaluadas. TODO -> definir cuáles
+	\item Realizar pruebas con repositorios de GitLab y GitHub simultáneamente.
+	\item Realizar diferentes mejoras en las interfaces de la aplicación para mejorar la experiencia de usuario.
+	\item Corrección de errores.
+\end{itemize}
+
+\newpage
 
 
 \section{Objetivos de la aplicación y funcionalidad previa}
    
-A continuación se enumeran los objetivos iniciales de la aplicación ya desarrollada y cómo se han desarrollado: \cite{TFGPrevio}, un software para calcular métricas de control \footnote{También llamadas métricas de proceso o métricas de evolución} sobre distintos repositorios.
+A continuación se enumeran los objetivos iniciales de la aplicación ya desarrollada y cómo se han desarrollado: \cite{TFGPrevio}
 \begin{itemize}
 	\tightlist
 	\item Se obtienen medidas de métricas de evolución de uno o varios proyectos alojados en repositorios de GitLab.
@@ -27,31 +40,28 @@ A continuación se enumeran los objetivos iniciales de la aplicación ya desarro
 		\item Porcentaje de pico de cambios
 	\end{itemize}
 	\item Se permite comparar con otros proyectos de la misma naturaleza. Para ello se establecen unos valores umbrales por cada métrica basados en el cálculo de los cuartiles Q1 y Q3. Además, estos valores se calculan dinámicamente y se almacenan en perfiles de configuración de métricas.
-	\item Se permite la posibilidad de almacenar de manera persistente estos perfiles de configuiración de métricas para permitir comparaciones futuras.
+	\item Se permite la posibilidad de almacenar de manera persistente estos perfiles de configuiración de métricas para permitir comparaciones futuras (TODO -> comprobar)
 	\item También se permite almacenar de forma persistente las métricas obtenidas de los repositorios para su posterior consulta o tratamiento. Esto permite comparar nuevos proyectos con proyectos de los que ya se han calculado sus métricas.
 	 Esta funcionalidad se basa en la exportación e importación de los valores de métricas obtenidos por la aplicación en diferentes análisis usando archivos CSV.
 \end{itemize}
 
 \newpage
 
-\section{Objetivos generales}
-El objetivo principal del presente TFG no se puede entender sin tener en cuenta los objetivos previamente enumerados ya que es realizar mejoras y extender la funcionalidad que tiene el software \textit{\textbf{Evolution Metrics Gauge}}.
-En esta nueva iteración se pretende:
-
+º
+\section{Objetivos técnicos}
+Además de mantener todos los objetivos técnicos previos fijados para el desarrollo de la aplicación en la primera iteración, se busca profundizar en ellos y mejorar el desarrollo actual. Para ello se se proponen los siguientes objetivos:
 \begin{itemize}
 	\tightlist
-	\item Permitir leer repositorios de GitHub además de GitLab.
-	\item Introducir nuevas métricas a las ya evaluadas. TODO -> definir cuáles
-	\item Realizar pruebas con repositorios de GitLab y GitHub simultáneamente.
-	\item Realizar diferentes mejoras en las interfaces de la aplicación para mejorar la experiencia de usuario.
-	\item Corrección de errores.
-	\item Mejorar el paquete de tests de la aplicación para mejorar su cobertura.
+	\item Comprender y aplicar el flujo de trabajo de integración continua del proyecto actual.
+	\item Definir un conjunto de pruebas que ayuden a detectar errores de la versión actual.
+	\item Mejora de la cobertura de pruebas automáticas del proyecto.
+	\item Mejora del tratamiento de errores para evitar bloqueos de la aplicación.
+	\item Mejora del almacenamiento y visualización de errores para facilitar su corrección de cara a posteriores iteraciones.
+	\item Pruebas la aplicación con ejemplos reales y utilizando técnicas avanzadas, como entrada de datos de test en ficheros con formato tabulado tipo CSV (\textit{comma separated values}) también para métricas obtenidas de repositorios de GitHub. 	
 \end{itemize}
 
-\newpage
 
-
-\section{Objetivos técnicos proyecto existente}
+\section{Objetivos técnicos previos}
 Este apartado recoge los requisitos técnicos del proyecto existente  \cite{TFGPrevio}:
 \begin{itemize}
 	\tightlist
@@ -66,19 +76,4 @@ Este apartado recoge los requisitos técnicos del proyecto existente  \cite{TFGP
 	\item Utilización de sistemas que aseguren la calidad continua del código que permitan evaluar la deuda técnica del proyecto.
 	\item Pruebas la aplicación con ejemplos reales y utilizando técnicas avanzadas, como entrada de datos de test en ficheros con formato tabulado tipo CSV (\textit{comma separated values}). 	
 \end{itemize}
-
-\newpage
-
-\section{Objetivos técnicos}
-Además de mantener todos los objetivos técnicos previos fijados para el desarrollo de la aplicación en la primera iteración, se busca profundizar en ellos y mejorar el desarrollo actual. Para ello se se proponen los siguientes objetivos:
-\begin{itemize}
-	\tightlist
-	\item Mejora de la cobertura de pruebas automáticas del proyecto. 
-	\item Mejora del tratamiento de errores para evitar bloqueos de la aplicación.
-	\item Mejora del almacenamiento y visualización de errores para facilitar su corrección de cara a posteriores iteraciones.
-	\item Actualización y puesta a punto del sistema de integración y despliegue continuo.
-	\item Pruebas la aplicación con ejemplos reales y utilizando técnicas avanzadas, como entrada de datos de test en ficheros con formato tabulado tipo CSV (\textit{comma separated values}) también para métricas obtenidas de repositorios de GitHub. 	
-\end{itemize}
-
-
 
