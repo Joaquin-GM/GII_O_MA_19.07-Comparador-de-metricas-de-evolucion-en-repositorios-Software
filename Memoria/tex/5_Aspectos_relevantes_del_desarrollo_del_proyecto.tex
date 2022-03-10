@@ -105,7 +105,7 @@ Para esta versión, la configuración necesaria de Maven para que el proyecto co
 
 \begin{minipage}{\linewidth}
 {\tiny
-\begin{verbatim}[breaklines]
+\begin{verbatim}
 ...
 <properties>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -161,7 +161,7 @@ Destacan dos funcionalidades, el \textit{mapeo} que asocia cada dato del stream 
 Un ejemplo de uso de \textit{streams} en la aplicación:\\
 \begin{minipage}{\linewidth}
 {\tiny
-\begin{verbatim}[breaklines]
+\begin{verbatim}
 ...
 return gitLabApi.getIssuesApi().getIssuesStream(projectId, new IssueFilter().withState(IssueState.CLOSED))
   .filter(issue -> issue.getCreatedAt() != null && issue.getClosedAt() != null)
@@ -195,7 +195,7 @@ que no están declaradas en una clase y pueden ser utilizadas en cualquier parte
 Estas han sido utilizadas en numerosas ocasiones tanto para los \textit{streams} (como se observa en el código anterior), como en elementos de la interfaz gráfica y otros elementos sensibles a eventos:\\
 \begin{minipage}{\linewidth}
 {\tiny
-\begin{verbatim}[breaklines]
+\begin{verbatim}
 ...
 closeConnectionButton.addClickListener(event ->  
 {
@@ -218,7 +218,7 @@ También han sido utilizadas para almacenar funciones en variables, definiendo u
 
 \begin{minipage}{\linewidth}
 {\tiny
-\begin{verbatim}[breaklines]
+\begin{verbatim}
 ...
 public interface Metric extends Serializable {
  @FunctionalInterface
@@ -283,7 +283,7 @@ Aunque puede resultar difícil configurar correctamente Maven a través del arch
 
 Se ha utilizado Git para el desarrollo del proyecto para el control de versiones y se ha utilizado GitHub como repositorio remoto. 
 
-GitHub no sólo ha permitido el almacenamiento del código del proyecto si no que también ha permitido el seguimiento y colaboración alumno-tutor gracias a las herramientas que proporciona. Además, utilizando ZenHub (que se puede integrar en el propio GitHub) se ha llevado a cabo la gestión de las tareas (\textit{issues}) del proyecto. Como se puede observar en la Fig. \ref{fig:M5_GitHub-ZenHub_board}.
+GitHub no sólo ha permitido el almacenamiento del código del proyecto si no que también ha permitido el seguimiento y colaboración alumno-tutor gracias a las herramientas que proporciona. Además, utilizando ZenHub (que se puede integrar en el propio GitHub) se ha llevado a cabo la gestión de las tareas (\textit{issues}) del proyecto. Como se puede observar en la Fig. \cite{fig:M5_GitHub-ZenHub_board}.
 
 \imagen{M5_GitHub-ZenHub_board}{Tablero de Scrum en ZenHub integrado en GitHub}
 
@@ -291,6 +291,75 @@ Es posible configurar Eclipse y Maven para trabajar con Git. Sin embargo, debido
 
 \imagen{M5_GitBash}{Consola para Git de Windows GitBash}
 
-\subsection{Logging}
+\subsection{Logger}
 
-% TODO
+
+Un \textit{logger} permite crear mensajes para el seguimiento o registro de la ejecución de una aplicación. Puede resultar de utilidad, por ejemplo, para realizar la depuración de la aplicación si se muestran los distintos puntos o estados por lo que va pasando la ejecución con los valores tomados por variables de interés\cite{logger_info}.
+
+Este tipo de mensajes se pueden obtener también con la instrucción System.out.println() para mostrar mensajes en la salida estándar, pero esta clase Logger ofrece la ventaja de poder emitir la salida también en archivos con diferentes formatos (XML, TXT, HTML, etc).
+
+El uso de un \textit{logger} se puede utilizar en cualquier entorno, en desarrollo, se utiliza para mostrar los mensajes por consola y ayudar a los desarrolladores a detectar y solucionar problemas de forma rápida. En cambio, en entornos de producción se almacenan los logs capturados en una base de datos para que puedan ser analizados de forma centralizada y se puedan analizar los logs provenientes de los diferentes usuarios finales de la aplicación.
+
+
+Cada mensaje generado con la clase Logger debe tener asignado un nivel de importancia. Por ejemplo, se podrían plantear los siguientes niveles ordenador de mayor importancia a menos\cite{Level_class_info}:
+\begin{description}
+\item \textbf{SEVERE}: Nivel de mensaje indicando un error crítico.
+\item \textbf{WARNING}: Indica un error potencial.
+\item \textbf{INFO}: Para mensajes informativos.
+\item \textbf{CONFIG}: Usado con mensajes relacionados con la configuración.
+\item \textbf{FINE}: Proporciona información de traza de la ejecución.
+\item \textbf{FINER}: Proporciona información de traza de la ejecución más detallada.
+\item \textbf{FINEST}: Proporciona información de traza de la ejecución muy detallada.
+
+La clase Level de Java nos permite usar estos niveles y usándola podemos establecer a partir de qué nivel se deben almacenar o mostrar los mensajes de log.
+
+\end{description}
+
+Se han mantenido las herramientas utilizadas en la primera iteración del proyecto \cite{TFGPrevio} actualizando a versiones actuales para evitar vulnerabilidades:
+\begin{itemize}
+	\item \textbf{SLF4J} (\textit{Simple Logging Facade for Java}): proporciona una API de registro Java a través de un simple patrón de fachada. El servidor de registro subyacente se determina en tiempo de implementación y puede ser java.util.logging , log4j, logback o tinylog. La separación de la API de cliente desde el servidor de registro reduce el acoplamiento entre una aplicación y cualquier marco de registro especial. Esto puede hacer más fácil integrar con código existente o de terceros o entregar código en otros proyectos que ya han hecho una opción de registro de back-end\cite{SLF4J_wiki}.
+
+	\item\textbf{Log4j}: es una biblioteca de código abierto desarrollada en Java por la Apache Software Foundation que permite a los desarrolladores de software escribir mensajes de registro, cuyo propósito es dejar constancia de una determinada transacción en tiempo de ejecución. Log4j permite filtrar los mensajes en función de su importancia. La configuración de salida y granularidad de los mensajes es realizada en tiempo de ejecución mediante el uso de archivos de configuración externos \cite{Log4j_wiki}. 
+	\\A través del fichero \textit{log4j2} con extensión \textit{XML}, \textit{JSON}, \textit{YAML} o \textit{Properties} se pueden configurar diferentes aspectos como los niveles y el formato de los mensajes\footnote{Manual de configuración de Log4j 2: \url{https://logging.apache.org/log4j/2.x/manual/configuration.html}} \cite{apache_apache_nodate}. 
+	\\En este proyecto se configuró mediante un fichero con extensión \textit{.properties}, localizado en la carpeta \textit{resources} \ruta{src/main/resources} para que los mensajes sean redirigidos a un fichero con ruta \textit{log/log4.log}. También se muestran por consola si estamos en el entorno de desarrollo.	
+\end{itemize}
+
+Como las dos herramientas tienen integración con Maven sólo es necesario añadir en el fichero \ruta{pom.xml} las dependencias correspondientes en el fichero \ruta{pom.xml} del proyecto
+
+
+Para poder añadir mensajes con el \textit{logger}, utilizamos la API SLF4J (\ruta{slf4j-api}). Eso permite que si cambiáramos de Log4J a otro \textit{logger} no tuviéramos que modificar el código si no sólo la conexión con la API SLF4J.
+
+Para ello, en primer lugar, se debe obtener en cada clase que quiera ser utilizado:\\
+\begin{minipage}{\linewidth}
+{\tiny
+\begin{verbatim}
+private static final Logger LOGGER = LoggerFactory.getLogger(MetricsService.class);
+\end{verbatim}
+}
+\end{minipage}
+en segundo lugar, para añadir un mensaje sólo es necesario realizar una llamada al \textit{logger} estableciendo el nivel de error:\\
+\begin{minipage}{\linewidth}
+{\tiny
+\begin{verbatim}
+LOGGER.error("Error fetching a repository. Message: " + e.getMessage());
+\end{verbatim}
+}
+\end{minipage}
+
+% TODO siguientes secciones, consultar propuesta de las mismas
+\section{Automatización del proceso de desarrollo}
+\subsection{CI/CD: GitHub Actions}
+\subsubsection{Tokens y variables necesarias}
+\subsubsection{Badges}
+\subsection{Pruebas unitarias: JUnit}
+\subsection{Ejecución local de la aplicación: Tomcat}
+\subsection{Revisión de la cobertura de tests: Codacy}
+% incluir JaCoCo con Maven para la generación de los informes
+\subsection{Gestión de la calidad: Codacy}
+\subsection{Despliegue automático: Heroku}
+
+
+\section{Diseño extensible}
+\section{API de GitLab} % hace falta meterla ya que la vamos a seguir usando entiendo
+\section{API de GitHub} % similar a la sección anterior, explicando la API de GitHub
+\section{Interfaz gráfica: Vaadin}
