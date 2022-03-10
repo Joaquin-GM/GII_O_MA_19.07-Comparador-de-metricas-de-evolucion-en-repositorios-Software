@@ -2,26 +2,12 @@
 
 % Este apartado explica de forma precisa y concisa cuales son los objetivos que se persiguen con la realización del proyecto. Se puede distinguir entre los objetivos marcados por los requisitos del software a construir y los objetivos de carácter técnico que plantea a la hora de llevar a la práctica el proyecto.
 
+Este TFG es una segunda iteración del software desarrollado \textit{\textbf{Evolution Metrics Gauge}} y disponible en: 
+\\ \url{https://gitlab.com/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software}
+  
+Para facilitar la comprensión se divide en esta sección con los objetivos definidos en cada iteración. Además se ha diferenciado entre objetivos generales y técnicos.
 
-A continuación se van a detallar los objetivos perseguidos con la realización del proyecto así como los de la aplicación Web sobra la que se trabaja,
-\section{Objetivos generales}
-El objetivo principal del presente TFG es realizar mejoras y extender la funcionalidad que tiene el software \textit{\textbf{Evolution Metrics Gauge}}, un software para calcular métricas de control \footnote{También llamadas métricas de proceso o métricas de evolución} sobre distintos repositorios.
-En esta nueva iteración se pretende:
-
-\begin{itemize}
-	\tightlist
-	\item Permitir leer repositorios de GitHub además de GitLab.
-	\item Introducir nuevas métricas a las ya evaluadas. TODO -> definir cuáles
-	\item Realizar pruebas con repositorios de GitLab y GitHub simultáneamente.
-	\item Realizar diferentes mejoras en las interfaces de la aplicación para mejorar la experiencia de usuario.
-	\item Corrección de errores.
-\end{itemize}
-
-\newpage
-
-
-\section{Objetivos de la aplicación y funcionalidad previa}
-   
+\section{Objetivos Evolution Metrics Gauge iteración 1}
 A continuación se enumeran los objetivos iniciales de la aplicación ya desarrollada y cómo se han desarrollado: \cite{TFGPrevio}
 \begin{itemize}
 	\tightlist
@@ -40,28 +26,31 @@ A continuación se enumeran los objetivos iniciales de la aplicación ya desarro
 		\item Porcentaje de pico de cambios
 	\end{itemize}
 	\item Se permite comparar con otros proyectos de la misma naturaleza. Para ello se establecen unos valores umbrales por cada métrica basados en el cálculo de los cuartiles Q1 y Q3. Además, estos valores se calculan dinámicamente y se almacenan en perfiles de configuración de métricas.
-	\item Se permite la posibilidad de almacenar de manera persistente estos perfiles de configuiración de métricas para permitir comparaciones futuras (TODO -> comprobar)
+	\item Se permite la posibilidad de almacenar de manera persistente estos perfiles de configuración de métricas para permitir comparaciones futuras (TODO -> comprobar)
 	\item También se permite almacenar de forma persistente las métricas obtenidas de los repositorios para su posterior consulta o tratamiento. Esto permite comparar nuevos proyectos con proyectos de los que ya se han calculado sus métricas.
 	 Esta funcionalidad se basa en la exportación e importación de los valores de métricas obtenidos por la aplicación en diferentes análisis usando archivos CSV.
 \end{itemize}
 
-\newpage
 
-º
-\section{Objetivos técnicos}
-Además de mantener todos los objetivos técnicos previos fijados para el desarrollo de la aplicación en la primera iteración, se busca profundizar en ellos y mejorar el desarrollo actual. Para ello se se proponen los siguientes objetivos:
+\section{Objetivos Evolution Metrics Gauge iteración 2}
+   
+El objetivo principal del presente TFG es realizar mejoras y extender la funcionalidad que tiene el software \textit{\textbf{Evolution Metrics Gauge}}, un software para calcular métricas de control \footnote{También llamadas métricas de proceso o métricas de evolución} sobre distintos repositorios.
+En esta nueva iteración se pretende:
+
 \begin{itemize}
 	\tightlist
+	\item Calcular las 8 métricas de evolución definidas sobre repositorios GitHub además de GitLab .
+	\item Implementar nuevas métricas a las ya evaluadas. TODO -> definir cuáles
+	\item Realizar pruebas con repositorios de GitLab y GitHub simultáneamente.
+	\item Diseñar una interfaz gráfica que permita la interacción simultánea con repositorios de GitLab y GitHub.
 	\item Comprender y aplicar el flujo de trabajo de integración continua del proyecto actual.
 	\item Definir un conjunto de pruebas que ayuden a detectar errores de la versión actual.
-	\item Mejora de la cobertura de pruebas automáticas del proyecto.
-	\item Mejora del tratamiento de errores para evitar bloqueos de la aplicación.
-	\item Mejora del almacenamiento y visualización de errores para facilitar su corrección de cara a posteriores iteraciones.
-	\item Pruebas la aplicación con ejemplos reales y utilizando técnicas avanzadas, como entrada de datos de test en ficheros con formato tabulado tipo CSV (\textit{comma separated values}) también para métricas obtenidas de repositorios de GitHub. 	
 \end{itemize}
 
+\newpage
 
-\section{Objetivos técnicos previos}
+
+\section{Objetivos técnicos}
 Este apartado recoge los requisitos técnicos del proyecto existente  \cite{TFGPrevio}:
 \begin{itemize}
 	\tightlist
@@ -74,6 +63,19 @@ Este apartado recoge los requisitos técnicos del proyecto existente  \cite{TFGP
 	\item Correcta gestión de errores definiendo excepciones de biblioteca y registrando eventos de error e información en ficheros de \textit{log}. 
 	\item Aplicar nuevas estructuras  del lenguaje Java para el desarrollo, como son expresiones lambda. 
 	\item Utilización de sistemas que aseguren la calidad continua del código que permitan evaluar la deuda técnica del proyecto.
-	\item Pruebas la aplicación con ejemplos reales y utilizando técnicas avanzadas, como entrada de datos de test en ficheros con formato tabulado tipo CSV (\textit{comma separated values}). 	
+	\item Pruebas la aplicación con ejemplos reales y utilizando técnicas avanzadas, como entrada de datos de test en ficheros con formato tabulado tipo CSV (\textit{comma separated values}).
+	\item Comprender y aplicar el flujo de trabajo de integración continua del proyecto actual.
+	\item Implementar un sistema de registro de errores persistente para gestionar su posible resolución.
+	\item Pruebas la aplicación con ejemplos reales y utilizando técnicas avanzadas, como entrada de datos de test en ficheros con formato tabulado tipo CSV (\textit{comma separated values}) también para métricas obtenidas de repositorios de GitHub. 		
 \end{itemize}
 
+
+%\section{Objetivos técnicos Evolution Metrics Gauge iteración 1}
+%\section{Objetivos técnicos Evolution Metrics Gauge iteración 2}
+%Además de mantener todos los objetivos técnicos previos fijados para el desarrollo de la aplicación en la primera iteración, se busca profundizar en ellos y mejorar el desarrollo actual. Para ello se se proponen los siguientes objetivos:
+%\begin{itemize}
+%	\tightlist
+%	\item Comprender y aplicar el flujo de trabajo de integración continua del proyecto actual.
+%	\item Implementar un sistema de registro de errores persistente para gestionar su posible resolución.
+%	\item Pruebas la aplicación con ejemplos reales y utilizando técnicas avanzadas, como entrada de datos de test en ficheros con formato tabulado tipo CSV (\textit{comma separated values}) también para métricas obtenidas de repositorios de GitHub. 	
+%\end{itemize}
