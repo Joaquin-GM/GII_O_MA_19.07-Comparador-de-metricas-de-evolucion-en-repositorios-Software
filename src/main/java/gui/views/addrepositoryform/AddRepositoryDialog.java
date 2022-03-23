@@ -3,6 +3,11 @@ package gui.views.addrepositoryform;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import gui.customcomponents.DialogHeader;
 import org.claspina.confirmdialog.ConfirmDialog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,8 +78,22 @@ public class AddRepositoryDialog extends Dialog {
 			
 			HorizontalLayout connFormsHLayout = new HorizontalLayout(tabs, formsPages);
 			connFormsHLayout.setSizeFull();
-			
-			VerticalLayout root = new VerticalLayout(new H3("Add projects"), connFormsHLayout);
+
+
+			/*
+			Button closeButton = new Button();
+			closeButton.setIcon(new Icon(VaadinIcon.CLOSE));
+			closeButton.addClassNames("button", "no-background");
+			closeButton.addClickListener(event -> close());
+
+			HorizontalLayout headerLayout = new HorizontalLayout(new H3("Add projects"), closeButton);
+*/
+
+
+			DialogHeader dialogHeader = new DialogHeader("Add projects");
+			dialogHeader.addCloseListener(e -> close());
+
+			VerticalLayout root = new VerticalLayout(dialogHeader.headerLayout, connFormsHLayout);
 			
 			add(root);
 

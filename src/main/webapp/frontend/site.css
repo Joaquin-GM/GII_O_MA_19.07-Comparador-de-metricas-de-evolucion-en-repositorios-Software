@@ -36,3 +36,20 @@
 .MetricConfigTip {
 	font-size: small;
 }
+
+.button {
+	cursor: pointer;
+}
+
+.no-background{
+	background: none;
+}
+
+.dialog-header {
+	margin-top: 0;
+	margin-bottom: 1em;
+}
+
+.dialog-header::before {
+	display: none;
+}
