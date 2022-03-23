@@ -12,3 +12,8 @@ bin/
 
 log/
 /.tern-project
+
+**/desktop.ini
+
+desktop.ini
+
