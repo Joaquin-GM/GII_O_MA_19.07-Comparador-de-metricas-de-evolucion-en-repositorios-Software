@@ -3,6 +3,8 @@ package gui.views.connectionforms;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import gui.customcomponents.DialogHeader;
 import org.claspina.confirmdialog.ConfirmDialog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,13 +65,21 @@ public class ConnectionDialog extends Dialog {
 					connectionForms.get(0).getPage().setVisible(true);				
 				}
 			});
-			
+
+			DialogHeader dialogHeader = new DialogHeader("Set a connection");
+			dialogHeader.addCloseListener(e -> close());
+
+
 			HorizontalLayout connFormsHLayout = new HorizontalLayout(tabs, forms);
 			connFormsHLayout.setSizeFull();
-			add(connFormsHLayout);
+
+
+			VerticalLayout root = new VerticalLayout(dialogHeader.headerLayout, connFormsHLayout);
+
+			add(root);
 
 			setWidth("550px");
-			setHeight("345px");
+			setHeight("375px");
 			setCloseOnEsc(false);
 			setCloseOnOutsideClick(false);
 		} catch (Exception e) {

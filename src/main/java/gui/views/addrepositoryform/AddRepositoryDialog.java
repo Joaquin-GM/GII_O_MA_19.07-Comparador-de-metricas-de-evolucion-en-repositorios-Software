@@ -80,16 +80,6 @@ public class AddRepositoryDialog extends Dialog {
 			connFormsHLayout.setSizeFull();
 
 
-			/*
-			Button closeButton = new Button();
-			closeButton.setIcon(new Icon(VaadinIcon.CLOSE));
-			closeButton.addClassNames("button", "no-background");
-			closeButton.addClickListener(event -> close());
-
-			HorizontalLayout headerLayout = new HorizontalLayout(new H3("Add projects"), closeButton);
-*/
-
-
 			DialogHeader dialogHeader = new DialogHeader("Add projects");
 			dialogHeader.addCloseListener(e -> close());
 
