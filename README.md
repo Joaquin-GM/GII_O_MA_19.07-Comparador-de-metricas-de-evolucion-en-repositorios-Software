@@ -60,7 +60,7 @@ Estas APIs de envoltura nos ahorran trabajo adaptando [GitLab REST API](https://
 
 *   [Eclipse IDE for Java EE Developers. Version: 2018-09 (4.9.0)](https://www.eclipse.org/)
 
-*   [Apache Maven v3.6.0](https://maven.apache.org/)
+*   [Apache Maven v3.8.4](https://maven.apache.org/)
 
 *   [Apache Tomcat v9.0.13](http://tomcat.apache.org/)
 

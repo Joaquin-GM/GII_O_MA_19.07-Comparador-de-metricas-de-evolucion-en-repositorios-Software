@@ -6,20 +6,20 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>es.ubu.lsi</groupId>
-	<artifactId>evolution-metrics-gauge</artifactId>
-	<version>1.0.1</version>
+	<artifactId>evolution-metrics-gauge-v2</artifactId>
+	<version>0.0.1</version>
 	<packaging>war</packaging>
 
-	<scm>
-		<url>git@gitlab.com:mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software.git</url>
-		<connection>git@gitlab.com:mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software.git</connection>
-		<developerConnection>git@gitlab.com:mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software.git</developerConnection>
-	</scm>
+<!--	<scm>-->
+<!--		<url>git@gitlab.com:mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software.git</url>-->
+<!--		<connection>git@gitlab.com:mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software.git</connection>-->
+<!--		<developerConnection>git@gitlab.com:mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software.git</developerConnection>-->
+<!--	</scm>-->
 
-	<name>comparador-de-metricas-de-evolucion-en-repositorios-software</name>
-	<description>Aplicación Java que toma como entrada un conjunto de direcciones de repositorios públicos o privados y calcula medidas de la evolución que permiten comparar los repositorios.</description>
-	<url>https://gitlab.com/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software</url>
-	<inceptionYear>2018</inceptionYear>
+	<name>GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software</name>
+	<description>Nueva iteracion sobre la aplicacion Evolution Metrics Gague</description>
+	<url>https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software/blob/main/pom.xml</url>
+	<inceptionYear>2022</inceptionYear>
 
 	<organization>
 		<name>Universidad de Burgos</name>
@@ -31,8 +31,8 @@
 
 	<developers>
 		<developer>
-			<name>Miguel Ángel León Bardavío</name>
-			<email>miguelelleon@gmail.com</email>
+			<name>Joaquín García Molina</name>
+			<email>jgm1009@alu.ubu.es</email>
 			<organization>Universidad de Burgos</organization>
 			<organizationUrl>https://www.ubu.es/</organizationUrl>
 		</developer>
@@ -46,8 +46,8 @@
 			<organizationUrl>https://www.ubu.es/</organizationUrl>
 		</contributor>
 		<contributor>
-			<name>Miguel Ángel León Bardavío</name>
-			<email>miguelelleon@gmail.com</email>
+			<name>Joaquín García Molina</name>
+			<email>jgm1009@alu.ubu.es</email>
 			<organization>Universidad de Burgos</organization>
 			<organizationUrl>https://www.ubu.es/</organizationUrl>
 		</contributor>
@@ -184,7 +184,7 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 				</configuration>
-				<version>3.8.0</version>
+				<version>3.8.1</version>
 			</plugin>
 			<!-- Compile web application -->
 			<plugin>
@@ -192,6 +192,22 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.2.2</version>
 			</plugin>
+
+			<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-site-plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.7.1</version>
+			</plugin>
+
+
+			<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-deploy-plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.2</version>
+			</plugin>
+
 			<!-- Unit tests -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -227,36 +243,36 @@
 				</configuration>
 			</plugin>
 			<!-- SCM -->
-			<plugin>
-				<artifactId>maven-scm-plugin</artifactId>
-				<version>1.11.2</version>
-				<configuration>
-					<tag>v${project.version}</tag>
-				</configuration>
-				<dependencies>
-		            <dependency>
-		               <groupId>org.codehaus.plexus</groupId>
-		               <artifactId>plexus-utils</artifactId>
-		               <version>2.1</version>
-		            </dependency>
-		            <dependency>
-		               <groupId>org.apache.maven.scm</groupId>
-		               <artifactId>maven-scm-provider-gitexe</artifactId>
-		               <version>1.2</version>
-		           </dependency>
-	         	</dependencies>
-	         	<executions>
-		          <execution>
-		          <id>tag</id>
-		          <phase>deploy</phase>
-		          <goals>
-		            <goal>tag</goal>
-		          </goals>
-		          </execution>
-		        </executions>
-			</plugin>
+<!--			<plugin>-->
+<!--				<artifactId>maven-scm-plugin</artifactId>-->
+<!--				<version>1.11.2</version>-->
+<!--				<configuration>-->
+<!--					<tag>v${project.version}</tag>-->
+<!--				</configuration>-->
+<!--				<dependencies>-->
+<!--					&lt;!&ndash; https://mvnrepository.com/artifact/org.codehaus.plexus/plexus-utils &ndash;&gt;-->
+<!--					<dependency>-->
+<!--						<groupId>org.codehaus.plexus</groupId>-->
+<!--						<artifactId>plexus-utils</artifactId>-->
+<!--						<version>3.3.0</version>-->
+<!--					</dependency>-->
+<!--		            <dependency>-->
+<!--		               <groupId>org.apache.maven.scm</groupId>-->
+<!--		               <artifactId>maven-scm-provider-gitexe</artifactId>-->
+<!--		               <version>1.2.2</version>-->
+<!--		           </dependency>-->
+<!--	         	</dependencies>-->
+<!--	         	<executions>-->
+<!--		          <execution>-->
+<!--		          <id>tag</id>-->
+<!--		          <phase>deploy</phase>-->
+<!--		          <goals>-->
+<!--		            <goal>tag</goal>-->
+<!--		          </goals>-->
+<!--		          </execution>-->
+<!--		        </executions>-->
+<!--			</plugin>-->
 			<!-- Deployment -->
-			<!-- Testing Heroku deploy -->
 			<plugin>
 				<groupId>com.heroku.sdk</groupId>
 				<artifactId>heroku-maven-plugin</artifactId>
@@ -286,6 +302,7 @@
 				<dependency>
 					<groupId>com.vaadin</groupId>
 					<artifactId>flow-server-production-mode</artifactId>
+					<version>9.0.10</version>
 				</dependency>
 			</dependencies>
 			<build>
