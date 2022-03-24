@@ -256,6 +256,7 @@
 		        </executions>
 			</plugin>
 			<!-- Deployment -->
+			<!-- Testing Heroku deploy -->
 			<plugin>
 				<groupId>com.heroku.sdk</groupId>
 				<artifactId>heroku-maven-plugin</artifactId>
