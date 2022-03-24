@@ -186,6 +186,7 @@
 				</configuration>
 				<version>3.8.1</version>
 			</plugin>
+			
 			<!-- Compile web application -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
