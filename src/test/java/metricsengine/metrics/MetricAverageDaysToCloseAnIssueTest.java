@@ -44,7 +44,7 @@ public class MetricAverageDaysToCloseAnIssueTest {
 	}
 
 	/**
-	 * Test method for {@link metricsengine.numeric_value_metrics.MetricAverageDaysToCloseAnIssue#MetricAverageDaysToCloseAnIssue()}.
+	 * Test method for metricsengine.numeric_value_metrics.MetricAverageDaysToCloseAnIssue#MetricAverageDaysToCloseAnIssue().
 	 */
 	@Test
 	public void testMetricAverageDaysToCloseAnIssue() {
@@ -63,7 +63,7 @@ public class MetricAverageDaysToCloseAnIssueTest {
 	@ParameterizedTest(name= "[{index}]: DCI: {0}, NCI: {1}, Test Case: {3}")
 	@MethodSource
 	public void testCheck(List<Integer> daysToCloseEachIssue, Integer numberOfClosedIssues, Boolean expectedValue, String testCase) {
-		Repository repository = new Repository("URL", "Test", 1);
+		Repository repository = new Repository("URL", "Test", 1L);
 		repository.setRepositoryInternalMetrics(new RepositoryInternalMetrics(null, null, numberOfClosedIssues, daysToCloseEachIssue, null, null));
 		assertEquals(expectedValue, metricAverageDaysToCloseAnIssue.check(repository), 
 				"Should return " + expectedValue +
@@ -81,7 +81,7 @@ public class MetricAverageDaysToCloseAnIssueTest {
 	@ParameterizedTest(name= "[{index}]: DCI: {0}, NCI: {1}, Test Case: {3}")
 	@MethodSource
 	public void testRun(List<Integer> daysToCloseEachIssue, Integer numberOfClosedIssues, IValue expected, String testCase) {
-		Repository repository = new Repository("URL", "Test", 1);
+		Repository repository = new Repository("URL", "Test", 1L);
 		repository.setRepositoryInternalMetrics(new RepositoryInternalMetrics(null, null, numberOfClosedIssues, daysToCloseEachIssue, null, null));
 		IValue actual = metricAverageDaysToCloseAnIssue.run(repository);
 		assertEquals(expected.getValueString(), actual.getValueString(), "Incorrect calculation in test case: " + testCase);

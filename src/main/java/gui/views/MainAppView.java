@@ -1,5 +1,9 @@
 package gui.views;
 
+import com.vaadin.flow.component.page.Page;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.server.InitialPageSettings;
+import com.vaadin.flow.server.PageConfigurator;
 import org.claspina.confirmdialog.ConfirmDialog;
 
 import com.vaadin.flow.component.button.Button;
@@ -22,7 +26,8 @@ import gui.views.connectionforms.ConnectionInfoComponent;
 
 @StyleSheet("site.css")
 @Route("")
-public class MainAppView extends VerticalLayout {
+@PageTitle("Evolution Metrics Gauge")
+public class MainAppView extends VerticalLayout implements PageConfigurator {
 
 	private static final long serialVersionUID = -8176239269004450857L;
 	
@@ -40,7 +45,7 @@ public class MainAppView extends VerticalLayout {
 	
 	private Image logoImage = new Image("images/LOGOAPP.png", "Logo Evolution Metrics Gauge");
 	
-	private Label appNameLabel = new Label("Evolution Metrics Gauge testing");
+	private Label appNameLabel = new Label("Evolution Metrics Gauge v2");
 	
 	private Button connectionButton = new Button();
 	
@@ -59,7 +64,9 @@ public class MainAppView extends VerticalLayout {
 	private ConnectionDialog connectionFormDialog = new ConnectionDialog();
 
 	private RepositoriesListView repositoriesListView = new RepositoriesListView();
-	
+
+
+
 	public MainAppView() {
 		try {
 			setSizeFull();
@@ -121,9 +128,26 @@ public class MainAppView extends VerticalLayout {
 		footer.setWidthFull();
 		HorizontalLayout footerHLayout = new HorizontalLayout();
 		footerHLayout.add(authorNameLabel);
-		authorNameLabel.setText("Autor: Miguel Ángel León Bardavío\nTutor: Carlos López Nozal");
+		authorNameLabel.setText("Autor: Joaquín García Molina\nTutor: Carlos López Nozal");
 		authorNameLabel.setId("Authors");
 		footerHLayout.setWidthFull();
 		footer.getElement().appendChild(footerHLayout.getElement());
+	}
+
+	@Override
+	public void configurePage(InitialPageSettings settings) {
+//		settings.addInlineFromFile(InitialPageSettings.Position.PREPEND,
+//				"inline.js", InitialPageSettings.WrapMode.JAVASCRIPT);
+
+		settings.addMetaTag("og:title", "Evolution Metrics Gauge");
+		settings.addMetaTag("og:type", "Repository analytics");
+		settings.addMetaTag("og:url",
+				"https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software/");
+		settings.addMetaTag("og:image",
+				"https://evolution-metrics-v2.herokuapp.com/images/LOGOAPP.png");
+
+		settings.addLink("shortcut icon", "frontend/icons/favicon.ico");
+		settings.addFavIcon("icon", "frontend/icons/favicon.ico", "192x192");
+
 	}
 }

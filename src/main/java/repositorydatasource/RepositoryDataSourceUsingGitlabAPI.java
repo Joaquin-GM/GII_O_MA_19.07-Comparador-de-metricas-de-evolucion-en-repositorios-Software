@@ -267,9 +267,12 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 */
 	@Override
 	public Repository getRepository(String repositoryHTTPSURL) throws RepositoryDataSourceException{
-		Integer projectId;
+		LOGGER.info("--getRepository---");
+		LOGGER.info(repositoryHTTPSURL);
+		Long projectId;
 		if (! connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
 			projectId = getProjectId(repositoryHTTPSURL);
+			LOGGER.info(String.valueOf(projectId));
 			if (projectId != null) {
 				return new Repository(repositoryHTTPSURL, getRepositoryName(projectId), projectId);
 			} else {
@@ -281,8 +284,10 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	}
 
 	@Override
-	public Repository getRepository(int repositoryId) throws RepositoryDataSourceException {
+	public Repository getRepository(Long repositoryId) throws RepositoryDataSourceException {
 		try {
+			LOGGER.info("--getRepository 2---");
+			LOGGER.info(String.valueOf(repositoryId));
 			if (! connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
 				Project pProyecto = gitLabApi.getProjectApi().getProject(repositoryId);
 				if (pProyecto != null) {
@@ -303,8 +308,10 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 */
 	@Override
 	public RepositoryInternalMetrics getRepositoryInternalMetrics(Repository repository) throws RepositoryDataSourceException {
-		getRepository(repository.getId());//Si no se obtiene, lanza una excepción
-		Integer projectId = repository.getId();
+		LOGGER.info("getRepositoryInternalMetrics");
+		LOGGER.info(String.valueOf(repository));
+		getRepository(repository.getId()); // Si no se obtiene, lanza una excepción
+		Long projectId = repository.getId();
 		Integer totalNumberOfIssues = getTotalNumberOfIssues(projectId);
 		Integer totalNumberOfCommits = getTotalNumberOfCommits(projectId);
 		Integer numberOfClosedIssues = getNumberOfClosedIssues(projectId);
@@ -319,6 +326,13 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 				commitDates,
 				lifeSpanMonths
 		);
+		LOGGER.info("projectId " + projectId);
+		LOGGER.info("totalNumberOfIssues " + totalNumberOfIssues);
+		LOGGER.info("totalNumberOfCommits " + totalNumberOfCommits);
+		LOGGER.info("numberOfClosedIssues " + numberOfClosedIssues);
+		LOGGER.info("daysToCloseEachIssue " + daysToCloseEachIssue);
+		LOGGER.info("commitDates " + commitDates);
+		LOGGER.info("lifeSpanMonths " + lifeSpanMonths);
 		return repositoryInternalMetrics;
 	}
 
@@ -339,8 +353,10 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @param repositoryURL Project URL.
 	 * @return ID of a project.
 	 */
-	private Integer getProjectId(String repositoryURL) {
+	private Long getProjectId(String repositoryURL) {
 		try {
+			LOGGER.info("getProjectId");
+			LOGGER.info(String.valueOf(repositoryURL));
 			if(repositoryURL == null) return null;
 			String sProyecto = repositoryURL.replaceAll(RepositoryDataSourceUsingGitlabAPI.HOST_URL + "/", "");
 			String nombreProyecto = sProyecto.split("/")[sProyecto.split("/").length - 1];
@@ -358,8 +374,10 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @param projectId ID of the project.
 	 * @return Repository name or null if fail.
 	 */
-	private String getRepositoryName(Integer projectId) {
+	private String getRepositoryName(Long projectId) {
 		try {
+			LOGGER.info("getRepositoryName");
+			LOGGER.info(String.valueOf(projectId));
 			return gitLabApi.getProjectApi().getProject(projectId).getName();
 		} catch (GitLabApiException e) {
 			return null;
@@ -372,9 +390,20 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @param projectId ID of the project.
 	 * @return Total number of issues or -1 if fail.
 	 */
-	private Integer getTotalNumberOfIssues(Integer projectId) {	
+	private Integer getTotalNumberOfIssues(Long projectId) {	
 		try {
-			return (int) gitLabApi.getIssuesApi().getIssuesStream(projectId, new IssueFilter()).count();
+			LOGGER.info("getTotalNumberOfIssues");
+
+			var returnedValueNoNum = gitLabApi.getIssuesApi().getIssuesStream(projectId, new IssueFilter());
+			LOGGER.info("returnedValueNoNum");
+			LOGGER.info(String.valueOf(returnedValueNoNum));
+
+			var returnedValue = (int) returnedValueNoNum.count();
+			LOGGER.info("returnedValue");
+			LOGGER.info(String.valueOf(returnedValue));
+
+			return returnedValue;
+//			return (int) gitLabApi.getIssuesApi().getIssuesStream(projectId, new IssueFilter()).count();
 		} catch (GitLabApiException e) {
 			return null;
 		}
@@ -386,9 +415,20 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @param projectId ID of the project.
 	 * @return Total number of commits of a project or -1 if fail.
 	 */
-	private Integer getTotalNumberOfCommits(Integer projectId) {
+	private Integer getTotalNumberOfCommits(Long projectId) {
 		try {
-			return (int) gitLabApi.getCommitsApi().getCommitStream(projectId).count();
+			LOGGER.info("getTotalNumberOfCommits");
+
+			var returnedValueNoNum = gitLabApi.getCommitsApi().getCommitStream(projectId);
+			LOGGER.info("returnedValueNoNum");
+			LOGGER.info(String.valueOf(returnedValueNoNum));
+
+			var returnedValue = (int) returnedValueNoNum.count();
+			LOGGER.info("returnedValue");
+			LOGGER.info(String.valueOf(returnedValue));
+
+			return returnedValue;
+//			return (int) gitLabApi.getCommitsApi().getCommitStream(projectId).count();
 		} catch (GitLabApiException e) {
 			return null;
 		}
@@ -400,7 +440,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @param projectId ID of the project.
 	 * @return Number of closed issues of a project or -1 if fail.
 	 */
-	private Integer getNumberOfClosedIssues(Integer projectId) {
+	private Integer getNumberOfClosedIssues(Long projectId) {
 		try {
 			return (int) gitLabApi.getIssuesApi().getIssuesStream(projectId, new IssueFilter().withState(IssueState.CLOSED)).count();
 		} catch (GitLabApiException e) {
@@ -414,7 +454,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @param projectId ID of the project.
 	 * @return Days to close each issue of a project or null if fail.
 	 */
-	private List<Integer> getDaysToCloseEachIssue(Integer projectId) {
+	private List<Integer> getDaysToCloseEachIssue(Long projectId) {
 		try {
 			return gitLabApi.getIssuesApi().getIssuesStream(projectId, new IssueFilter().withState(IssueState.CLOSED))
 					.filter(issue -> issue.getCreatedAt() != null && issue.getClosedAt() != null)
@@ -431,7 +471,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @param projectId ID of the project.
 	 * @return Set of dates of commits of a project or null if fail.
 	 */
-	private Set<Date> getCommitsDates(Integer projectId) {
+	private Set<Date> getCommitsDates(Long projectId) {
 		try {
 			return gitLabApi.getCommitsApi().getCommitStream(projectId)
 					.map(commit -> commit.getCommittedDate())
@@ -449,7 +489,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @return  Number of months that have passed since the creation of the repository
 	 * until the date of last activity.
 	 */
-	private Integer getRepositoryLifeInMonths(Integer projectId) {
+	private Integer getRepositoryLifeInMonths(Long projectId) {
 		try {
 			Date createdAtDate = gitLabApi.getProjectApi().getProject(projectId).getCreatedAt();
 			Date lastActivityDate = gitLabApi.getProjectApi().getProject(projectId).getLastActivityAt();

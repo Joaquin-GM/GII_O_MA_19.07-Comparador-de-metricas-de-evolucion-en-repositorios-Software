@@ -157,7 +157,7 @@ public interface RepositoryDataSource extends Serializable{
 	 * @return The repository whose id is the one passed as a parameter
 	 * @throws RepositoryDataSourceException
 	 */
-	Repository getRepository(int repositoryId) throws RepositoryDataSourceException;
+	Repository getRepository(Long repositoryId) throws RepositoryDataSourceException;
 	
 	/**
 	 * Updates the internal metrics of the repository that is passed by parameter,

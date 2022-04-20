@@ -42,7 +42,7 @@ public class MetricCommitsPerIssueTest {
 	}
 
 	/**
-	 * Test method for {@link metricsengine.numeric_value_metrics.MetricCommitsPerIssue#MetricCommitsPerIssue()}.
+	 * Test method for metricsengine.numeric_value_metrics.MetricCommitsPerIssue#MetricCommitsPerIssue().
 	 */
 	@Test
 	public void testMetricCommitsPerIssue() {
@@ -61,7 +61,7 @@ public class MetricCommitsPerIssueTest {
 	@ParameterizedTest(name= "[{index}]: TNI: {0}, TNC: {1}, Test Case: {3}")
 	@MethodSource
 	public void testCheck(Integer totalNumberOfIssues, Integer totalNumberOfCommits, Boolean expected, String testCase) {
-		Repository repository = new Repository("URL", "Test", 1);
+		Repository repository = new Repository("URL", "Test", 1L);
 		repository.setRepositoryInternalMetrics(new RepositoryInternalMetrics(totalNumberOfIssues, totalNumberOfCommits, null, null, null, null));
 		assertEquals(expected, metricCommitsPerIssue.check(repository), 
 				"Should return " + expected + 
@@ -79,7 +79,7 @@ public class MetricCommitsPerIssueTest {
 	@ParameterizedTest(name = "[{index}]: TNI: {0}, TNC: {1}, Test Case: {3}")
 	@MethodSource
 	public void testRun(Integer totalNumberOfIssues, Integer totalNumberOfCommits, IValue expected, String testCase) {
-		Repository repository = new Repository("URL", "Test", 1);
+		Repository repository = new Repository("URL", "Test", 1L);
 		repository.setRepositoryInternalMetrics(new RepositoryInternalMetrics(totalNumberOfIssues, totalNumberOfCommits, null, null, null, null));
 		IValue actual = metricCommitsPerIssue.run(repository);
 		assertEquals(expected.getValueString(), actual.getValueString(), "Incorrect calculation in test case: " + testCase);

@@ -61,7 +61,7 @@ public class MetricTotalNumberOfIssuesTest {
 	@ParameterizedTest(name= "[{index}]: TNI: {0}, Calculable: {1}, Test Case: {2}")
 	@MethodSource
 	public void testCheck(Integer totalNumberOfIssues, Boolean expected, String testCase) {
-		Repository repository = new Repository("URL", "Test", 1);
+		Repository repository = new Repository("URL", "Test", 1L);
 		repository.setRepositoryInternalMetrics(new RepositoryInternalMetrics(totalNumberOfIssues, null, null, null, null, null));
 		assertEquals(expected, metricTotalNumberOfIssues.check(repository), 
 				"Should return " + expected +
@@ -78,7 +78,7 @@ public class MetricTotalNumberOfIssuesTest {
 	@ParameterizedTest(name = "[{index}]: TNI = {0}, Test Case: {2}")
 	@MethodSource
 	public void testRun(Integer totalNumberOfIssues, IValue expected, String testCase) {
-		Repository repository = new Repository("URL", "Test", 1);
+		Repository repository = new Repository("URL", "Test", 1L);
 		repository.setRepositoryInternalMetrics(new RepositoryInternalMetrics(totalNumberOfIssues, null, null, null, null, null));
 		IValue actual = metricTotalNumberOfIssues.run(repository);
 		assertEquals(expected.getValueString(), actual.getValueString(), "Incorrect calculation in test case: " + testCase);

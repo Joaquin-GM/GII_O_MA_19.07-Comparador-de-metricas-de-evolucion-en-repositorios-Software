@@ -48,7 +48,7 @@ public class MetricPeakChangeTest {
 	}
 
 	/**
-	 * Test method for {@link metricsengine.numeric_value_metrics.MetricPeakChange#MetricPeakChange()}.
+	 * Test method for metricsengine.numeric_value_metrics.MetricPeakChange#MetricPeakChange().
 	 */
 	@Test
 	public void testMetricPeakChange() {
@@ -67,7 +67,7 @@ public class MetricPeakChangeTest {
 	@ParameterizedTest(name = "[{index}] TNC = {0}, CD = {1}, Test Case: {3}")
 	@MethodSource
 	public void testCheck(Integer totalNumberOfCommits, Set<Date> commitDates, Boolean expected, String testCase) {
-		Repository repository = new Repository("URL", "Test", 1);
+		Repository repository = new Repository("URL", "Test", 1L);
 		repository.setRepositoryInternalMetrics(new RepositoryInternalMetrics(null, totalNumberOfCommits, null, null, commitDates, null));
 		assertEquals(expected, metricPeakChange.check(repository), 
 				"Should return " + expected +
@@ -85,7 +85,7 @@ public class MetricPeakChangeTest {
 	@ParameterizedTest(name = "[{index}] TNC = {0}, CD = {1}, Test Case: {3}")
 	@MethodSource
 	public void testRun(Integer totalNumberOfCommits, Set<Date> commitDates, IValue expected, String testCase) {
-		Repository repository = new Repository("URL", "Test", 1);
+		Repository repository = new Repository("URL", "Test", 1L);
 		repository.setRepositoryInternalMetrics(new RepositoryInternalMetrics(null, totalNumberOfCommits, null, null, commitDates, null));
 		IValue actual = metricPeakChange.run(repository);
 		assertEquals(expected.getValueString(), actual.getValueString(), "Incorrect calculation in test case: " + testCase);

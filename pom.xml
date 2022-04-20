@@ -106,7 +106,7 @@
 		<dependency>
 			<groupId>org.gitlab4j</groupId>
 			<artifactId>gitlab4j-api</artifactId>
-			<version>4.9.14</version>
+			<version>5.0.1</version>
 			<scope>compile</scope>
 		</dependency>
 		<!-- LOGGER -->
@@ -290,9 +290,9 @@
 		        <version>9.4.36.v20210114</version>
 				<configuration>
 					<scanIntervalSeconds>3</scanIntervalSeconds>
-					<scanTargets>
-						<scanTarget>target/classes</scanTarget>
-					</scanTargets>
+<!--					<scanTargets>-->
+<!--						<scanTarget>target/classes</scanTarget>-->
+<!--					</scanTargets>-->
 				</configuration>
     </plugin>
 		</plugins>

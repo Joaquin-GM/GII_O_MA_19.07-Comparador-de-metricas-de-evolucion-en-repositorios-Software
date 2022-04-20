@@ -34,7 +34,7 @@ public class RepositoryTest {
 	 */
 	@Test
 	public void testRepositoryEmptyStrings() {
-		Repository repo = new Repository("", "", 0);
+		Repository repo = new Repository("", "", 0L);
 		assertEquals("", repo.getUrl(), "Fail in url");
 		assertEquals("", repo.getName(), "Fail in name");
 	}
@@ -46,7 +46,7 @@ public class RepositoryTest {
 	 */
 	@Test
 	public void testSetInternalMetrics() {
-		Repository repo = new Repository("", "", 0);
+		Repository repo = new Repository("", "", 0L);
 		RepositoryInternalMetrics repositoryInternalMetrics = new RepositoryInternalMetrics(0, 0, 0, null, null, 0);
 		repo.setRepositoryInternalMetrics(repositoryInternalMetrics);
 		assertEquals(repositoryInternalMetrics, repo.getRepositoryInternalMetrics());

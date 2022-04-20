@@ -17,7 +17,7 @@ public class User implements Serializable{
 	 */
 	private static final long serialVersionUID = -8802110263950506090L;
 
-	private Integer id;
+	private Long id;
 	
 	/**
 	 * URL of the avatar.
@@ -57,7 +57,7 @@ public class User implements Serializable{
 	 * @param name Name.
 	 * @param username Username.
 	 */
-	public User(Integer id, String avatarUrl, String email, String name, String username) {
+	public User(Long id, String avatarUrl, String email, String name, String username) {
 		setId(id);
 		setAvatarUrl(avatarUrl);
 		setEmail(email);
@@ -71,7 +71,7 @@ public class User implements Serializable{
 	 * @author Miguel Ángel León Bardavío - mlb0029
 	 * @return the id
 	 */
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -81,7 +81,7 @@ public class User implements Serializable{
 	 * @author Miguel Ángel León Bardavío - mlb0029
 	 * @param id the id to set
 	 */
-	private void setId(Integer id) {
+	private void setId(Long id) {
 		this.id = id;
 	}
 

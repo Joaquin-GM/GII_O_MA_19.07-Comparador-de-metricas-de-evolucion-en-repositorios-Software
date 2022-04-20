@@ -32,7 +32,7 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 	private Set<Listener<ConnectionChangedEvent>> connectionChangedEventListeners = new HashSet<>();
 	
 	/**
-	 * Constructor that instantiates the repository data sorce.
+	 * Constructor that instantiates the repository data source.
 	 *
 	 * @author Miguel Ángel León Bardavío - mlb0029
 	 */
@@ -55,7 +55,7 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 	 * Sets the repository data source through a repository data source factory.
 	 * 
 	 * @author Miguel Ángel León Bardavío - mlb0029
-	 * @param repositoryDataSource the repositoryDataSource to set
+	 * @param repositoryDataSourceFactory the repositoryDataSource to set
 	 */
 	public void setRepositoryDataSource(RepositoryDataSourceFactory repositoryDataSourceFactory) {
 		this.repositoryDataSource = repositoryDataSourceFactory.getRepositoryDataSource();
@@ -177,7 +177,7 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 	 * @see repositorydatasource.RepositoryDataSource#getRepository(int)
 	 */
 	@Override
-	public Repository getRepository(int repositoryId) throws RepositoryDataSourceException {
+	public Repository getRepository(Long repositoryId) throws RepositoryDataSourceException {
 		return this.repositoryDataSource.getRepository(repositoryId);
 	}
 

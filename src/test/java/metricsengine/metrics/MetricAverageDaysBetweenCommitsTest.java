@@ -67,7 +67,7 @@ public class MetricAverageDaysBetweenCommitsTest {
 	@ParameterizedTest(name = "[{index}] TNC = {0}, CD = {1}, Test Case: {3}")
 	@MethodSource("metricsengine.metrics.ArgumentsProviders#argsForCheckMethodInCommitDates")
 	public void testCheck(Integer totalNumberOfCommits, Set<Date> commitDates, Boolean expected, String testCase) {
-		Repository repository = new Repository("URL", "Test", 1);
+		Repository repository = new Repository("URL", "Test", 1L);
 		repository.setRepositoryInternalMetrics(new RepositoryInternalMetrics(null, totalNumberOfCommits, null, null, commitDates, null));
 		assertEquals(expected, metricAverageDaysBetweenCommits.check(repository), 
 				"Should return " + expected +
@@ -85,7 +85,7 @@ public class MetricAverageDaysBetweenCommitsTest {
 	@ParameterizedTest(name = "[{index}] TNC = {0}, CD = {1}, Test Case: {3}")
 	@MethodSource
 	public void testRun(Integer totalNumberOfCommits, Set<Date> commitDates, IValue expected, String testCase) {
-		Repository repository = new Repository("URL", "Test", 1);
+		Repository repository = new Repository("URL", "Test", 1L);
 		repository.setRepositoryInternalMetrics(new RepositoryInternalMetrics(null, totalNumberOfCommits, null, null, commitDates, null));
 		IValue actual = metricAverageDaysBetweenCommits.run(repository);
 		assertEquals(expected.getValueString(), actual.getValueString(), "Incorrect calculation in test case: " + testCase);
