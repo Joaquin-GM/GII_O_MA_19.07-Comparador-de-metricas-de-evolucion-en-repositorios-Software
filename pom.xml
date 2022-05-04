@@ -1,335 +1,338 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>es.ubu.lsi</groupId>
-	<artifactId>evolution-metrics-gauge-v2</artifactId>
-	<version>0.0.1</version>
-	<packaging>war</packaging>
+    <groupId>es.ubu.lsi</groupId>
+    <artifactId>evolution-metrics-gauge-v2</artifactId>
+    <version>0.0.1</version>
+    <packaging>war</packaging>
 
-<!--	<scm>-->
-<!--		<url>git@gitlab.com:mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software.git</url>-->
-<!--		<connection>git@gitlab.com:mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software.git</connection>-->
-<!--		<developerConnection>git@gitlab.com:mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software.git</developerConnection>-->
-<!--	</scm>-->
+    <!--	<scm>-->
+    <!--		<url>git@gitlab.com:mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software.git</url>-->
+    <!--		<connection>git@gitlab.com:mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software.git</connection>-->
+    <!--		<developerConnection>git@gitlab.com:mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software.git</developerConnection>-->
+    <!--	</scm>-->
 
-	<name>GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software</name>
-	<description>Nueva iteracion sobre la aplicacion Evolution Metrics Gague</description>
-	<url>https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software/blob/main/pom.xml</url>
-	<inceptionYear>2022</inceptionYear>
+    <name>GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software</name>
+    <description>Nueva iteracion sobre la aplicacion Evolution Metrics Gague</description>
+    <url>
+        https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software/blob/main/pom.xml
+    </url>
+    <inceptionYear>2022</inceptionYear>
 
-	<organization>
-		<name>Universidad de Burgos</name>
-		<url>https://www.ubu.es/</url>
-	</organization>
+    <organization>
+        <name>Universidad de Burgos</name>
+        <url>https://www.ubu.es/</url>
+    </organization>
 
-	<!-- <licenses> <license> <name></name> <url></url> <distribution></distribution> 
-		<comments></comments> </license> </licenses> -->
+    <!-- <licenses> <license> <name></name> <url></url> <distribution></distribution>
+        <comments></comments> </license> </licenses> -->
 
-	<developers>
-		<developer>
-			<name>Joaquín García Molina</name>
-			<email>jgm1009@alu.ubu.es</email>
-			<organization>Universidad de Burgos</organization>
-			<organizationUrl>https://www.ubu.es/</organizationUrl>
-		</developer>
-	</developers>
+    <developers>
+        <developer>
+            <name>Joaquín García Molina</name>
+            <email>jgm1009@alu.ubu.es</email>
+            <organization>Universidad de Burgos</organization>
+            <organizationUrl>https://www.ubu.es/</organizationUrl>
+        </developer>
+    </developers>
 
-	<contributors>
-		<contributor>
-			<name>Carlos López Nozal</name>
-			<email>clopezno@ubu.es</email>
-			<organization>Universidad de Burgos</organization>
-			<organizationUrl>https://www.ubu.es/</organizationUrl>
-		</contributor>
-		<contributor>
-			<name>Joaquín García Molina</name>
-			<email>jgm1009@alu.ubu.es</email>
-			<organization>Universidad de Burgos</organization>
-			<organizationUrl>https://www.ubu.es/</organizationUrl>
-		</contributor>
-	</contributors>
+    <contributors>
+        <contributor>
+            <name>Carlos López Nozal</name>
+            <email>clopezno@ubu.es</email>
+            <organization>Universidad de Burgos</organization>
+            <organizationUrl>https://www.ubu.es/</organizationUrl>
+        </contributor>
+        <contributor>
+            <name>Joaquín García Molina</name>
+            <email>jgm1009@alu.ubu.es</email>
+            <organization>Universidad de Burgos</organization>
+            <organizationUrl>https://www.ubu.es/</organizationUrl>
+        </contributor>
+    </contributors>
 
-	<prerequisites>
-		<maven>3</maven>
-	</prerequisites>
+    <prerequisites>
+        <maven>3</maven>
+    </prerequisites>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>11</java.version>
-		<vaadin.version>13.0.0</vaadin.version>
-		<failOnMissingWebXml>false</failOnMissingWebXml>
-	</properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>11</java.version>
+        <vaadin.version>13.0.0</vaadin.version>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+    </properties>
 
-	<repositories>
-		<!-- Repository used by many Vaadin add-ons -->
-		<repository>
-			<id>vaadin-addons</id>
-			<url>https://maven.vaadin.com/vaadin-addons</url>
-		</repository>
-		<!-- Repository needed for prerelease versions of Vaadin -->
-		<repository>
-			<id>vaadin-prereleases</id>
-			<name>Vaadin Pre-releases</name>
-			<url>https://maven.vaadin.com/vaadin-prereleases</url>
-		</repository>
+    <repositories>
+        <!-- Repository used by many Vaadin add-ons -->
+        <repository>
+            <id>vaadin-addons</id>
+            <url>https://maven.vaadin.com/vaadin-addons</url>
+        </repository>
+        <!-- Repository needed for prerelease versions of Vaadin -->
+        <repository>
+            <id>vaadin-prereleases</id>
+            <name>Vaadin Pre-releases</name>
+            <url>https://maven.vaadin.com/vaadin-prereleases</url>
+        </repository>
 
-	</repositories>
+    </repositories>
 
-	<pluginRepositories>
-		<!-- Repository needed for prerelease versions of Vaadin -->
-		<pluginRepository>
-			<id>vaadin-prereleases</id>
-			<url>https://maven.vaadin.com/vaadin-prereleases</url>
-		</pluginRepository>
-	</pluginRepositories>
+    <pluginRepositories>
+        <!-- Repository needed for prerelease versions of Vaadin -->
+        <pluginRepository>
+            <id>vaadin-prereleases</id>
+            <url>https://maven.vaadin.com/vaadin-prereleases</url>
+        </pluginRepository>
+    </pluginRepositories>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>com.vaadin</groupId>
-				<artifactId>vaadin-bom</artifactId>
-				<version>${vaadin.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-bom</artifactId>
+                <version>${vaadin.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-	<dependencies>
-		<!-- GitLab API -->
-		<!-- https://mvnrepository.com/artifact/org.gitlab4j/gitlab4j-api -->
-		<dependency>
-			<groupId>org.gitlab4j</groupId>
-			<artifactId>gitlab4j-api</artifactId>
-			<version>5.0.1</version>
-			<scope>compile</scope>
-		</dependency>
-		<!-- LOGGER -->
-		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-slf4j-impl</artifactId>
-			<version>2.11.2</version>
-		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.apache.logging.log4j</groupId> -->
-<!-- 			<artifactId>log4j-api</artifactId> -->
-<!-- 			<version>2.11.2</version> -->
-<!-- 		</dependency> -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>2.11.2</version>
-		</dependency>
-		<!-- JUnit 5 API -->
-		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.3.2</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- JUnit 5 Engine -->
-		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.3.2</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- JUnit 5 Parameterized Tests -->
-		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params -->
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-params</artifactId>
-			<version>5.3.2</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- MATH -->
-		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-math3</artifactId>
-			<version>3.6.1</version>
-		</dependency>
-		<!-- VAADIN -->
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-core</artifactId>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.claspina/confirm-dialog -->
-		<dependency>
-			<groupId>org.claspina</groupId>
-			<artifactId>confirm-dialog</artifactId>
-			<version>2.0.0</version>
-		</dependency>
+    <dependencies>
+        <!-- GitLab API -->
+        <!-- https://mvnrepository.com/artifact/org.gitlab4j/gitlab4j-api -->
+        <dependency>
+            <groupId>org.gitlab4j</groupId>
+            <artifactId>gitlab4j-api</artifactId>
+            <version>5.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- LOGGER -->
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+        <!-- 		<dependency> -->
+        <!-- 			<groupId>org.apache.logging.log4j</groupId> -->
+        <!-- 			<artifactId>log4j-api</artifactId> -->
+        <!-- 			<version>2.11.2</version> -->
+        <!-- 		</dependency> -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+        <!-- JUnit 5 API -->
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.3.2</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- JUnit 5 Engine -->
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.3.2</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- JUnit 5 Parameterized Tests -->
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.3.2</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- MATH -->
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>3.6.1</version>
+        </dependency>
+        <!-- VAADIN -->
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-core</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.claspina/confirm-dialog -->
+        <dependency>
+            <groupId>org.claspina</groupId>
+            <artifactId>confirm-dialog</artifactId>
+            <version>2.0.0</version>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 
-	<build>
-		<plugins>
-			<!-- Compile sources -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-				<version>3.8.1</version>
-			</plugin>
+    <build>
+        <plugins>
+            <!-- Compile sources -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+                <version>3.8.1</version>
+            </plugin>
 
-			<!-- Compile web application -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>3.2.2</version>
-			</plugin>
+            <!-- Compile web application -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.2</version>
+            </plugin>
 
-			<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-site-plugin -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<version>3.7.1</version>
-			</plugin>
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-site-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7.1</version>
+            </plugin>
 
 
-			<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-deploy-plugin -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<version>2.8.2</version>
-			</plugin>
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-deploy-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+            </plugin>
 
-			<!-- Unit tests -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<reportsDirectory>${project.reporting.outputDirectory}/surefire-reports</reportsDirectory>
-				</configuration>
-				<version>2.22.1</version>
-			</plugin>
-			<!-- Integration tests -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.22.1</version>
-			</plugin>
-			<!-- Coverage -->
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.3</version>
-				<configuration>
-					<outputDirectory>${project.reporting.outputDirectory}/jacoco-reports</outputDirectory>
-					<output>file</output>
-					<title>Coverage of project: ${project.name}</title>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.gavinmogan</groupId>
-				<artifactId>codacy-maven-plugin</artifactId>
-				<version>1.2.0</version>
-				<configuration>
-                   	<coverageReportFile>${project.reporting.outputDirectory}/jacoco-reports/jacoco.xml</coverageReportFile>
-				</configuration>
-			</plugin>
-			<!-- SCM -->
-<!--			<plugin>-->
-<!--				<artifactId>maven-scm-plugin</artifactId>-->
-<!--				<version>1.11.2</version>-->
-<!--				<configuration>-->
-<!--					<tag>v${project.version}</tag>-->
-<!--				</configuration>-->
-<!--				<dependencies>-->
-<!--					&lt;!&ndash; https://mvnrepository.com/artifact/org.codehaus.plexus/plexus-utils &ndash;&gt;-->
-<!--					<dependency>-->
-<!--						<groupId>org.codehaus.plexus</groupId>-->
-<!--						<artifactId>plexus-utils</artifactId>-->
-<!--						<version>3.3.0</version>-->
-<!--					</dependency>-->
-<!--		            <dependency>-->
-<!--		               <groupId>org.apache.maven.scm</groupId>-->
-<!--		               <artifactId>maven-scm-provider-gitexe</artifactId>-->
-<!--		               <version>1.2.2</version>-->
-<!--		           </dependency>-->
-<!--	         	</dependencies>-->
-<!--	         	<executions>-->
-<!--		          <execution>-->
-<!--		          <id>tag</id>-->
-<!--		          <phase>deploy</phase>-->
-<!--		          <goals>-->
-<!--		            <goal>tag</goal>-->
-<!--		          </goals>-->
-<!--		          </execution>-->
-<!--		        </executions>-->
-<!--			</plugin>-->
-			<!-- Deployment -->
-			<plugin>
-				<groupId>com.heroku.sdk</groupId>
-				<artifactId>heroku-maven-plugin</artifactId>
-				<version>2.0.9</version>
-				<configuration>
-					<appName>evolution-metrics-v2</appName>
-				</configuration>
-			</plugin>
-			 <plugin>
-		        <groupId>org.eclipse.jetty</groupId>
-		        <artifactId>jetty-maven-plugin</artifactId>
-		        <version>9.4.36.v20210114</version>
-				<configuration>
-					<scanIntervalSeconds>3</scanIntervalSeconds>
-<!--					<scanTargets>-->
-<!--						<scanTarget>target/classes</scanTarget>-->
-<!--					</scanTargets>-->
-				</configuration>
-    </plugin>
-		</plugins>
-	</build>
+            <!-- Unit tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <reportsDirectory>${project.reporting.outputDirectory}/surefire-reports</reportsDirectory>
+                </configuration>
+                <version>2.22.1</version>
+            </plugin>
+            <!-- Integration tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.22.1</version>
+            </plugin>
+            <!-- Coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.3</version>
+                <configuration>
+                    <outputDirectory>${project.reporting.outputDirectory}/jacoco-reports</outputDirectory>
+                    <output>file</output>
+                    <title>Coverage of project: ${project.name}</title>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.gavinmogan</groupId>
+                <artifactId>codacy-maven-plugin</artifactId>
+                <version>1.2.0</version>
+                <configuration>
+                    <coverageReportFile>${project.reporting.outputDirectory}/jacoco-reports/jacoco.xml
+                    </coverageReportFile>
+                </configuration>
+            </plugin>
+            <!-- SCM -->
+            <!--			<plugin>-->
+            <!--				<artifactId>maven-scm-plugin</artifactId>-->
+            <!--				<version>1.11.2</version>-->
+            <!--				<configuration>-->
+            <!--					<tag>v${project.version}</tag>-->
+            <!--				</configuration>-->
+            <!--				<dependencies>-->
+            <!--					&lt;!&ndash; https://mvnrepository.com/artifact/org.codehaus.plexus/plexus-utils &ndash;&gt;-->
+            <!--					<dependency>-->
+            <!--						<groupId>org.codehaus.plexus</groupId>-->
+            <!--						<artifactId>plexus-utils</artifactId>-->
+            <!--						<version>3.3.0</version>-->
+            <!--					</dependency>-->
+            <!--		            <dependency>-->
+            <!--		               <groupId>org.apache.maven.scm</groupId>-->
+            <!--		               <artifactId>maven-scm-provider-gitexe</artifactId>-->
+            <!--		               <version>1.2.2</version>-->
+            <!--		           </dependency>-->
+            <!--	         	</dependencies>-->
+            <!--	         	<executions>-->
+            <!--		          <execution>-->
+            <!--		          <id>tag</id>-->
+            <!--		          <phase>deploy</phase>-->
+            <!--		          <goals>-->
+            <!--		            <goal>tag</goal>-->
+            <!--		          </goals>-->
+            <!--		          </execution>-->
+            <!--		        </executions>-->
+            <!--			</plugin>-->
+            <!-- Deployment -->
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>2.0.9</version>
+                <configuration>
+                    <appName>evolution-metrics-v2</appName>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.36.v20210114</version>
+                <configuration>
+                    <scanIntervalSeconds>2</scanIntervalSeconds>
+                    <!--					<scanTargets>-->
+                    <!--						<scanTarget>target/classes</scanTarget>-->
+                    <!--					</scanTargets>-->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
-	<profiles>
-		<profile>
-			<id>production-mode</id>
-			<dependencies>
-				<dependency>
-					<groupId>com.vaadin</groupId>
-					<artifactId>flow-server-production-mode</artifactId>
-					<version>9.0.10</version>
-				</dependency>
-			</dependencies>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>com.vaadin</groupId>
-						<artifactId>vaadin-maven-plugin</artifactId>
-						<version>${vaadin.version}</version>
-						<executions>
-							<execution>
-								<goals>
-									<goal>copy-production-files</goal>
-									<goal>package-for-production</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+    <profiles>
+        <profile>
+            <id>production</id>
+            <dependencies>
+                <dependency>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>flow-server-production-mode</artifactId>
+                    <version>9.0.10</version>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.vaadin</groupId>
+                        <artifactId>vaadin-maven-plugin</artifactId>
+                        <version>${vaadin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>copy-production-files</goal>
+                                    <goal>package-for-production</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
-	<reporting>
-		<outputDirectory>${project.build.directory}/reports</outputDirectory>
-	</reporting>
+    <reporting>
+        <outputDirectory>${project.build.directory}/reports</outputDirectory>
+    </reporting>
 
 </project>
