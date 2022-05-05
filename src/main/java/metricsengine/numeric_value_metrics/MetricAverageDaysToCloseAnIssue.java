@@ -14,7 +14,6 @@ import metricsengine.values.ValueDecimal;
  *
  */
 public class MetricAverageDaysToCloseAnIssue extends NumericValueMetricTemplate {
-
 	/**
 	 * Description.
 	 * 

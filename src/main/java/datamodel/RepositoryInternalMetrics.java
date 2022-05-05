@@ -3,7 +3,10 @@ package datamodel;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+
+import org.gitlab4j.api.models.Job;
 
 /**
  * Stores the metrics that can be obtained directly from the repository and used to calculate the rest of the metrics.
@@ -48,6 +51,11 @@ public class RepositoryInternalMetrics implements Serializable{
 	 * until the date of last activity.
 	 */
 	private Integer lifeSpanMonths = null;
+	
+	/**
+	 * Jobs (default successful ones).
+	 */
+	private Collection<Job> jobs = null;
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -75,7 +83,7 @@ public class RepositoryInternalMetrics implements Serializable{
 	public RepositoryInternalMetrics() {}
 	
 	/**
-	 * Sets all the metrics.
+	 * Sets all the metrics, unless jobs.
 	 *
 	 * @author Miguel Ángel León Bardavío - mlb0029
 	 * @param totalNumberOfIssues Total number of issues.
@@ -96,6 +104,31 @@ public class RepositoryInternalMetrics implements Serializable{
 		setCommitDates(commitDates);
 		setLifeSpanMonths(lifeSpanMonths);
 	}
+	
+	/**
+	 * Sets all the metrics.
+	 *
+	 * @author Miguel Ángel León Bardavío - mlb0029
+	 * @param totalNumberOfIssues Total number of issues.
+	 * @param totalNumberOfCommits Total number of commits.
+	 * @param numberOfClosedIssues Number of closed issues.
+	 * @param daysToCloseEachIssue Days to close each issue.
+	 * @param commitDates Dates of commits.
+	 * @param lifeSpanMonths Number of months that have passed since the creation of the repository
+	 * until the date of last activity.
+	 */
+	public RepositoryInternalMetrics(Integer totalNumberOfIssues, Integer totalNumberOfCommits, Integer numberOfClosedIssues,
+			Collection<Integer> daysToCloseEachIssue, Collection<Date> commitDates, Integer lifeSpanMonths, List<Job> jobs) {
+		setDate(new Date());
+		setTotalNumberOfIssues(totalNumberOfIssues);
+		setTotalNumberOfCommits(totalNumberOfCommits);
+		setNumberOfClosedIssues(numberOfClosedIssues);
+		setDaysToCloseEachIssue(daysToCloseEachIssue);
+		setCommitDates(commitDates);
+		setLifeSpanMonths(lifeSpanMonths);
+		setJobs(jobs);
+	}
+
 
 	/**
 	 * Gets the date.
@@ -239,5 +272,26 @@ public class RepositoryInternalMetrics implements Serializable{
 	 */
 	private void setLifeSpanMonths(Integer lifeSpanMonths) {
 		this.lifeSpanMonths = lifeSpanMonths;
+	}
+	
+	/**
+	 * Gets the jobs of a repository.
+	 * 
+	 * @author Joaquin Garcia Molina - Joaquin-GM
+	 * @return list of the jobs of the repository
+	 */
+	public Collection<Job> getJobs() {
+		return jobs;
+	}
+
+	
+	/**
+	 * Sets the jobs of a repository.
+	 * 
+	 * @author Joaquin Garcia Molina - Joaquin-GM
+	 * @param jobs list of the jobs of the repository
+	 */
+	public void setJobs(List<Job> jobs) {
+		this.jobs = jobs;
 	}
 }

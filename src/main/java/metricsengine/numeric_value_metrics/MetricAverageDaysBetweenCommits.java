@@ -78,7 +78,7 @@ public class MetricAverageDaysBetweenCommits extends NumericValueMetricTemplate 
 		
 		if(totalNumberOfCommits != null &&
 				commitDates != null &&
-				commitDates.size() == totalNumberOfCommits && 
+//				commitDates.size() == totalNumberOfCommits && 
 				totalNumberOfCommits > 1) {
 			for (Date date : commitDates) {
 				if (date == null) return false;
