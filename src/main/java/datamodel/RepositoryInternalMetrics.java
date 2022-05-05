@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.gitlab4j.api.models.Job;
+import org.gitlab4j.api.models.Release;
 
 /**
  * Stores the metrics that can be obtained directly from the repository and used to calculate the rest of the metrics.
@@ -56,6 +57,11 @@ public class RepositoryInternalMetrics implements Serializable{
 	 * Jobs (default successful ones).
 	 */
 	private Collection<Job> jobs = null;
+	
+	/**
+	 * Releases (default successful ones).
+	 */
+	private Collection<Release> releases = null;
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -115,10 +121,12 @@ public class RepositoryInternalMetrics implements Serializable{
 	 * @param daysToCloseEachIssue Days to close each issue.
 	 * @param commitDates Dates of commits.
 	 * @param lifeSpanMonths Number of months that have passed since the creation of the repository
+	 * @param jobs of the repository.
+	 * @param releases of the repository.
 	 * until the date of last activity.
 	 */
 	public RepositoryInternalMetrics(Integer totalNumberOfIssues, Integer totalNumberOfCommits, Integer numberOfClosedIssues,
-			Collection<Integer> daysToCloseEachIssue, Collection<Date> commitDates, Integer lifeSpanMonths, List<Job> jobs) {
+			Collection<Integer> daysToCloseEachIssue, Collection<Date> commitDates, Integer lifeSpanMonths, List<Job> jobs, List<Release> releases) {
 		setDate(new Date());
 		setTotalNumberOfIssues(totalNumberOfIssues);
 		setTotalNumberOfCommits(totalNumberOfCommits);
@@ -127,8 +135,8 @@ public class RepositoryInternalMetrics implements Serializable{
 		setCommitDates(commitDates);
 		setLifeSpanMonths(lifeSpanMonths);
 		setJobs(jobs);
+		setReleases(releases);
 	}
-
 
 	/**
 	 * Gets the date.
@@ -283,7 +291,6 @@ public class RepositoryInternalMetrics implements Serializable{
 	public Collection<Job> getJobs() {
 		return jobs;
 	}
-
 	
 	/**
 	 * Sets the jobs of a repository.
@@ -293,5 +300,26 @@ public class RepositoryInternalMetrics implements Serializable{
 	 */
 	public void setJobs(List<Job> jobs) {
 		this.jobs = jobs;
+	}
+	
+
+	/**
+	 * Gets the releases of a repository.
+	 * 
+	 * @author Joaquin Garcia Molina - Joaquin-GM
+	 * @return list of the releases of the repository
+	 */
+	public Collection<Release> getReleases() {
+		return releases;
+	}
+
+	/**
+	 * Sets the jobs of a repository.
+	 * 
+	 * @author Joaquin Garcia Molina - Joaquin-GM
+	 * @param releases list of the releases of the repository
+	 */
+	public void setReleases(List<Release> releases) {
+		this.releases = releases;
 	}
 }

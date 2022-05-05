@@ -45,6 +45,7 @@ import metricsengine.numeric_value_metrics.MetricDaysBetweenFirstAndLastCommit;
 import metricsengine.numeric_value_metrics.MetricJobsLastMonth;
 import metricsengine.numeric_value_metrics.MetricPeakChange;
 import metricsengine.numeric_value_metrics.MetricPercentageClosedIssues;
+import metricsengine.numeric_value_metrics.MetricReleasesLastMonth;
 import metricsengine.numeric_value_metrics.MetricTotalNumberOfIssues;
 import metricsengine.numeric_value_metrics.ProjectEvaluation;
 import metricsengine.values.IValue;
@@ -122,14 +123,17 @@ public class RepositoriesGrid extends Grid<Repository> {
 				MetricPercentageClosedIssues.class);
 
 		Grid.Column<Repository> p1MetricColumn = null;
-		RepositoryDataSourceService rds = RepositoryDataSourceService.getInstance();
-
 		headerText = MetricJobsLastMonth.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
 		headerTitle = MetricJobsLastMonth.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		p1MetricColumn = addMetricColumn("p1MetricColumn", headerText, headerTitle, "", MetricJobsLastMonth.class);
 
-		// TODO p2MetricColumn
 
+		Grid.Column<Repository> p2MetricColumn = null;
+		headerText = MetricReleasesLastMonth.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
+		headerTitle = MetricReleasesLastMonth.DEFAULT_METRIC_DESCRIPTION.getDescription();
+		p2MetricColumn = addMetricColumn("p2MetricColumn", headerText, headerTitle, "", MetricReleasesLastMonth.class);
+		
+		
 		headerText = MetricAverageDaysToCloseAnIssue.DEFAULT_METRIC_DESCRIPTION.getName();
 		headerTitle = MetricAverageDaysToCloseAnIssue.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		Grid.Column<Repository> ti1MetricColumn = addMetricColumn("ti1MetricColumn", headerText, headerTitle, "",
@@ -167,7 +171,7 @@ public class RepositoriesGrid extends Grid<Repository> {
 		Div procOrientHeader = new Div(new Span("Process Orientation"));
 		procOrientHeader.getStyle().set("text-align", "right");
 		procOrientHeader.setSizeFull();
-		metricsClassification.join(i1MetricColumn, i2MetricColumn, i3MetricColumn, p1MetricColumn)
+		metricsClassification.join(i1MetricColumn, i2MetricColumn, i3MetricColumn, p1MetricColumn, p2MetricColumn)
 				.setComponent(procOrientHeader);
 
 		/*

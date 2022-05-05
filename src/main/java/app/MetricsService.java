@@ -34,6 +34,7 @@ import metricsengine.numeric_value_metrics.MetricDaysBetweenFirstAndLastCommitFa
 import metricsengine.numeric_value_metrics.MetricJobsLastMonthFactory;
 import metricsengine.numeric_value_metrics.MetricPeakChangeFactory;
 import metricsengine.numeric_value_metrics.MetricPercentageClosedIssuesFactory;
+import metricsengine.numeric_value_metrics.MetricReleasesLastMonthFactory;
 import metricsengine.numeric_value_metrics.MetricTotalNumberOfIssuesFactory;
 import metricsengine.values.IValue;
 import metricsengine.values.NumericValue;
@@ -83,6 +84,7 @@ public class MetricsService implements Serializable {
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricChangeActivityRangeFactory()));
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricPeakChangeFactory()));
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricJobsLastMonthFactory()));
+		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricReleasesLastMonthFactory()));
 		return defaultMetricProfile;
 	}
 

@@ -15,6 +15,7 @@ import org.gitlab4j.api.models.IssueFilter;
 import org.gitlab4j.api.models.Job;
 import org.gitlab4j.api.models.Project;
 import org.gitlab4j.api.models.ProjectFilter;
+import org.gitlab4j.api.models.Release;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -355,6 +356,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 		} else if (rds.getConnectionType() == EnumConnectionType.LOGGED) {
 			// With logged connection we can get jobs (and releases) of the repository
 			List<Job> jobs = getRepositoryJobs(projectId);
+			List<Release> releases = getRepositoryReleases(projectId);
 			
 			repositoryInternalMetrics = new RepositoryInternalMetrics(
 				totalNumberOfIssues,
@@ -363,7 +365,8 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 				daysToCloseEachIssue,
 				commitDates,
 				lifeSpanMonths,
-				jobs
+				jobs,
+				releases
 			);
 			
 			LOGGER.info("jobs of the repository " + Integer.toString(jobs.size()));
@@ -569,8 +572,23 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 		LOGGER.info("--getRepositoryJobs---");
 		try {
 			List<Job> jobs = gitLabApi.getJobApi().getJobsStream(projectId).collect(Collectors.toList());
-			LOGGER.info("--despues del getJobs ---");
 			return jobs;
+		} catch (GitLabApiException e) {
+			return null;
+		}
+	}
+	
+	/**
+	 * Get a list of releases of a project.
+	 * 
+	 * @param projectId ID of the project.
+	 * @return List of releases of a project or null if fail.
+	 */
+	private List<Release> getRepositoryReleases(Long projectId) {
+		LOGGER.info("--getRepositoryReleases---");
+		try {
+			List<Release> releases = gitLabApi.getReleasesApi().getReleasesStream(projectId).collect(Collectors.toList());
+			return releases;
 		} catch (GitLabApiException e) {
 			return null;
 		}
