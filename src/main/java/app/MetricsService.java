@@ -36,6 +36,7 @@ import metricsengine.numeric_value_metrics.MetricJobsLastYearFactory;
 import metricsengine.numeric_value_metrics.MetricPeakChangeFactory;
 import metricsengine.numeric_value_metrics.MetricPercentageClosedIssuesFactory;
 import metricsengine.numeric_value_metrics.MetricReleasesLastMonthFactory;
+import metricsengine.numeric_value_metrics.MetricReleasesLastYearFactory;
 import metricsengine.numeric_value_metrics.MetricTotalNumberOfIssuesFactory;
 import metricsengine.values.IValue;
 import metricsengine.values.NumericValue;
@@ -86,7 +87,9 @@ public class MetricsService implements Serializable {
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricPeakChangeFactory()));
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricJobsLastMonthFactory()));
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricJobsLastYearFactory()));
+		// TODO metrica de tipos de jobs
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricReleasesLastMonthFactory()));
+		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricReleasesLastYearFactory()));
 		return defaultMetricProfile;
 	}
 

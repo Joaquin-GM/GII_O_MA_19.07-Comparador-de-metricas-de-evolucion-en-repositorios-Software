@@ -16,7 +16,7 @@ import metricsengine.values.ValueInteger;
 import repositorydatasource.RepositoryDataSource.EnumConnectionType;
 
 /**
- * Computes the jobs executed the last year.
+ * Computes the releases executed the last year.
  * 
  * @author Joaquin Garcia Molina - Joaquin-GM
  *
@@ -107,8 +107,8 @@ public class MetricReleasesLastYear extends NumericValueMetricTemplate {
 	@Override
 	public NumericValue run(Repository repository) {
 		Date now = new Date();
-		long day30 = 30l * 24 * 60 * 60 * 1000;
-		Date currentMonthLimitDate = new Date((now.getTime() - day30));
+		long day365 = 365l * 24 * 60 * 60 * 1000;
+		Date currentYearLimitDate = new Date((now.getTime() - day365));
 
 		List<Release> releasesLastMonth = new ArrayList<Release>();
 		List<Release> repositoryReleases = repository.getRepositoryInternalMetrics().getReleases().stream()
@@ -117,7 +117,7 @@ public class MetricReleasesLastYear extends NumericValueMetricTemplate {
 		for (int i = 0; i < repositoryReleases.size(); i++) {
 			Release release = repositoryReleases.get(i);
 
-			if (release.getReleasedAt() != null && release.getReleasedAt().after(currentMonthLimitDate)) {
+			if (release.getReleasedAt() != null && release.getReleasedAt().after(currentYearLimitDate)) {
 				releasesLastMonth.add(release);
 			}
 		}

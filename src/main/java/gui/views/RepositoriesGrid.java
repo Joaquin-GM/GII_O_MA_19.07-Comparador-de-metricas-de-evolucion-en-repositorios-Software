@@ -53,6 +53,7 @@ import metricsengine.numeric_value_metrics.MetricJobsLastYear;
 import metricsengine.numeric_value_metrics.MetricPeakChange;
 import metricsengine.numeric_value_metrics.MetricPercentageClosedIssues;
 import metricsengine.numeric_value_metrics.MetricReleasesLastMonth;
+import metricsengine.numeric_value_metrics.MetricReleasesLastYear;
 import metricsengine.numeric_value_metrics.MetricTotalNumberOfIssues;
 import metricsengine.numeric_value_metrics.ProjectEvaluation;
 import metricsengine.values.IValue;
@@ -180,11 +181,18 @@ public class RepositoriesGrid extends Grid<Repository> {
 		headerText = MetricJobsLastYear.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
 		headerTitle = MetricJobsLastYear.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		ic2MetricColumn = addMetricColumn("ic2MetricColumn", headerText, headerTitle, "", MetricJobsLastYear.class);
-
+		
+		// TODO metrica de tipos de jobs
+		
 		Grid.Column<Repository> dc1MetricColumn = null;
 		headerText = MetricReleasesLastMonth.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
 		headerTitle = MetricReleasesLastMonth.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		dc1MetricColumn = addMetricColumn("dc1MetricColumn", headerText, headerTitle, "", MetricReleasesLastMonth.class);
+		
+		Grid.Column<Repository> dc2MetricColumn = null;
+		headerText = MetricReleasesLastYear.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
+		headerTitle = MetricReleasesLastYear.DEFAULT_METRIC_DESCRIPTION.getDescription();
+		dc2MetricColumn = addMetricColumn("dc2MetricColumn", headerText, headerTitle, "", MetricReleasesLastYear.class);
 		// TODO PONER AQUI LAS 5 nuevas metricas en CI/CD
 		
 		
@@ -238,7 +246,7 @@ public class RepositoriesGrid extends Grid<Repository> {
 		Div CICDHeader = new Div(new Span("CI/CD"));
 		CICDHeader.getStyle().set("text-align", "center");
 		CICDHeader.setSizeFull();
-		metricsClassification.join(ic1MetricColumn, ic2MetricColumn, dc1MetricColumn)
+		metricsClassification.join(ic1MetricColumn, ic2MetricColumn, dc1MetricColumn, dc2MetricColumn)
 				.setComponent(CICDHeader);
 	}
 
