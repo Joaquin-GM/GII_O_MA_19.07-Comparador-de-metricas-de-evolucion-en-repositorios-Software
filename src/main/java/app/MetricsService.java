@@ -31,11 +31,11 @@ import metricsengine.numeric_value_metrics.MetricAverageDaysToCloseAnIssueFactor
 import metricsengine.numeric_value_metrics.MetricChangeActivityRangeFactory;
 import metricsengine.numeric_value_metrics.MetricCommitsPerIssueFactory;
 import metricsengine.numeric_value_metrics.MetricDaysBetweenFirstAndLastCommitFactory;
-import metricsengine.numeric_value_metrics.MetricJobsLastMonthFactory;
+import metricsengine.numeric_value_metrics.MetricTotalNumberOfJobsFactory;
 import metricsengine.numeric_value_metrics.MetricJobsLastYearFactory;
 import metricsengine.numeric_value_metrics.MetricPeakChangeFactory;
 import metricsengine.numeric_value_metrics.MetricPercentageClosedIssuesFactory;
-import metricsengine.numeric_value_metrics.MetricReleasesLastMonthFactory;
+import metricsengine.numeric_value_metrics.MetricTotalNumberOfReleasesFactory;
 import metricsengine.numeric_value_metrics.MetricReleasesLastYearFactory;
 import metricsengine.numeric_value_metrics.MetricTotalNumberOfIssuesFactory;
 import metricsengine.values.IValue;
@@ -85,10 +85,10 @@ public class MetricsService implements Serializable {
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricDaysBetweenFirstAndLastCommitFactory()));
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricChangeActivityRangeFactory()));
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricPeakChangeFactory()));
-		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricJobsLastMonthFactory()));
+		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricTotalNumberOfJobsFactory()));
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricJobsLastYearFactory()));
 		// TODO metrica de tipos de jobs
-		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricReleasesLastMonthFactory()));
+		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricTotalNumberOfReleasesFactory()));
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricReleasesLastYearFactory()));
 		return defaultMetricProfile;
 	}

@@ -48,11 +48,11 @@ import metricsengine.numeric_value_metrics.MetricAverageDaysToCloseAnIssue;
 import metricsengine.numeric_value_metrics.MetricChangeActivityRange;
 import metricsengine.numeric_value_metrics.MetricCommitsPerIssue;
 import metricsengine.numeric_value_metrics.MetricDaysBetweenFirstAndLastCommit;
-import metricsengine.numeric_value_metrics.MetricJobsLastMonth;
+import metricsengine.numeric_value_metrics.MetricTotalNumberOfJobs;
 import metricsengine.numeric_value_metrics.MetricJobsLastYear;
 import metricsengine.numeric_value_metrics.MetricPeakChange;
 import metricsengine.numeric_value_metrics.MetricPercentageClosedIssues;
-import metricsengine.numeric_value_metrics.MetricReleasesLastMonth;
+import metricsengine.numeric_value_metrics.MetricTotalNumberOfReleases;
 import metricsengine.numeric_value_metrics.MetricReleasesLastYear;
 import metricsengine.numeric_value_metrics.MetricTotalNumberOfIssues;
 import metricsengine.numeric_value_metrics.ProjectEvaluation;
@@ -129,20 +129,6 @@ public class RepositoriesGrid extends Grid<Repository> {
 		headerTitle = MetricPercentageClosedIssues.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		Grid.Column<Repository> i3MetricColumn = addMetricColumn("i3MetricColumn", headerText, headerTitle, "%",
 				MetricPercentageClosedIssues.class);
-
-		// TODO QUITAR DE AQUI
-		/*
-		Grid.Column<Repository> p1MetricColumn = null;
-		headerText = MetricJobsLastMonth.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
-		headerTitle = MetricJobsLastMonth.DEFAULT_METRIC_DESCRIPTION.getDescription();
-		p1MetricColumn = addMetricColumn("p1MetricColumn", headerText, headerTitle, "", MetricJobsLastMonth.class);
-
-		Grid.Column<Repository> p2MetricColumn = null;
-		headerText = MetricReleasesLastMonth.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
-		headerTitle = MetricReleasesLastMonth.DEFAULT_METRIC_DESCRIPTION.getDescription();
-		p2MetricColumn = addMetricColumn("p2MetricColumn", headerText, headerTitle, "", MetricReleasesLastMonth.class);
-		*/
-		// TODO QUITAR DE AQUI
 		
 		headerText = MetricAverageDaysToCloseAnIssue.DEFAULT_METRIC_DESCRIPTION.getName();
 		headerTitle = MetricAverageDaysToCloseAnIssue.DEFAULT_METRIC_DESCRIPTION.getDescription();
@@ -172,9 +158,9 @@ public class RepositoriesGrid extends Grid<Repository> {
 		
 		// TODO PONER AQUI LAS 5 nuevas metricas en CI/CD
 		Grid.Column<Repository> ic1MetricColumn = null;
-		headerText = MetricJobsLastMonth.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
-		headerTitle = MetricJobsLastMonth.DEFAULT_METRIC_DESCRIPTION.getDescription();
-		ic1MetricColumn = addMetricColumn("ic1MetricColumn", headerText, headerTitle, "", MetricJobsLastMonth.class);
+		headerText = MetricTotalNumberOfJobs.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
+		headerTitle = MetricTotalNumberOfJobs.DEFAULT_METRIC_DESCRIPTION.getDescription();
+		ic1MetricColumn = addMetricColumn("ic1MetricColumn", headerText, headerTitle, "", MetricTotalNumberOfJobs.class);
 		// ((HasStyle) p1MetricColumn).getStyle().set("background-color", "rgb(239, 239, 239)");
 		
 		Grid.Column<Repository> ic2MetricColumn = null;
@@ -185,9 +171,9 @@ public class RepositoriesGrid extends Grid<Repository> {
 		// TODO metrica de tipos de jobs
 		
 		Grid.Column<Repository> dc1MetricColumn = null;
-		headerText = MetricReleasesLastMonth.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
-		headerTitle = MetricReleasesLastMonth.DEFAULT_METRIC_DESCRIPTION.getDescription();
-		dc1MetricColumn = addMetricColumn("dc1MetricColumn", headerText, headerTitle, "", MetricReleasesLastMonth.class);
+		headerText = MetricTotalNumberOfReleases.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
+		headerTitle = MetricTotalNumberOfReleases.DEFAULT_METRIC_DESCRIPTION.getDescription();
+		dc1MetricColumn = addMetricColumn("dc1MetricColumn", headerText, headerTitle, "", MetricTotalNumberOfReleases.class);
 		
 		Grid.Column<Repository> dc2MetricColumn = null;
 		headerText = MetricReleasesLastYear.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];

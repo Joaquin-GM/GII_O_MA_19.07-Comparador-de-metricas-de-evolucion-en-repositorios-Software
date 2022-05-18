@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.gitlab4j.api.models.Release;
+import org.gitlab4j.api.models.Job;
 
 import app.RepositoryDataSourceService;
 import datamodel.Repository;
@@ -16,34 +16,34 @@ import metricsengine.values.ValueInteger;
 import repositorydatasource.RepositoryDataSource.EnumConnectionType;
 
 /**
- * Computes the releases executed the last year.
+ * Computes the total number of jobs successfully executed.
  * 
  * @author Joaquin Garcia Molina - Joaquin-GM
  *
  */
-public class MetricReleasesLastYear extends NumericValueMetricTemplate {
+public class MetricTotalNumberOfJobs extends NumericValueMetricTemplate {
 	/**
 	 * Description.
 	 * 
 	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 */
-	private static final long serialVersionUID = -1039405944018960444L;
+	private static final long serialVersionUID = -1039405944018960452L;
 
 	/**
 	 * Default metric description.
 	 */
 	public static final MetricDescription DEFAULT_METRIC_DESCRIPTION = new MetricDescription(
-			"DC2",
-			"Releases released last year",
-			"Need GitLab connection with authorization", 
-			"Joaquin Garcia Molina",
+			"IC1",
+			"Total number of jobs executed",
+			"Need GitLab connection with authorization",
+			"Joaquin Garcia Molina", 
 			"CI/CD",
-			"How many releases have been successfully released last year?",
-			"RRLM = Releases released last year",
+			"How many jobs have been successfully executed?",
+			"NJE = Number of jobs executed",
 			"Repository", 
-			"RRLM >= 0, better greater values.",
+			"NJE >= 0, better greater values.",
 			MetricDescription.EnumTypeOfScale.ABSOLUTE,
-			"RRLM: Count"
+			"NJE: Count"
 	);
 
 	/**
@@ -54,23 +54,23 @@ public class MetricReleasesLastYear extends NumericValueMetricTemplate {
 	/**
 	 * Maximum acceptable value.
 	 */
-	public static final NumericValue DEFAULT_MAX_VALUE = new ValueDecimal(5.0);
+	public static final NumericValue DEFAULT_MAX_VALUE = new ValueDecimal(1000.0);
 
-	private static MetricReleasesLastYear instance = null;
+	private static MetricTotalNumberOfJobs instance = null;
 
 	/**
 	 * Constructor that initializes the metric with default values.
 	 *
 	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 */
-	private MetricReleasesLastYear() {
+	private MetricTotalNumberOfJobs() {
 		super(DEFAULT_METRIC_DESCRIPTION, DEFAULT_MIN_VALUE, DEFAULT_MAX_VALUE,
 				NumericValueMetricTemplate.EVAL_FUNC_BETWEEN_Q1_Q3);
 	}
 
-	public static MetricReleasesLastYear getInstance() {
+	public static MetricTotalNumberOfJobs getInstance() {
 		if (instance == null)
-			instance = new MetricReleasesLastYear();
+			instance = new MetricTotalNumberOfJobs();
 		return instance;
 	}
 
@@ -106,21 +106,9 @@ public class MetricReleasesLastYear extends NumericValueMetricTemplate {
 	 */
 	@Override
 	public NumericValue run(Repository repository) {
-		Date now = new Date();
-		long day365 = 365l * 24 * 60 * 60 * 1000;
-		Date currentYearLimitDate = new Date((now.getTime() - day365));
-
-		List<Release> releasesLastYear = new ArrayList<Release>();
-		List<Release> repositoryReleases = repository.getRepositoryInternalMetrics().getReleases().stream()
+		List<Job> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
 				.collect(Collectors.toList());
 
-		for (int i = 0; i < repositoryReleases.size(); i++) {
-			Release release = repositoryReleases.get(i);
-
-			if (release.getReleasedAt() != null && release.getReleasedAt().after(currentYearLimitDate)) {
-				releasesLastYear.add(release);
-			}
-		}
-		return new ValueInteger(releasesLastYear.size());
+		return new ValueInteger(repositoryJobs.size());
 	}
 }

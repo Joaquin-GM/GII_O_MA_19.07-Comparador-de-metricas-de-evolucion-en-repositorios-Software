@@ -49,7 +49,7 @@ public class MetricJobsLastYear extends NumericValueMetricTemplate {
 	/**
 	 * Minimum acceptable value.
 	 */
-	public static final NumericValue DEFAULT_MIN_VALUE = new ValueDecimal(10);
+	public static final NumericValue DEFAULT_MIN_VALUE = new ValueDecimal(1.0);
 
 	/**
 	 * Maximum acceptable value.

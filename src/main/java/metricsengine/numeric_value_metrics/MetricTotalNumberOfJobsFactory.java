@@ -7,7 +7,7 @@ import metricsengine.MetricFactory;
  * @author Joaquin Garcia Molina - Joaquin-GM
  *
  */
-public class MetricJobsLastMonthFactory implements MetricFactory {
+public class MetricTotalNumberOfJobsFactory implements MetricFactory {
 
 	/**
 	 * Description.
@@ -21,14 +21,14 @@ public class MetricJobsLastMonthFactory implements MetricFactory {
 	 *
 	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 */
-	public MetricJobsLastMonthFactory() {}
+	public MetricTotalNumberOfJobsFactory() {}
 
 	/* (non-Javadoc)
 	 * @see metricsengine.MetricFactory#getMetric()
 	 */
 	@Override
 	public Metric getMetric() {
-		return MetricJobsLastMonth.getInstance();
+		return MetricTotalNumberOfJobs.getInstance();
 	}
 
 }
