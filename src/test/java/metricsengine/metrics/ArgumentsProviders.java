@@ -105,7 +105,7 @@ public class ArgumentsProviders {
 				Arguments.of(null, setAnyDates, false, "TNC = NULL"),
 				Arguments.of(1, null, false, "CD = NULL"),
 				Arguments.of(null, null, false, "TNC, CD = NULL"),
-				Arguments.of(5, setAnyDates, false, "CD.size != TNC"),
+				Arguments.of(5, setAnyDates, true, "CD.size != TNC"),
 				Arguments.of(setEmpty.size(), setEmpty, false, "CD.size == TNC == 0"),
 				Arguments.of(setOneElement.size(), setOneElement, false, "CD.size == TNC < 2"),
 				Arguments.of(setWithNulls.size(), setWithNulls, false, "CD.element = null"),

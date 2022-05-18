@@ -22,15 +22,15 @@
 }
 
 .metricEvaluationGood {
-	color:green;
+	color: green;
 }
 
 .metricEvaluationWarning {
-	color:orange;
+	color: orange;
 }
 
-.metricEvaluationBad{
-	color:red;
+.metricEvaluationBad {
+	color: red;
 }
 
 .MetricConfigTip {
@@ -41,7 +41,7 @@
 	cursor: pointer;
 }
 
-.no-background{
+.no-background {
 	background: none;
 }
 
@@ -52,4 +52,12 @@
 
 .dialog-header::before {
 	display: none;
+}
+
+.info-hover-icon {
+	padding-left: 0.5em;
+}
+
+.custom-tooltip {
+	inset: 18px 0 auto auto !important;
 }

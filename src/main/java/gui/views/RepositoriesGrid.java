@@ -14,6 +14,10 @@ import org.claspina.confirmdialog.ConfirmDialog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.vaadin.componentfactory.Tooltip;
+import com.vaadin.componentfactory.TooltipAlignment;
+import com.vaadin.componentfactory.TooltipPosition;
+import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
@@ -21,7 +25,9 @@ import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.grid.HeaderRow;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H5;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -122,17 +128,19 @@ public class RepositoriesGrid extends Grid<Repository> {
 		Grid.Column<Repository> i3MetricColumn = addMetricColumn("i3MetricColumn", headerText, headerTitle, "%",
 				MetricPercentageClosedIssues.class);
 
+		// TODO QUITAR DE AQUI
+		/*
 		Grid.Column<Repository> p1MetricColumn = null;
 		headerText = MetricJobsLastMonth.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
 		headerTitle = MetricJobsLastMonth.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		p1MetricColumn = addMetricColumn("p1MetricColumn", headerText, headerTitle, "", MetricJobsLastMonth.class);
 
-
 		Grid.Column<Repository> p2MetricColumn = null;
 		headerText = MetricReleasesLastMonth.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
 		headerTitle = MetricReleasesLastMonth.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		p2MetricColumn = addMetricColumn("p2MetricColumn", headerText, headerTitle, "", MetricReleasesLastMonth.class);
-		
+		*/
+		// TODO QUITAR DE AQUI
 		
 		headerText = MetricAverageDaysToCloseAnIssue.DEFAULT_METRIC_DESCRIPTION.getName();
 		headerTitle = MetricAverageDaysToCloseAnIssue.DEFAULT_METRIC_DESCRIPTION.getDescription();
@@ -159,6 +167,24 @@ public class RepositoriesGrid extends Grid<Repository> {
 		Grid.Column<Repository> c1MetricColumn = addMetricColumn("c1MetricColumn", headerText, headerTitle, "",
 				MetricPeakChange.class);
 
+		
+		// TODO PONER AQUI LAS 5 nuevas metricas en CI/CD
+		Grid.Column<Repository> ic1MetricColumn = null;
+		headerText = MetricJobsLastMonth.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
+		headerTitle = MetricJobsLastMonth.DEFAULT_METRIC_DESCRIPTION.getDescription();
+		ic1MetricColumn = addMetricColumn("ic1MetricColumn", headerText, headerTitle, "", MetricJobsLastMonth.class);
+		// ((HasStyle) p1MetricColumn).getStyle().set("background-color", "rgb(239, 239, 239)");
+		
+		
+
+		Grid.Column<Repository> dc1MetricColumn = null;
+		headerText = MetricReleasesLastMonth.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
+		headerTitle = MetricReleasesLastMonth.DEFAULT_METRIC_DESCRIPTION.getDescription();
+		dc1MetricColumn = addMetricColumn("dc1MetricColumn", headerText, headerTitle, "", MetricReleasesLastMonth.class);
+		// TODO PONER AQUI LAS 5 nuevas metricas en CI/CD
+		
+		
+		
 		/* Grid.Column<Repository> projectEvaluation = */ addProjectEvalColumn();
 
 		addComponentColumn(repository -> createCalculateButton(repository)).setKey("calculateButtonColumn")
@@ -169,9 +195,23 @@ public class RepositoriesGrid extends Grid<Repository> {
 		HeaderRow metricsClassification = prependHeaderRow();
 
 		Div procOrientHeader = new Div(new Span("Process Orientation"));
-		procOrientHeader.getStyle().set("text-align", "right");
+
+		Icon questionIcon = VaadinIcon.INFO_CIRCLE_O.create();
+		questionIcon.setSize("16px");
+		questionIcon.setColor("blue");
+		questionIcon.setClassName("info-hover-icon");
+
+		Tooltip tooltip = new Tooltip();
+		tooltip.attachToComponent(questionIcon);
+		tooltip.setClassName("custom-tooltip");
+		tooltip.add(new Paragraph(
+				"Metrics P1 and P2 need authenticated connection of GiLab (username and password or personal access token)"));
+
+		procOrientHeader.add(questionIcon, tooltip);
+
+		procOrientHeader.getStyle().set("text-align", "center");
 		procOrientHeader.setSizeFull();
-		metricsClassification.join(i1MetricColumn, i2MetricColumn, i3MetricColumn, p1MetricColumn, p2MetricColumn)
+		metricsClassification.join(i1MetricColumn, i2MetricColumn, i3MetricColumn)
 				.setComponent(procOrientHeader);
 
 		/*
@@ -185,11 +225,17 @@ public class RepositoriesGrid extends Grid<Repository> {
 		 */
 
 		Div timeConstraintsHeader = new Div(new Span("Time Constraints"));
-		timeConstraintsHeader.getStyle().set("text-align", "right");
+		timeConstraintsHeader.getStyle().set("text-align", "center");
 		timeConstraintsHeader.setSizeFull();
 		metricsClassification.join(ti1MetricColumn, tc1MetricColumn, tc2MetricColumn, tc3MetricColumn, c1MetricColumn)
 				.setComponent(timeConstraintsHeader);
-
+		
+		
+		Div CICDHeader = new Div(new Span("CI/CD"));
+		CICDHeader.getStyle().set("text-align", "center");
+		CICDHeader.setSizeFull();
+		metricsClassification.join(ic1MetricColumn, dc1MetricColumn)
+				.setComponent(CICDHeader);
 	}
 
 	private Grid.Column<Repository> addMetricColumn(String key, String headerText, String headerTitle,

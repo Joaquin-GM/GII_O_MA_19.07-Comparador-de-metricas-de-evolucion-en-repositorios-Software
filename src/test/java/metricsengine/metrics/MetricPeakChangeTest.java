@@ -150,7 +150,7 @@ public class MetricPeakChangeTest {
 				Arguments.of(null, setSameDay, false, "TNC = NULL"),
 				Arguments.of(1, null, false, "CD = NULL"),
 				Arguments.of(null, null, false, "TNC, CD = NULL"),
-				Arguments.of(setSameDay.size() + 1, setSameDay, false, "CD.size != TNC"),
+				Arguments.of(setSameDay.size() + 1, setSameDay, true, "CD.size != TNC"),
 				Arguments.of(setEmpty.size(), setEmpty, false, "CD.size == TNC == 0"),
 				Arguments.of(setWithNulls.size(), setWithNulls, false, "CD.element = null"),
 				Arguments.of(setOneElement.size(), setOneElement, true, "CD.size == TNC == 1"),

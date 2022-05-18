@@ -16,12 +16,12 @@ import metricsengine.values.ValueInteger;
 import repositorydatasource.RepositoryDataSource.EnumConnectionType;
 
 /**
- * Computes the jobs executed the last month.
+ * Computes the jobs executed the last year.
  * 
  * @author Joaquin Garcia Molina - Joaquin-GM
  *
  */
-public class MetricJobsLastMonth extends NumericValueMetricTemplate {
+public class MetricJobsLastYear extends NumericValueMetricTemplate {
 	/**
 	 * Description.
 	 * 
@@ -33,13 +33,13 @@ public class MetricJobsLastMonth extends NumericValueMetricTemplate {
 	 * Default metric description.
 	 */
 	public static final MetricDescription DEFAULT_METRIC_DESCRIPTION = new MetricDescription(
-			"IC1",
-			"Jobs executed last month",
+			"IC2",
+			"Jobs executed last year",
 			"Need GitLab connection with authorization",
 			"Joaquin Garcia Molina", 
 			"CI/CD",
-			"How many jobs have been successfully executed last month?",
-			"JELM = Jobs executed last month",
+			"How many jobs have been successfully executed last year?",
+			"JELY = Jobs executed last year",
 			"Repository", 
 			"JELM >= 0, better greater values.",
 			MetricDescription.EnumTypeOfScale.ABSOLUTE,
@@ -56,21 +56,21 @@ public class MetricJobsLastMonth extends NumericValueMetricTemplate {
 	 */
 	public static final NumericValue DEFAULT_MAX_VALUE = new ValueDecimal(50.0);
 
-	private static MetricJobsLastMonth instance = null;
+	private static MetricJobsLastYear instance = null;
 
 	/**
 	 * Constructor that initializes the metric with default values.
 	 *
 	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 */
-	private MetricJobsLastMonth() {
+	private MetricJobsLastYear() {
 		super(DEFAULT_METRIC_DESCRIPTION, DEFAULT_MIN_VALUE, DEFAULT_MAX_VALUE,
 				NumericValueMetricTemplate.EVAL_FUNC_BETWEEN_Q1_Q3);
 	}
 
-	public static MetricJobsLastMonth getInstance() {
+	public static MetricJobsLastYear getInstance() {
 		if (instance == null)
-			instance = new MetricJobsLastMonth();
+			instance = new MetricJobsLastYear();
 		return instance;
 	}
 

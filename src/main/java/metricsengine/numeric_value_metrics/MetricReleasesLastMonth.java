@@ -33,11 +33,11 @@ public class MetricReleasesLastMonth extends NumericValueMetricTemplate {
 	 * Default metric description.
 	 */
 	public static final MetricDescription DEFAULT_METRIC_DESCRIPTION = new MetricDescription(
-			"P2",
+			"DC1",
 			"Releases released last month",
 			"Need GitLab connection with authorization", 
 			"Joaquin Garcia Molina",
-			"Process Orientation",
+			"CI/CD",
 			"How many releases have been successfully released last month?",
 			"RRLM = Releases released last month",
 			"Repository", 
