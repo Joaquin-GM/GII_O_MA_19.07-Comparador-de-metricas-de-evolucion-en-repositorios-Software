@@ -27,23 +27,23 @@ public class MetricTotalNumberOfJobTypes extends NumericValueMetricTemplate {
 	 * 
 	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 */
-	private static final long serialVersionUID = -1039405944018960452L;
+	private static final long serialVersionUID = -1039405944018960457L;
 
 	/**
 	 * Default metric description.
 	 */
 	public static final MetricDescription DEFAULT_METRIC_DESCRIPTION = new MetricDescription(
-			"IC1",
-			"Total number of jobs executed",
+			"IC3",
+			"Total number of executed jobs types",
 			"Need GitLab connection with authorization",
 			"Joaquin Garcia Molina", 
 			"CI/CD",
-			"How many jobs have been successfully executed?",
-			"NJE = Number of jobs executed",
+			"How many types of jobs have been successfully executed?",
+			"NTJE = Number of types of the jobs executed",
 			"Repository", 
-			"NJE >= 0, better greater values.",
+			"NTJE >= 0, better greater values.",
 			MetricDescription.EnumTypeOfScale.ABSOLUTE,
-			"NJE: Count"
+			"NTJE: Count"
 	);
 
 	/**
@@ -54,7 +54,7 @@ public class MetricTotalNumberOfJobTypes extends NumericValueMetricTemplate {
 	/**
 	 * Maximum acceptable value.
 	 */
-	public static final NumericValue DEFAULT_MAX_VALUE = new ValueDecimal(1000.0);
+	public static final NumericValue DEFAULT_MAX_VALUE = new ValueDecimal(8.0);
 
 	private static MetricTotalNumberOfJobTypes instance = null;
 
@@ -106,9 +106,20 @@ public class MetricTotalNumberOfJobTypes extends NumericValueMetricTemplate {
 	 */
 	@Override
 	public NumericValue run(Repository repository) {
+		
+		List<String> jobTypesList = new ArrayList<String>();
+		
 		List<Job> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
 				.collect(Collectors.toList());
+		
+		for (int i = 0; i < repositoryJobs.size(); i++) {
+			Job job = repositoryJobs.get(i);
 
-		return new ValueInteger(repositoryJobs.size());
+			if (job.getName() != null && !jobTypesList.contains(job.getName())) {
+				jobTypesList.add(job.getName());
+			}
+		}
+
+		return new ValueInteger(jobTypesList.size());
 	}
 }

@@ -7,28 +7,28 @@ import metricsengine.MetricFactory;
  * @author Joaquin Garcia Molina - Joaquin-GM
  *
  */
-public class MetricTotalNumberOfJobsTypesFactory implements MetricFactory {
+public class MetricTotalNumberOfJobTypesFactory implements MetricFactory {
 
 	/**
 	 * Description.
 	 * 
 	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 */
-	private static final long serialVersionUID = 5564575072523772923L;
+	private static final long serialVersionUID = 5564575072523772927L;
 
 	/**
 	 * Constructor.
 	 *
 	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 */
-	public MetricTotalNumberOfJobsTypesFactory() {}
+	public MetricTotalNumberOfJobTypesFactory() {}
 
 	/* (non-Javadoc)
 	 * @see metricsengine.MetricFactory#getMetric()
 	 */
 	@Override
 	public Metric getMetric() {
-		return MetricTotalNumberOfJobs.getInstance();
+		return MetricTotalNumberOfJobTypes.getInstance();
 	}
 
 }

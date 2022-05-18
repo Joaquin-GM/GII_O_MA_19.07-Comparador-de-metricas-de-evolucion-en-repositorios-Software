@@ -55,6 +55,7 @@ import metricsengine.numeric_value_metrics.MetricPercentageClosedIssues;
 import metricsengine.numeric_value_metrics.MetricTotalNumberOfReleases;
 import metricsengine.numeric_value_metrics.MetricReleasesLastYear;
 import metricsengine.numeric_value_metrics.MetricTotalNumberOfIssues;
+import metricsengine.numeric_value_metrics.MetricTotalNumberOfJobTypes;
 import metricsengine.numeric_value_metrics.ProjectEvaluation;
 import metricsengine.values.IValue;
 import metricsengine.values.NumericValue;
@@ -115,6 +116,7 @@ public class RepositoriesGrid extends Grid<Repository> {
 				.setComparator(r -> r.getRepositoryInternalMetrics().getDate()).setWidth("6em")
 				.setTextAlign(ColumnTextAlign.CENTER);
 
+		// Process orientation metrics
 		headerText = MetricTotalNumberOfIssues.DEFAULT_METRIC_DESCRIPTION.getName();
 		headerTitle = MetricTotalNumberOfIssues.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		Grid.Column<Repository> i1MetricColumn = addMetricColumn("i1MetricColumn", headerText, headerTitle, "",
@@ -135,6 +137,7 @@ public class RepositoriesGrid extends Grid<Repository> {
 		Grid.Column<Repository> ti1MetricColumn = addMetricColumn("ti1MetricColumn", headerText, headerTitle, "",
 				MetricAverageDaysToCloseAnIssue.class);
 
+		// Time constraints metrics
 		headerText = MetricAverageDaysBetweenCommits.DEFAULT_METRIC_DESCRIPTION.getName();
 		headerTitle = MetricAverageDaysBetweenCommits.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		Grid.Column<Repository> tc1MetricColumn = addMetricColumn("tc1MetricColumn", headerText, headerTitle, "",
@@ -154,22 +157,23 @@ public class RepositoriesGrid extends Grid<Repository> {
 		headerTitle = MetricPeakChange.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		Grid.Column<Repository> c1MetricColumn = addMetricColumn("c1MetricColumn", headerText, headerTitle, "",
 				MetricPeakChange.class);
-
 		
-		// TODO PONER AQUI LAS 5 nuevas metricas en CI/CD
+		// CI/CD metrics
 		Grid.Column<Repository> ic1MetricColumn = null;
 		headerText = MetricTotalNumberOfJobs.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
 		headerTitle = MetricTotalNumberOfJobs.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		ic1MetricColumn = addMetricColumn("ic1MetricColumn", headerText, headerTitle, "", MetricTotalNumberOfJobs.class);
-		// ((HasStyle) p1MetricColumn).getStyle().set("background-color", "rgb(239, 239, 239)");
 		
 		Grid.Column<Repository> ic2MetricColumn = null;
 		headerText = MetricJobsLastYear.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
 		headerTitle = MetricJobsLastYear.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		ic2MetricColumn = addMetricColumn("ic2MetricColumn", headerText, headerTitle, "", MetricJobsLastYear.class);
 		
-		// TODO metrica de tipos de jobs
-		
+		Grid.Column<Repository> ic3MetricColumn = null;
+		headerText = MetricTotalNumberOfJobTypes.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
+		headerTitle = MetricTotalNumberOfJobTypes.DEFAULT_METRIC_DESCRIPTION.getDescription();
+		ic3MetricColumn = addMetricColumn("ic3MetricColumn", headerText, headerTitle, "", MetricTotalNumberOfJobTypes.class);
+	
 		Grid.Column<Repository> dc1MetricColumn = null;
 		headerText = MetricTotalNumberOfReleases.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
 		headerTitle = MetricTotalNumberOfReleases.DEFAULT_METRIC_DESCRIPTION.getDescription();
@@ -179,8 +183,6 @@ public class RepositoriesGrid extends Grid<Repository> {
 		headerText = MetricReleasesLastYear.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
 		headerTitle = MetricReleasesLastYear.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		dc2MetricColumn = addMetricColumn("dc2MetricColumn", headerText, headerTitle, "", MetricReleasesLastYear.class);
-		// TODO PONER AQUI LAS 5 nuevas metricas en CI/CD
-		
 		
 		
 		/* Grid.Column<Repository> projectEvaluation = */ addProjectEvalColumn();
@@ -232,7 +234,7 @@ public class RepositoriesGrid extends Grid<Repository> {
 		Div CICDHeader = new Div(new Span("CI/CD"));
 		CICDHeader.getStyle().set("text-align", "center");
 		CICDHeader.setSizeFull();
-		metricsClassification.join(ic1MetricColumn, ic2MetricColumn, dc1MetricColumn, dc2MetricColumn)
+		metricsClassification.join(ic1MetricColumn, ic2MetricColumn, ic3MetricColumn, dc1MetricColumn, dc2MetricColumn)
 				.setComponent(CICDHeader);
 	}
 

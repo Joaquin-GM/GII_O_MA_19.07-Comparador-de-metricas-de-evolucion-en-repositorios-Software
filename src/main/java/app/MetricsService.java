@@ -38,6 +38,7 @@ import metricsengine.numeric_value_metrics.MetricPercentageClosedIssuesFactory;
 import metricsengine.numeric_value_metrics.MetricTotalNumberOfReleasesFactory;
 import metricsengine.numeric_value_metrics.MetricReleasesLastYearFactory;
 import metricsengine.numeric_value_metrics.MetricTotalNumberOfIssuesFactory;
+import metricsengine.numeric_value_metrics.MetricTotalNumberOfJobTypesFactory;
 import metricsengine.values.IValue;
 import metricsengine.values.NumericValue;
 import repositorydatasource.RepositoryDataSource;
@@ -81,13 +82,15 @@ public class MetricsService implements Serializable {
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricCommitsPerIssueFactory()));
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricPercentageClosedIssuesFactory()));
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricAverageDaysToCloseAnIssueFactory()));
+		
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricAverageDaysBetweenCommitsFactory()));
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricDaysBetweenFirstAndLastCommitFactory()));
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricChangeActivityRangeFactory()));
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricPeakChangeFactory()));
+		
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricTotalNumberOfJobsFactory()));
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricJobsLastYearFactory()));
-		// TODO metrica de tipos de jobs
+		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricTotalNumberOfJobTypesFactory()));
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricTotalNumberOfReleasesFactory()));
 		defaultMetricProfile.addMetricConfiguration(new MetricConfiguration(new MetricReleasesLastYearFactory()));
 		return defaultMetricProfile;
