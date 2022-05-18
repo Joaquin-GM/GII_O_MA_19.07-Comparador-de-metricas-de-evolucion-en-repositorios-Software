@@ -49,6 +49,7 @@ import metricsengine.numeric_value_metrics.MetricChangeActivityRange;
 import metricsengine.numeric_value_metrics.MetricCommitsPerIssue;
 import metricsengine.numeric_value_metrics.MetricDaysBetweenFirstAndLastCommit;
 import metricsengine.numeric_value_metrics.MetricJobsLastMonth;
+import metricsengine.numeric_value_metrics.MetricJobsLastYear;
 import metricsengine.numeric_value_metrics.MetricPeakChange;
 import metricsengine.numeric_value_metrics.MetricPercentageClosedIssues;
 import metricsengine.numeric_value_metrics.MetricReleasesLastMonth;
@@ -175,7 +176,10 @@ public class RepositoriesGrid extends Grid<Repository> {
 		ic1MetricColumn = addMetricColumn("ic1MetricColumn", headerText, headerTitle, "", MetricJobsLastMonth.class);
 		// ((HasStyle) p1MetricColumn).getStyle().set("background-color", "rgb(239, 239, 239)");
 		
-		
+		Grid.Column<Repository> ic2MetricColumn = null;
+		headerText = MetricJobsLastYear.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
+		headerTitle = MetricJobsLastYear.DEFAULT_METRIC_DESCRIPTION.getDescription();
+		ic2MetricColumn = addMetricColumn("ic2MetricColumn", headerText, headerTitle, "", MetricJobsLastYear.class);
 
 		Grid.Column<Repository> dc1MetricColumn = null;
 		headerText = MetricReleasesLastMonth.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
@@ -234,7 +238,7 @@ public class RepositoriesGrid extends Grid<Repository> {
 		Div CICDHeader = new Div(new Span("CI/CD"));
 		CICDHeader.getStyle().set("text-align", "center");
 		CICDHeader.setSizeFull();
-		metricsClassification.join(ic1MetricColumn, dc1MetricColumn)
+		metricsClassification.join(ic1MetricColumn, ic2MetricColumn, dc1MetricColumn)
 				.setComponent(CICDHeader);
 	}
 

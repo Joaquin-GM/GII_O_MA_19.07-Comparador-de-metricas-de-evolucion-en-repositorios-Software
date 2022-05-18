@@ -49,12 +49,12 @@ public class MetricJobsLastYear extends NumericValueMetricTemplate {
 	/**
 	 * Minimum acceptable value.
 	 */
-	public static final NumericValue DEFAULT_MIN_VALUE = new ValueDecimal(1.0);
+	public static final NumericValue DEFAULT_MIN_VALUE = new ValueDecimal(10);
 
 	/**
 	 * Maximum acceptable value.
 	 */
-	public static final NumericValue DEFAULT_MAX_VALUE = new ValueDecimal(50.0);
+	public static final NumericValue DEFAULT_MAX_VALUE = new ValueDecimal(200.0);
 
 	private static MetricJobsLastYear instance = null;
 
@@ -107,20 +107,20 @@ public class MetricJobsLastYear extends NumericValueMetricTemplate {
 	@Override
 	public NumericValue run(Repository repository) {
 		Date now = new Date();
-		long day30 = 30l * 24 * 60 * 60 * 1000;
-		Date currentMonthLimitDate = new Date((now.getTime() - day30));
+		long day365 = 365l * 24 * 60 * 60 * 1000;
+		Date currentYearLimitDate = new Date((now.getTime() - day365));
 
-		List<Job> jobsLastMonth = new ArrayList<Job>();
+		List<Job> jobsLastYear = new ArrayList<Job>();
 		List<Job> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
 				.collect(Collectors.toList());
 
 		for (int i = 0; i < repositoryJobs.size(); i++) {
 			Job job = repositoryJobs.get(i);
 
-			if (job.getFinishedAt() != null && job.getFinishedAt().after(currentMonthLimitDate)) {
-				jobsLastMonth.add(job);
+			if (job.getFinishedAt() != null && job.getFinishedAt().after(currentYearLimitDate)) {
+				jobsLastYear.add(job);
 			}
 		}
-		return new ValueInteger(jobsLastMonth.size());
+		return new ValueInteger(jobsLastYear.size());
 	}
 }
