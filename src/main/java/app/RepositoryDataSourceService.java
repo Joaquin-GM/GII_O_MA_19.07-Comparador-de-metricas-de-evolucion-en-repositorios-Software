@@ -9,10 +9,12 @@ import app.listeners.ConnectionChangedEvent;
 import app.listeners.Listener;
 import datamodel.Repository;
 import datamodel.RepositoryInternalMetrics;
+import datamodel.RepositorySourceType;
 import datamodel.User;
 import exceptions.RepositoryDataSourceException;
 import repositorydatasource.RepositoryDataSource;
 import repositorydatasource.RepositoryDataSourceFactory;
+import repositorydatasource.RepositoryDataSourceFactoryGithub;
 import repositorydatasource.RepositoyDataSourceFactoryGitlab;
 
 /**
@@ -22,22 +24,27 @@ import repositorydatasource.RepositoyDataSourceFactoryGitlab;
  *
  */
 public class RepositoryDataSourceService implements Serializable, RepositoryDataSource {
-	
+
 	private static final long serialVersionUID = -6197642368639361682L;
 
 	private static RepositoryDataSourceService instance;
-	
-	private RepositoryDataSource repositoryDataSource;
-	
+
+	private RepositoryDataSource repositoryDataSourceGitLab;
+	private RepositoryDataSource repositoryDataSourceGitHub;
+
 	private Set<Listener<ConnectionChangedEvent>> connectionChangedEventListeners = new HashSet<>();
-	
+
 	/**
 	 * Constructor that instantiates the repository data source.
 	 *
 	 * @author Miguel Ángel León Bardavío - mlb0029
 	 */
 	private RepositoryDataSourceService() {
-		this.repositoryDataSource = new RepositoyDataSourceFactoryGitlab().getRepositoryDataSource();
+		this.repositoryDataSourceGitLab = new RepositoyDataSourceFactoryGitlab().getRepositoryDataSource();
+		// TODO tengo que instanciar también con GitHub y usar una u otra instancia
+		// dependiendo del repositorio
+		this.repositoryDataSourceGitHub = new RepositoryDataSourceFactoryGithub().getRepositoryDataSource();
+
 	}
 
 	/**
@@ -47,18 +54,24 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 	 * @return the unique instance of the repository data source service
 	 */
 	public static RepositoryDataSourceService getInstance() {
-		if (instance == null) instance = new RepositoryDataSourceService();
+		if (instance == null)
+			instance = new RepositoryDataSourceService();
 		return instance;
 	}
-	
+
 	/**
 	 * Sets the repository data source through a repository data source factory.
 	 * 
 	 * @author Miguel Ángel León Bardavío - mlb0029
 	 * @param repositoryDataSourceFactory the repositoryDataSource to set
 	 */
-	public void setRepositoryDataSource(RepositoryDataSourceFactory repositoryDataSourceFactory) {
-		this.repositoryDataSource = repositoryDataSourceFactory.getRepositoryDataSource();
+	public void setRepositoryDataSource(RepositoryDataSourceFactory repositoryDataSourceFactory,
+			RepositorySourceType repositorySourceType) {
+		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			this.repositoryDataSourceGitLab = repositoryDataSourceFactory.getRepositoryDataSource();
+		} else {
+			this.repositoryDataSourceGitHub = repositoryDataSourceFactory.getRepositoryDataSource();
+		}
 	}
 
 	/**
@@ -70,7 +83,7 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 	public void addConnectionChangedEventListener(Listener<ConnectionChangedEvent> listener) {
 		connectionChangedEventListeners.add(listener);
 	}
-	
+
 	/**
 	 * Removes a connection changed listener.
 	 * 
@@ -81,104 +94,184 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 		connectionChangedEventListeners.remove(listener);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see repositorydatasource.RepositoryDataSource#connect()
 	 */
 	@Override
-	public void connect() throws RepositoryDataSourceException {
-		EnumConnectionType before = getConnectionType();
-		this.repositoryDataSource.connect();
-		EnumConnectionType after = getConnectionType();
-		connectionChangedEventListeners.forEach(l -> l.on(new ConnectionChangedEvent(before, after)));		
-	}
-
-	/* (non-Javadoc)
-	 * @see repositorydatasource.RepositoryDataSource#connect(java.lang.String, java.lang.String)
-	 */
-	@Override
-	public void connect(String username, String password) throws RepositoryDataSourceException {
-		EnumConnectionType before = getConnectionType();
-		this.repositoryDataSource.connect(username, password);;
-		EnumConnectionType after = getConnectionType();
+	public void connect(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
+		EnumConnectionType before = getConnectionType(repositorySourceType);
+		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			this.repositoryDataSourceGitLab.connect(repositorySourceType);
+		} else {
+			this.repositoryDataSourceGitHub.connect(repositorySourceType);
+		}
+		EnumConnectionType after = getConnectionType(repositorySourceType);
 		connectionChangedEventListeners.forEach(l -> l.on(new ConnectionChangedEvent(before, after)));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see repositorydatasource.RepositoryDataSource#connect(java.lang.String,
+	 * java.lang.String)
+	 */
+	@Override
+	public void connect(String username, String password, RepositorySourceType repositorySourceType)
+			throws RepositoryDataSourceException {
+		EnumConnectionType before = getConnectionType(repositorySourceType);
+		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			this.repositoryDataSourceGitLab.connect(username, password, repositorySourceType);
+		} else {
+			this.repositoryDataSourceGitHub.connect(username, password, repositorySourceType);
+		}
+
+		EnumConnectionType after = getConnectionType(repositorySourceType);
+		connectionChangedEventListeners.forEach(l -> l.on(new ConnectionChangedEvent(before, after)));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see repositorydatasource.RepositoryDataSource#connect(java.lang.String)
 	 */
 	@Override
-	public void connect(String token) throws RepositoryDataSourceException {
-		EnumConnectionType before = getConnectionType();
-		this.repositoryDataSource.connect(token);;
-		EnumConnectionType after = getConnectionType();
+	public void connect(String token, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
+		EnumConnectionType before = getConnectionType(repositorySourceType);
+		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			this.repositoryDataSourceGitLab.connect(token, repositorySourceType);
+		} else {
+			this.repositoryDataSourceGitHub.connect(token, repositorySourceType);
+		}
+		EnumConnectionType after = getConnectionType(repositorySourceType);
 		connectionChangedEventListeners.forEach(l -> l.on(new ConnectionChangedEvent(before, after)));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see repositorydatasource.RepositoryDataSource#disconnect()
 	 */
 	@Override
-	public void disconnect() throws RepositoryDataSourceException {
-		EnumConnectionType before = getConnectionType();
-		this.repositoryDataSource.disconnect();
-		EnumConnectionType after = getConnectionType();
+	public void disconnect(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
+		EnumConnectionType before = getConnectionType(repositorySourceType);
+		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			this.repositoryDataSourceGitLab.disconnect(repositorySourceType);
+		} else {
+			this.repositoryDataSourceGitHub.disconnect(repositorySourceType);
+		}
+		EnumConnectionType after = getConnectionType(repositorySourceType);
 		connectionChangedEventListeners.forEach(l -> l.on(new ConnectionChangedEvent(before, after)));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see repositorydatasource.RepositoryDataSource#getConnectionType()
 	 */
 	@Override
-	public EnumConnectionType getConnectionType() {
-		return this.repositoryDataSource.getConnectionType();
+	public EnumConnectionType getConnectionType(RepositorySourceType repositorySourceType) {
+		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			return this.repositoryDataSourceGitLab.getConnectionType(repositorySourceType);
+		} else {
+			return this.repositoryDataSourceGitHub.getConnectionType(repositorySourceType);
+		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see repositorydatasource.RepositoryDataSource#getCurrentUser()
 	 */
 	@Override
-	public User getCurrentUser() throws RepositoryDataSourceException {
-		return this.repositoryDataSource.getCurrentUser();
+	public User getCurrentUser(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
+		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			return this.repositoryDataSourceGitLab.getCurrentUser(repositorySourceType);
+		} else {
+			return this.repositoryDataSourceGitHub.getCurrentUser(repositorySourceType);
+		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see repositorydatasource.RepositoryDataSource#getCurrentUserRepositories()
 	 */
 	@Override
-	public Collection<Repository> getCurrentUserRepositories() throws RepositoryDataSourceException {
-		return this.repositoryDataSource.getCurrentUserRepositories();
+	public Collection<Repository> getCurrentUserRepositories(RepositorySourceType repositorySourceType)
+			throws RepositoryDataSourceException {
+		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			return this.repositoryDataSourceGitLab.getCurrentUserRepositories(repositorySourceType);
+		} else {
+			return this.repositoryDataSourceGitHub.getCurrentUserRepositories(repositorySourceType);
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see repositorydatasource.RepositoryDataSource#getAllUserRepositories(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * repositorydatasource.RepositoryDataSource#getAllUserRepositories(java.lang.
+	 * String)
 	 */
 	@Override
-	public Collection<Repository> getAllUserRepositories(String username) throws RepositoryDataSourceException {
-		return this.repositoryDataSource.getAllUserRepositories(username);
+	public Collection<Repository> getAllUserRepositories(String username, RepositorySourceType repositorySourceType)
+			throws RepositoryDataSourceException {
+		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			return this.repositoryDataSourceGitLab.getAllUserRepositories(username, repositorySourceType);
+		} else {
+			return this.repositoryDataSourceGitHub.getAllUserRepositories(username, repositorySourceType);
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see repositorydatasource.RepositoryDataSource#getAllGroupRepositories(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * repositorydatasource.RepositoryDataSource#getAllGroupRepositories(java.lang.
+	 * String)
 	 */
 	@Override
-	public Collection<Repository> getAllGroupRepositories(String groupName) throws RepositoryDataSourceException {
-		return this.repositoryDataSource.getAllGroupRepositories(groupName);
+	public Collection<Repository> getAllGroupRepositories(String groupName, RepositorySourceType repositorySourceType)
+			throws RepositoryDataSourceException {
+		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			return this.repositoryDataSourceGitLab.getAllGroupRepositories(groupName, repositorySourceType);
+		} else {
+			return this.repositoryDataSourceGitHub.getAllGroupRepositories(groupName, repositorySourceType);
+
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see repositorydatasource.RepositoryDataSource#getRepository(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * repositorydatasource.RepositoryDataSource#getRepository(java.lang.String)
 	 */
 	@Override
-	public Repository getRepository(String repositoryHTTPSURL) throws RepositoryDataSourceException {
-		return this.repositoryDataSource.getRepository(repositoryHTTPSURL);
+	public Repository getRepository(String repositoryHTTPSURL, RepositorySourceType repositorySourceType)
+			throws RepositoryDataSourceException {
+		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			return this.repositoryDataSourceGitLab.getRepository(repositoryHTTPSURL, repositorySourceType);
+		} else {
+			return this.repositoryDataSourceGitHub.getRepository(repositoryHTTPSURL, repositorySourceType);
+		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see repositorydatasource.RepositoryDataSource#getRepository(int)
 	 */
 	@Override
-	public Repository getRepository(Long repositoryId) throws RepositoryDataSourceException {
-		return this.repositoryDataSource.getRepository(repositoryId);
+	public Repository getRepository(Long repositoryId, RepositorySourceType repositorySourceType)
+			throws RepositoryDataSourceException {
+		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			return this.repositoryDataSourceGitLab.getRepository(repositoryId, repositorySourceType);
+		} else {
+			return this.repositoryDataSourceGitHub.getRepository(repositoryId, repositorySourceType);
+		}
 	}
 
 	/**
@@ -186,21 +279,37 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 	 * 
 	 * @author Miguel Ángel León Bardavío - mlb0029
 	 * @param repository Repository to update.
-	 * @throws RepositoryDataSourceException If the repository could not be recovered.
+	 * @throws RepositoryDataSourceException If the repository could not be
+	 *                                       recovered.
 	 */
-	public void updateRepository(Repository repository) throws RepositoryDataSourceException {
-		Repository repo = this.repositoryDataSource.getRepository(repository.getId());
+	public void updateRepository(Repository repository, RepositorySourceType repositorySourceType)
+			throws RepositoryDataSourceException {
+		Repository repo;
+
+		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			repo = this.repositoryDataSourceGitLab.getRepository(repository.getId(), repositorySourceType);
+		} else {
+			repo = this.repositoryDataSourceGitHub.getRepository(repository.getId(), repositorySourceType);
+		}
+
 		repository.setId(repo.getId());
 		repository.setName(repo.getName());
 		repository.setUrl(repo.getUrl());
 	}
 
-	/* (non-Javadoc)
-	 * @see repositorydatasource.RepositoryDataSource#getRepositoryInternalMetrics(datamodel.Repository)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see repositorydatasource.RepositoryDataSource#getRepositoryInternalMetrics(
+	 * datamodel.Repository)
 	 */
 	@Override
-	public RepositoryInternalMetrics getRepositoryInternalMetrics(Repository repository)
-			throws RepositoryDataSourceException {
-		return this.repositoryDataSource.getRepositoryInternalMetrics(repository);
+	public RepositoryInternalMetrics getRepositoryInternalMetrics(Repository repository,
+			RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
+		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			return this.repositoryDataSourceGitLab.getRepositoryInternalMetrics(repository, repositorySourceType);
+		} else {
+			return this.repositoryDataSourceGitHub.getRepositoryInternalMetrics(repository, repositorySourceType);
+		}
 	}
 }

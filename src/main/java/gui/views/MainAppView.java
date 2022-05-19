@@ -4,6 +4,9 @@ import com.vaadin.flow.component.page.Page;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
+
+import datamodel.RepositorySourceType;
+
 import org.claspina.confirmdialog.ConfirmDialog;
 
 import com.vaadin.flow.component.button.Button;
@@ -47,13 +50,17 @@ public class MainAppView extends VerticalLayout implements PageConfigurator {
 
     private Label appNameLabel = new Label("Evolution Metrics Gauge v2");
 
-    private Button connectionButton = new Button();
-
+    private Button connectionButtonGitLab = new Button();
+    private Button connectionButtonGitHub = new Button();
+    
     private Anchor helpLink = new Anchor();
 
-    private ConnectionInfoComponent connectionInfoComponent = new ConnectionInfoComponent();
+    private ConnectionInfoComponent connectionInfoComponentGitLab = new ConnectionInfoComponent(RepositorySourceType.GitLab);
+   
+    private ConnectionInfoComponent connectionInfoComponentGitHub = new ConnectionInfoComponent(RepositorySourceType.GitHub);
 
-    private CloseConnectionDialog closeConnectionFormDialog = new CloseConnectionDialog();
+    private CloseConnectionDialog closeConnectionFormDialogGitLab = new CloseConnectionDialog(RepositorySourceType.GitLab);
+    private CloseConnectionDialog closeConnectionFormDialogGitHub = new CloseConnectionDialog(RepositorySourceType.GitHub);
 
     private Div content = new Div();
 
@@ -61,7 +68,7 @@ public class MainAppView extends VerticalLayout implements PageConfigurator {
 
     private Span authorNameLabel = new Span();
 
-    private ConnectionDialog connectionFormDialog = new ConnectionDialog();
+    // private ConnectionDialog connectionFormDialog = new ConnectionDialog();
 
     private RepositoriesListView repositoriesListView = new RepositoriesListView();
 
@@ -73,8 +80,10 @@ public class MainAppView extends VerticalLayout implements PageConfigurator {
             setUpContent();
             setUpFooter();
             add(header, content, footer);
+            /*
             if (!IS_INITIALIZED)
                 connectionFormDialog.open();
+            */
             MainAppView.IS_INITIALIZED = true;
             ConfirmDialog.setButtonDefaultIconsVisible(false);
         } catch (Exception e) {
@@ -95,10 +104,17 @@ public class MainAppView extends VerticalLayout implements PageConfigurator {
         appNameLabel.addClassName("appName");
         appNameLabel.setWidth("540px");
 
-        connectionButton.setIcon(connectionInfoComponent);
-        connectionButton.setMinHeight("60px");
-        connectionButton.addClickListener(e -> closeConnectionFormDialog.open());
-        connectionButton.setId("connectionInfoButton");
+        connectionButtonGitLab.setIcon(connectionInfoComponentGitLab);
+        connectionButtonGitLab.setMinHeight("60px");
+        connectionButtonGitLab.addClickListener(e -> closeConnectionFormDialogGitLab.open());
+        connectionButtonGitLab.setId("connectionInfoButtonGitLab");
+        
+        
+        connectionButtonGitHub.setIcon(connectionInfoComponentGitHub);
+        connectionButtonGitHub.setMinHeight("60px");
+        connectionButtonGitHub.addClickListener(e -> closeConnectionFormDialogGitHub.open());
+        connectionButtonGitHub.setId("connectionInfoButtonGitHub");
+        
 
         Icon questionIcon = VaadinIcon.QUESTION.create();
         questionIcon.setSize("37px");
@@ -109,7 +125,7 @@ public class MainAppView extends VerticalLayout implements PageConfigurator {
         helpLink.setTarget("_blank");
         helpLink.add(helpButton);
 
-        VerticalLayout connectionButtonLayout = new VerticalLayout(new HorizontalLayout(connectionButton, helpLink));
+        VerticalLayout connectionButtonLayout = new VerticalLayout(new HorizontalLayout(connectionButtonGitLab, connectionButtonGitHub, helpLink));
         connectionButtonLayout.setAlignItems(Alignment.END);
         connectionButtonLayout.setWidth("40%");
         HorizontalLayout headerHLayout = new HorizontalLayout(brandingImage, appNameLabel, logoImage, connectionButtonLayout);

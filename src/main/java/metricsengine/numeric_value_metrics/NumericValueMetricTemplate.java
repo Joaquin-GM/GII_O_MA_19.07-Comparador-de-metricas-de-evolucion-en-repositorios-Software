@@ -10,7 +10,6 @@ import metricsengine.MetricsResults;
 import metricsengine.values.IValue;
 import metricsengine.values.NumericValue;
 import metricsengine.values.ValueUncalculated;
-import repositorydatasource.RepositoryDataSourceUsingGitlabAPI;
 
 /**
  * Partially implements the IMetric interface.

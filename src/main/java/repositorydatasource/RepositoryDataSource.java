@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import datamodel.Repository;
 import datamodel.RepositoryInternalMetrics;
+import datamodel.RepositorySourceType;
 import datamodel.User;
 import exceptions.RepositoryDataSourceException;
 
@@ -51,7 +52,7 @@ public interface RepositoryDataSource extends Serializable{
 	 * @author Miguel Ángel León Bardavío - mlb0029
 	 * @throws RepositoryDataSourceException  When problems occur when connecting.
 	 */
-	void connect() throws RepositoryDataSourceException;
+	void connect(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException;
 	
 	/**
 	 * Try a login connection using user and password and sets the connection type to LOGGED
@@ -61,7 +62,7 @@ public interface RepositoryDataSource extends Serializable{
 	 * @param password Password.
 	 * @throws RepositoryDataSourceException When problems occur when connecting.
 	 */
-	void connect(String username, String password) throws RepositoryDataSourceException;
+	void connect(String username, String password, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException;
 	
 	/**
 	 * Try a login connection using personal access token and sets the connection type to LOGGED
@@ -70,7 +71,7 @@ public interface RepositoryDataSource extends Serializable{
 	 * @param token Token.
 	 * @throws RepositoryDataSourceException When problems occur when connecting. 
 	 */
-	void connect(String token) throws RepositoryDataSourceException;
+	void connect(String token, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException;
 	
 	/**
 	 * Close any established connection. Throw an exception if there was no connection.
@@ -78,14 +79,14 @@ public interface RepositoryDataSource extends Serializable{
 	 * @author Miguel Ángel León Bardavío - mlb0029
 	 * @throws RepositoryDataSourceException if there was no connection.
 	 */
-	void disconnect() throws RepositoryDataSourceException;
+	void disconnect(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException;
 	
 	/**
 	 * Gets type of connection.
 	 * 
 	 * @return Type of connection.
 	 */
-	EnumConnectionType getConnectionType();
+	EnumConnectionType getConnectionType(RepositorySourceType repositorySourceType);
 	
 	/**
 	 * Gets the user that has logged in or null if no user is connected.
@@ -95,7 +96,7 @@ public interface RepositoryDataSource extends Serializable{
 	 * @return The user that has logged in or null if no user is connected.
 	 * @throws RepositoryDataSourceException if there is a problem to obtain the user's information.
 	 */
-	User getCurrentUser() throws RepositoryDataSourceException;
+	User getCurrentUser(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException;
 	
 	/**
 	 * Get a collection of public and private repositories 
@@ -107,7 +108,7 @@ public interface RepositoryDataSource extends Serializable{
 	 * or null if no user has logged in. 
 	 * @throws RepositoryDataSourceException if a problem occurs when obtaining the user's repositories.
 	 */
-	Collection<Repository> getCurrentUserRepositories() throws RepositoryDataSourceException;
+	Collection<Repository> getCurrentUserRepositories(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException;
 	
 	
 	/**
@@ -122,7 +123,7 @@ public interface RepositoryDataSource extends Serializable{
 	 * @return A collection of repositories.
 	 * @throws RepositoryDataSourceException If user doesn't exists.
 	 */
-	Collection<Repository> getAllUserRepositories(String username) throws RepositoryDataSourceException;
+	Collection<Repository> getAllUserRepositories(String username, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException;
 	
 	/**
 	 * It obtains the public repositories of the group whose group name or id is passed by parameter 
@@ -135,7 +136,7 @@ public interface RepositoryDataSource extends Serializable{
 	 * @return Repositories owned by the group
 	 * @throws RepositoryDataSourceException Wen gorup not found
 	 */
-	Collection<Repository> getAllGroupRepositories(String groupName) throws RepositoryDataSourceException;
+	Collection<Repository> getAllGroupRepositories(String groupName, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException;
 	
 	/**
 	 * Obtain a repository accessible by the logged in user using the url
@@ -145,7 +146,7 @@ public interface RepositoryDataSource extends Serializable{
 	 * @return The repository pointed to by the url.
 	 * @throws RepositoryDataSourceException When it has not been possible to obtain the repository.
 	 */
-	Repository getRepository(String repositoryHTTPSURL) throws RepositoryDataSourceException;
+	Repository getRepository(String repositoryHTTPSURL, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException;
 	
 	
 	/**
@@ -157,7 +158,7 @@ public interface RepositoryDataSource extends Serializable{
 	 * @return The repository whose id is the one passed as a parameter
 	 * @throws RepositoryDataSourceException
 	 */
-	Repository getRepository(Long repositoryId) throws RepositoryDataSourceException;
+	Repository getRepository(Long repositoryId, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException;
 	
 	/**
 	 * Updates the internal metrics of the repository that is passed by parameter,
@@ -167,5 +168,5 @@ public interface RepositoryDataSource extends Serializable{
 	 * @return TODO
 	 * @throws RepositoryDataSourceException When it has not been possible to obtain information from the repository.
 	 */
-	RepositoryInternalMetrics getRepositoryInternalMetrics(Repository repository) throws RepositoryDataSourceException;
+	RepositoryInternalMetrics getRepositoryInternalMetrics(Repository repository, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException;
 }

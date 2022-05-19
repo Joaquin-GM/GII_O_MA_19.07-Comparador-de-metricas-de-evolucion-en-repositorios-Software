@@ -15,6 +15,8 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.Tabs.Orientation;
 
+import datamodel.RepositorySourceType;
+
 /**
  * @author Miguel Ángel León Bardavío - mlb0029
  *
@@ -24,10 +26,18 @@ public class ConnectionDialog extends Dialog {
 	private static final long serialVersionUID = -2348702400211722166L;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionDialog.class);
+	
+	private RepositorySourceType repositorySourceType;
+	
+	public RepositorySourceType getRepositorySource() {
+		return repositorySourceType;
+	}
 
 	private List<ConnectionForm> connectionForms = new ArrayList<>();
 	
-	public ConnectionDialog() {
+	public ConnectionDialog(RepositorySourceType repositorySourceType) {
+		this.repositorySourceType = repositorySourceType;
+		
 		try {
 			createConnectionForms();
 
@@ -66,7 +76,7 @@ public class ConnectionDialog extends Dialog {
 				}
 			});
 
-			DialogHeader dialogHeader = new DialogHeader("Set a connection");
+			DialogHeader dialogHeader = new DialogHeader("Set a connection with " + repositorySourceType.toString());
 			dialogHeader.addCloseListener(e -> close());
 
 

@@ -7,6 +7,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
 import app.RepositoryDataSourceService;
+import datamodel.RepositorySourceType;
 import datamodel.User;
 import exceptions.RepositoryDataSourceException;
 import repositorydatasource.RepositoryDataSource.EnumConnectionType;
@@ -28,15 +29,22 @@ public class ConnectionInfoComponent extends Div {
 	
 	private Label connectionInfoLabel = new Label();
 	
+	private RepositorySourceType repositorySourceType;
+	
+	public RepositorySourceType getRepositorySource() {
+		return repositorySourceType;
+	}
+	
 	/**
 	 * Constructor.
 	 *
 	 * @author Miguel Ángel León Bardavío - mlb0029
 	 */
-	public ConnectionInfoComponent() {
+	public ConnectionInfoComponent(RepositorySourceType repositorySourceType) {
+		this.repositorySourceType = repositorySourceType;
 		RepositoryDataSourceService rds = RepositoryDataSourceService.getInstance();
 		rds.addConnectionChangedEventListener(event -> update(event.getConnectionTypeAfter()));
-		update(rds.getConnectionType());
+		update(rds.getConnectionType(repositorySourceType));
 		userAvatar.setWidth("50px");
 		userAvatar.setHeight("50px");
 		userAvatar.setAlt("User Avatar");
@@ -71,7 +79,17 @@ public class ConnectionInfoComponent extends Div {
 		case NOT_CONNECTED:
 			userAvatar.setVisible(false);
 			userAvatar.setSrc("");
-			connectionInfoLabel.setText("No connection to GitLab");
+			
+			connectionInfoLabel.setText("No connection to " + repositorySourceType);
+			
+			/*
+			if (repositorySource.equals("GitLab")) {
+				connectionInfoLabel.setText("No connection to GitLab");
+			} else if (repositorySource.equals("GitHub")) {
+				connectionInfoLabel.setText("No connection to GitHub");
+			}
+			*/
+			
 			break;
 		case CONNECTED:
 			userAvatar.setVisible(false);
@@ -80,7 +98,7 @@ public class ConnectionInfoComponent extends Div {
 			break;
 		case LOGGED:
 			try {
-				User user = RepositoryDataSourceService.getInstance().getCurrentUser();
+				User user = RepositoryDataSourceService.getInstance().getCurrentUser(repositorySourceType);
 				userAvatar.setVisible(true);
 				userAvatar.setSrc((user.getAvatarUrl() != null)?user.getAvatarUrl():"");
 				connectionInfoLabel.setText("Connected as: " + user.getUsername());
