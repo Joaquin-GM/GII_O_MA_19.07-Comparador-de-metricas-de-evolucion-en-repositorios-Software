@@ -1,13 +1,10 @@
 package metricsengine.numeric_value_metrics;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.gitlab4j.api.models.Release;
-
 import app.RepositoryDataSourceService;
+import datamodel.CustomGitlabApiRelease;
 import datamodel.Repository;
 import metricsengine.MetricDescription;
 import metricsengine.values.NumericValue;
@@ -106,7 +103,7 @@ public class MetricTotalNumberOfReleases extends NumericValueMetricTemplate {
 	 */
 	@Override
 	public NumericValue run(Repository repository) {
-		List<Release> repositoryReleases = repository.getRepositoryInternalMetrics().getReleases().stream()
+		List<CustomGitlabApiRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getReleases().stream()
 				.collect(Collectors.toList());
 
 		return new ValueInteger(repositoryReleases.size());

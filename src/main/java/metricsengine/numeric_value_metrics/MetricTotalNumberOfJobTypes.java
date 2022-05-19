@@ -5,9 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.gitlab4j.api.models.Job;
-
 import app.RepositoryDataSourceService;
+import datamodel.CustomGitlabApiJob;
 import datamodel.Repository;
 import metricsengine.MetricDescription;
 import metricsengine.values.NumericValue;
@@ -27,7 +26,7 @@ public class MetricTotalNumberOfJobTypes extends NumericValueMetricTemplate {
 	 * 
 	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 */
-	private static final long serialVersionUID = -1039405944018960457L;
+	private static final long serialVersionUID = -1039405933018960457L;
 
 	/**
 	 * Default metric description.
@@ -109,17 +108,15 @@ public class MetricTotalNumberOfJobTypes extends NumericValueMetricTemplate {
 		
 		List<String> jobTypesList = new ArrayList<String>();
 		
-		List<Job> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
+		List<CustomGitlabApiJob> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
 				.collect(Collectors.toList());
-		
+				
 		for (int i = 0; i < repositoryJobs.size(); i++) {
-			Job job = repositoryJobs.get(i);
-
+			CustomGitlabApiJob job = repositoryJobs.get(i);
 			if (job.getName() != null && !jobTypesList.contains(job.getName())) {
 				jobTypesList.add(job.getName());
 			}
 		}
-
 		return new ValueInteger(jobTypesList.size());
 	}
 }

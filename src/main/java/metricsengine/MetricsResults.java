@@ -14,7 +14,6 @@ import java.util.Objects;
  *
  */
 public class MetricsResults implements Comparable<MetricsResults>, Serializable{
-	
 	/**
 	 * Description.
 	 * 

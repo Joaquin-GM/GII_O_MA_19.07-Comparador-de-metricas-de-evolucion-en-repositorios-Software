@@ -5,9 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.gitlab4j.api.models.Job;
-
 import app.RepositoryDataSourceService;
+import datamodel.CustomGitlabApiJob;
 import datamodel.Repository;
 import metricsengine.MetricDescription;
 import metricsengine.values.NumericValue;
@@ -110,14 +109,14 @@ public class MetricJobsLastYear extends NumericValueMetricTemplate {
 		long day365 = 365l * 24 * 60 * 60 * 1000;
 		Date currentYearLimitDate = new Date((now.getTime() - day365));
 
-		List<Job> jobsLastYear = new ArrayList<Job>();
-		List<Job> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
+		List<CustomGitlabApiJob> jobsLastYear = new ArrayList<CustomGitlabApiJob>();
+		List<CustomGitlabApiJob> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
 				.collect(Collectors.toList());
 
 		for (int i = 0; i < repositoryJobs.size(); i++) {
-			Job job = repositoryJobs.get(i);
+			CustomGitlabApiJob job = repositoryJobs.get(i);
 
-			if (job.getFinishedAt() != null && job.getFinishedAt().after(currentYearLimitDate)) {
+			if (job.getJob() != null && job.getJob().getFinishedAt() != null && job.getJob().getFinishedAt().after(currentYearLimitDate)) {
 				jobsLastYear.add(job);
 			}
 		}

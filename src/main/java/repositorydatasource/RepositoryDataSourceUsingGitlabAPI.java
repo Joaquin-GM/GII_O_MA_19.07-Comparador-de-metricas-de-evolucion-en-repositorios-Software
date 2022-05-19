@@ -1,5 +1,6 @@
 package repositorydatasource;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -20,6 +21,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import app.RepositoryDataSourceService;
+import datamodel.CustomGitlabApiJob;
+import datamodel.CustomGitlabApiRelease;
 import datamodel.Repository;
 import datamodel.RepositoryInternalMetrics;
 import datamodel.User;
@@ -28,7 +31,8 @@ import exceptions.RepositoryDataSourceException;
 /**
  * Implements IRepositoryDataSource that obtains the data from GitLab
  * 
- * @author migue
+ * @author migue	 
+ * @author Joaquin Garcia Molina - Joaquin-GM
  *
  */
 public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource {
@@ -355,8 +359,8 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 			);
 		} else if (rds.getConnectionType() == EnumConnectionType.LOGGED) {
 			// With logged connection we can get jobs (and releases) of the repository
-			List<Job> jobs = getRepositoryJobs(projectId);
-			List<Release> releases = getRepositoryReleases(projectId);
+			List<CustomGitlabApiJob> jobs = getRepositoryJobs(projectId);
+			List<CustomGitlabApiRelease> releases = getRepositoryReleases(projectId);
 			
 			repositoryInternalMetrics = new RepositoryInternalMetrics(
 				totalNumberOfIssues,
@@ -568,11 +572,18 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @param projectId ID of the project.
 	 * @return List of jobs of a project or null if fail.
 	 */
-	private List<Job> getRepositoryJobs(Long projectId) {
+	private List<CustomGitlabApiJob> getRepositoryJobs(Long projectId) {
 		LOGGER.info("--getRepositoryJobs---");
 		try {
 			List<Job> jobs = gitLabApi.getJobApi().getJobsStream(projectId).collect(Collectors.toList());
-			return jobs;
+			List<CustomGitlabApiJob> customGitlabApiJobs = new ArrayList<CustomGitlabApiJob>();
+			
+			for (Job job : jobs) {
+				CustomGitlabApiJob newCustomGitlabApiJob = new CustomGitlabApiJob(job);
+				customGitlabApiJobs.add(newCustomGitlabApiJob);
+			}
+			
+			return customGitlabApiJobs;
 		} catch (GitLabApiException e) {
 			return null;
 		}
@@ -584,11 +595,19 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @param projectId ID of the project.
 	 * @return List of releases of a project or null if fail.
 	 */
-	private List<Release> getRepositoryReleases(Long projectId) {
+	private List<CustomGitlabApiRelease> getRepositoryReleases(Long projectId) {
 		LOGGER.info("--getRepositoryReleases---");
 		try {
 			List<Release> releases = gitLabApi.getReleasesApi().getReleasesStream(projectId).collect(Collectors.toList());
-			return releases;
+			
+			List<CustomGitlabApiRelease> customGitlabApiReleases = new ArrayList<CustomGitlabApiRelease>();
+			
+			for (Release release : releases) {
+				CustomGitlabApiRelease newCustomGitlabApiRelease= new CustomGitlabApiRelease(release);
+				customGitlabApiReleases.add(newCustomGitlabApiRelease);
+			}
+			
+			return customGitlabApiReleases;
 		} catch (GitLabApiException e) {
 			return null;
 		}

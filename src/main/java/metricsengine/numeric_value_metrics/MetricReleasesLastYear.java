@@ -5,9 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.gitlab4j.api.models.Release;
-
 import app.RepositoryDataSourceService;
+import datamodel.CustomGitlabApiRelease;
 import datamodel.Repository;
 import metricsengine.MetricDescription;
 import metricsengine.values.NumericValue;
@@ -110,14 +109,14 @@ public class MetricReleasesLastYear extends NumericValueMetricTemplate {
 		long day365 = 365l * 24 * 60 * 60 * 1000;
 		Date currentYearLimitDate = new Date((now.getTime() - day365));
 
-		List<Release> releasesLastYear = new ArrayList<Release>();
-		List<Release> repositoryReleases = repository.getRepositoryInternalMetrics().getReleases().stream()
+		List<CustomGitlabApiRelease> releasesLastYear = new ArrayList<CustomGitlabApiRelease>();
+		List<CustomGitlabApiRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getReleases().stream()
 				.collect(Collectors.toList());
 
 		for (int i = 0; i < repositoryReleases.size(); i++) {
-			Release release = repositoryReleases.get(i);
+			CustomGitlabApiRelease release = repositoryReleases.get(i);
 
-			if (release.getReleasedAt() != null && release.getReleasedAt().after(currentYearLimitDate)) {
+			if (release.getRelease() != null && release.getRelease().getReleasedAt() != null && release.getRelease().getReleasedAt().after(currentYearLimitDate)) {
 				releasesLastYear.add(release);
 			}
 		}

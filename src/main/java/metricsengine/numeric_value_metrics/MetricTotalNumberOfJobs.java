@@ -1,13 +1,10 @@
 package metricsengine.numeric_value_metrics;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.gitlab4j.api.models.Job;
-
 import app.RepositoryDataSourceService;
+import datamodel.CustomGitlabApiJob;
 import datamodel.Repository;
 import metricsengine.MetricDescription;
 import metricsengine.values.NumericValue;
@@ -106,7 +103,7 @@ public class MetricTotalNumberOfJobs extends NumericValueMetricTemplate {
 	 */
 	@Override
 	public NumericValue run(Repository repository) {
-		List<Job> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
+		List<CustomGitlabApiJob> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
 				.collect(Collectors.toList());
 
 		return new ValueInteger(repositoryJobs.size());

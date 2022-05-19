@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import org.gitlab4j.api.models.Job;
-import org.gitlab4j.api.models.Release;
 
 /**
  * Stores the metrics that can be obtained directly from the repository and used to calculate the rest of the metrics.
@@ -56,12 +54,12 @@ public class RepositoryInternalMetrics implements Serializable{
 	/**
 	 * Jobs (default successful ones).
 	 */
-	private Collection<Job> jobs = null;
+	private Collection<CustomGitlabApiJob> jobs = null;
 	
 	/**
 	 * Releases (default successful ones).
 	 */
-	private Collection<Release> releases = null;
+	private Collection<CustomGitlabApiRelease> releases = null;
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -126,7 +124,7 @@ public class RepositoryInternalMetrics implements Serializable{
 	 * until the date of last activity.
 	 */
 	public RepositoryInternalMetrics(Integer totalNumberOfIssues, Integer totalNumberOfCommits, Integer numberOfClosedIssues,
-			Collection<Integer> daysToCloseEachIssue, Collection<Date> commitDates, Integer lifeSpanMonths, List<Job> jobs, List<Release> releases) {
+			Collection<Integer> daysToCloseEachIssue, Collection<Date> commitDates, Integer lifeSpanMonths, List<CustomGitlabApiJob> jobs, List<CustomGitlabApiRelease> releases) {
 		setDate(new Date());
 		setTotalNumberOfIssues(totalNumberOfIssues);
 		setTotalNumberOfCommits(totalNumberOfCommits);
@@ -288,7 +286,7 @@ public class RepositoryInternalMetrics implements Serializable{
 	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 * @return list of the jobs of the repository
 	 */
-	public Collection<Job> getJobs() {
+	public Collection<CustomGitlabApiJob> getJobs() {
 		return jobs;
 	}
 	
@@ -298,7 +296,7 @@ public class RepositoryInternalMetrics implements Serializable{
 	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 * @param jobs list of the jobs of the repository
 	 */
-	public void setJobs(List<Job> jobs) {
+	public void setJobs(List<CustomGitlabApiJob> jobs) {
 		this.jobs = jobs;
 	}
 	
@@ -309,7 +307,7 @@ public class RepositoryInternalMetrics implements Serializable{
 	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 * @return list of the releases of the repository
 	 */
-	public Collection<Release> getReleases() {
+	public Collection<CustomGitlabApiRelease> getReleases() {
 		return releases;
 	}
 
@@ -319,7 +317,7 @@ public class RepositoryInternalMetrics implements Serializable{
 	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 * @param releases list of the releases of the repository
 	 */
-	public void setReleases(List<Release> releases) {
+	public void setReleases(List<CustomGitlabApiRelease> releases) {
 		this.releases = releases;
 	}
 }
