@@ -38,11 +38,11 @@ public class MetricJobsLastYear extends NumericValueMetricTemplate {
 			"Joaquin Garcia Molina", 
 			"CI/CD",
 			"How many jobs have been successfully executed last year?",
-			"JELY = Jobs executed last year",
+			"NJELY = Jobs executed last year",
 			"Repository", 
-			"JELM >= 0, better greater values.",
+			"NJELY >= 0, better greater values.",
 			MetricDescription.EnumTypeOfScale.ABSOLUTE,
-			"JELM: Count"
+			"NJELY: Count"
 	);
 
 	/**

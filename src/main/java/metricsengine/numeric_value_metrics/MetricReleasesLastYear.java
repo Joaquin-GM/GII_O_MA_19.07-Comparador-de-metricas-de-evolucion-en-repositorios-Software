@@ -38,11 +38,11 @@ public class MetricReleasesLastYear extends NumericValueMetricTemplate {
 			"Joaquin Garcia Molina",
 			"CI/CD",
 			"How many releases have been successfully released last year?",
-			"RRLM = Releases released last year",
+			"NRRLY = Releases released last year",
 			"Repository", 
-			"RRLM >= 0, better greater values.",
+			"NRRLY >= 0, better greater values.",
 			MetricDescription.EnumTypeOfScale.ABSOLUTE,
-			"RRLM: Count"
+			"NRRLY: Count"
 	);
 
 	/**

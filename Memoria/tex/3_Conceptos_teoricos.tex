@@ -244,6 +244,8 @@ Todas estas herramientas facilitan la comunicación entre los miembros de un equ
 Las métricas de control que se utilizan en este proyecto provienen de una Master Tesis titulada \textit{sPACE: Software Project Assessment in the Course of Evolution} \cite{ratzinger_space:_2007}. 
 A continuación se describen las métricas que se implementan en este proyecto usando la plantilla de definición de la norma ISO 9126.
 
+Además, en esta segunda iteración del proyecto se han añadido cinco nuevas métricas relacionadas con la integración y despliegue continuo (\textit{CI-CD}).
+
 %\todo Cuando se ponen las fórmulas se puede utilizar el entorno matemático de Latex, mejora mucho la presentación.
 %\todo Se puede utilizar el editor de Latex Web  \url{https://www.codecogs.com/latex/eqneditor.php?lang=es-es}
 %\todo Un ejemplo de especificación  Sumatorio de (TCi-TCj) desde i=1, j=0 hasta i=NTC] / NTC. NTC
@@ -353,6 +355,74 @@ A continuación se describen las métricas que se implementan en este proyecto u
 	\item \textbf{Tipo de escala}: Ratio
 	\item \textbf{Tipo de medida}: \textit{NCMP, NTC = Contador}
 \end{itemize}
+
+\begin{large}
+\textbf{\underline{Nuevas métricas relacionadas con \textit{CI-CD}}}
+\linebreak
+\end{large}
+
+\textbf{\underline{IC1 - Número total de \textit{jobs} ejecutados}}
+\begin{itemize}
+	\item \textbf{Categoría}: CI-CD
+	\item \textbf{Descripción}: Número de \textit{jobs} ejecutados en el proyecto.
+	\item \textbf{Propósito}: ¿Cuál es el número total de de \textit{jobs} ejecutados con éxito en el proyecto?
+	\item \textbf{Fórmula}: $NJE =$ \textit{número total de jobs}.
+	\item \textbf{Fuente de medición}: Proyecto en una plataforma de desarrollo colaborativo.
+	\item \textbf{Interpretación}: $NJE \geq 0$. Un valor de cero indica que el proyecto no tiene integración y despliegues continuos y no se ha realizado ningún trabajo automatizado de despliegue.
+	\item \textbf{Tipo de escala}: Absoluta
+	\item \textbf{Tipo de medida}: \textit{NJE = Contador}
+\end{itemize}
+
+\textbf{\underline{IC2 - Número de \textit{Jobs} ejecutados el último año}}
+\begin{itemize}
+	\item \textbf{Categoría}: CI-CD
+	\item \textbf{Descripción}: Número de \textit{jobs} ejecutados en el último año (últimos 365 días).
+	\item \textbf{Propósito}: ¿Cuál es el número total de \textit{jobs} ejecutados con éxito en el proyecto durante el año previo?
+	\item \textbf{Fórmula}: $NJELY =$ \textit{número total de jobs ejecutados el útimo año}.
+	\item \textbf{Fuente de medición}: Proyecto en una plataforma de desarrollo colaborativo.
+	\item \textbf{Interpretación}: $NJELY \geq 0$. Un valor de cero indica que en el proyecto no se ha realizado ningún trabajo automatizado de despliegue durante el último año.
+	\item \textbf{Tipo de escala}: Absoluta
+	\item \textbf{Tipo de medida}: \textit{NJELY = Contador}
+\end{itemize}
+
+\textbf{\underline{IC3 - \textit Número de tipos diferentes de{jobs} ejecutados}}
+\begin{itemize}
+	\item \textbf{Categoría}: CI-CD
+	\item \textbf{Descripción}: Número de tipos diferentes de \textit{jobs} ejecutados en el proyecto.
+	\item \textbf{Propósito}: ¿Cuál es el número total de tipos de \textit{jobs} ejecutados con éxito en el proyecto?
+	\item \textbf{Fórmula}: $NTJE =$ \textit{número total de tipos diferentes de jobs ejecutados en el proyecto}.
+	\item \textbf{Fuente de medición}: Proyecto en una plataforma de desarrollo colaborativo.
+	\item \textbf{Interpretación}: $NTJE \geq 0$. Un valor de cero indica que el proyecto no tiene integración y despliegues continuos y no se ha realizado ningún trabajo automatizado de despliegue.
+	\item \textbf{Tipo de escala}: Absoluta
+	\item \textbf{Tipo de medida}: \textit{NTJE = Contador}
+\end{itemize}
+
+
+\textbf{\underline{DC1 - \textit Número total de{releases}}}
+\begin{itemize}
+	\item \textbf{Categoría}: CI-CD
+	\item \textbf{Descripción}: Número de \textit{releases} lanzadas en el proyecto.
+	\item \textbf{Propósito}: ¿Cuál es el número total de \textit{releases} del  proyecto?
+	\item \textbf{Fórmula}: $NRR =$ \textit{número total de releases lanzadas en el proyecto}.
+	\item \textbf{Fuente de medición}: Proyecto en una plataforma de desarrollo colaborativo.
+	\item \textbf{Interpretación}: $NRR \geq 0$. Un valor de cero indica que aún no se ha lanzado ninguna \textit{release} del proyecto.
+	\item \textbf{Tipo de escala}: Absoluta
+	\item \textbf{Tipo de medida}: \textit{NRR = Contador}
+\end{itemize}
+
+\textbf{\underline{DC2 - \textit Número de{releases} lanzadas el último año}}
+\begin{itemize}
+	\item \textbf{Categoría}: CI-CD
+	\item \textbf{Descripción}: Número de \textit{releases} lanzadas en el proyecto en el último año (últimos 365 días).
+	\item \textbf{Propósito}: ¿Cuál es el número total de \textit{releases} lanzadas en el proyecto durante el año previo?
+	\item \textbf{Fórmula}: $NRRLY =$ \textit{número total de releases lanzadas en el proyecto en el último año}.
+	\item \textbf{Fuente de medición}: Proyecto en una plataforma de desarrollo colaborativo.
+	\item \textbf{Interpretación}: $NRRLY \geq 0$. Un valor de cero indica que no se ha lanzado ninguna \textit{release} del proyecto durante el último año.
+	\item \textbf{Tipo de escala}: Absoluta
+	\item \textbf{Tipo de medida}: \textit{NRRLY = Contador}
+\end{itemize}
+
+
 
 \subsection{Framework de medición}\label{sect:3_3_3_FrameworkMedicion}
 
