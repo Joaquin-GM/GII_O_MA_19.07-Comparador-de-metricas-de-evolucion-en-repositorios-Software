@@ -20,6 +20,7 @@ import com.vaadin.flow.component.tabs.Tab;
 import app.MetricsService;
 import app.RepositoriesCollectionService;
 import datamodel.Repository;
+import datamodel.RepositorySourceType;
 import exceptions.ApplicationException;
 import exceptions.RepositoriesCollectionServiceException;
 import exceptions.RepositoryDataSourceException;
@@ -57,7 +58,7 @@ public abstract class AddRepositoryFormTemplate implements AddRepositoryForm{
 	private Label result = new Label();
 	private Div page = new Div();
 
-	protected AddRepositoryFormTemplate(String tabName, String description) {
+	protected AddRepositoryFormTemplate(String tabName, String description, RepositorySourceType repositorySourceType) {
 		this.tab.setLabel(tabName);
 
 		this.form.setResponsiveSteps(new ResponsiveStep("0", 1, LabelsPosition.TOP),
@@ -65,13 +66,13 @@ public abstract class AddRepositoryFormTemplate implements AddRepositoryForm{
 		this.description.setText(description);
 		this.form.add(this.description);
 		
-		addFormElements();
+		addFormElements(repositorySourceType);
 		
 		this.result.setText("");
 
 		this.button.setIcon(new Icon(VaadinIcon.PLUS));
 		this.button.setText("Add");
-		this.button.addClickListener(event -> addRepository());
+		this.button.addClickListener(event -> addRepository(repositorySourceType));
 		this.form.add(this.button);
 		
 		this.result.setWidthFull();
@@ -80,9 +81,9 @@ public abstract class AddRepositoryFormTemplate implements AddRepositoryForm{
 		this.page.add(form);
 	}
 
-	private void addRepository() {
+	private void addRepository(RepositorySourceType repositorySourceType) {
 		try {
-			Repository repository = getRepositoryFromForms();
+			Repository repository = getRepositoryFromForms(repositorySourceType);
 			if(repository != null) {
 				RepositoriesCollectionService.getInstance().addRepository(repository);
 				MetricsService.getMetricsService().obtainAndEvaluateRepositoryMetrics(repository);
@@ -178,9 +179,9 @@ public abstract class AddRepositoryFormTemplate implements AddRepositoryForm{
 		return page;
 	}
 
-	protected abstract void addFormElements();
+	protected abstract void addFormElements(RepositorySourceType repositorySourceType);
 
-	protected abstract Repository getRepositoryFromForms() throws ApplicationException;
+	protected abstract Repository getRepositoryFromForms(RepositorySourceType repositorySourceType) throws ApplicationException;
 
 	/* (non-Javadoc)
 	 * @see gui.views.connectionForms.IConnForm#addConnectionSuccessfulListener(gui.views.connectionForms.IConnForm.IConnectionSuccessfulListener)

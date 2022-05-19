@@ -20,6 +20,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.Tabs.Orientation;
 
+import datamodel.RepositorySourceType;
+
 /**
  * @author Miguel Ángel León Bardavío - mlb0029
  *
@@ -32,9 +34,9 @@ public class AddRepositoryDialog extends Dialog {
 
 	private List<AddRepositoryForm> addRepositoryForms = new ArrayList<>();
 	
-	public AddRepositoryDialog() {
+	public AddRepositoryDialog(RepositorySourceType repositorySourceType) {
 		try {
-			createConnectionForms();
+			createConnectionForms(repositorySourceType);
 
 			Tabs tabs = new Tabs();
 			tabs.setOrientation(Orientation.VERTICAL);
@@ -99,10 +101,10 @@ public class AddRepositoryDialog extends Dialog {
 		}
 	}
 
-	private void createConnectionForms() {
-		addRepositoryForms.add(new AddRepositoryFormByUsername());
-		addRepositoryForms.add(new AddRepositoryFormByGroup());
-		addRepositoryForms.add(new AddRepositoryFormByURL());
+	private void createConnectionForms(RepositorySourceType repositorySourceType) {
+		addRepositoryForms.add(new AddRepositoryFormByUsername(repositorySourceType));
+		addRepositoryForms.add(new AddRepositoryFormByGroup(repositorySourceType));
+		addRepositoryForms.add(new AddRepositoryFormByURL(repositorySourceType));
 	}
 
 }

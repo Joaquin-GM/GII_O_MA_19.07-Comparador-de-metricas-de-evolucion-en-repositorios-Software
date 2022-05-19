@@ -99,7 +99,7 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	}
 
 	@Override
-	public void connect() throws RepositoryDataSourceException {
+	public void connect(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		if (connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
 			githubclientApi = new GitHubClient();
 			currentUser = null;
@@ -112,7 +112,7 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	}
 
 	@Override
-	public void connect(String username, String password) throws RepositoryDataSourceException {
+	public void connect(String username, String password, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		try {
 			if (username == null || password == null || username.isBlank() || password.isBlank())
 				throw new RepositoryDataSourceException(RepositoryDataSourceException.LOGIN_ERROR);
@@ -136,7 +136,7 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	}
 
 	@Override
-	public void connect(String token) throws RepositoryDataSourceException {
+	public void connect(String token, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		try {
 			if (connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
 				githubclientApi = new GitHubClient();
@@ -158,7 +158,7 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	}
 
 	@Override
-	public void disconnect() throws RepositoryDataSourceException {
+	public void disconnect(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		if (connectionType != EnumConnectionType.NOT_CONNECTED) {
 			reset();
 		} else {
@@ -184,7 +184,7 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	 * @see repositorydatasource.IRepositoryDataSource#getConnectionType()
 	 */
 	@Override
-	public EnumConnectionType getConnectionType() {
+	public EnumConnectionType getConnectionType(RepositorySourceType repositorySourceType) {
 		return connectionType;
 	}
 
@@ -196,7 +196,7 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	 * @return
 	 */
 	@Override
-	public datamodel.User getCurrentUser() {
+	public datamodel.User getCurrentUser(RepositorySourceType repositorySourceType) {
 		return currentUser;
 	}
 
@@ -216,7 +216,7 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	}
 
 	@Override
-	public Collection<datamodel.Repository> getCurrentUserRepositories() throws RepositoryDataSourceException {
+	public Collection<datamodel.Repository> getCurrentUserRepositories(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 
 		try {
 			Collection<datamodel.Repository> resultrepositories = new ArrayList<datamodel.Repository>();
@@ -240,12 +240,12 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	}
 
 	@Override
-	public Collection<datamodel.Repository> getAllUserRepositories(String userIdOrUsername)
+	public Collection<datamodel.Repository> getAllUserRepositories(String userIdOrUsername, RepositorySourceType repositorySourceType)
 			throws RepositoryDataSourceException {
 		Collection<datamodel.Repository> repositories;
 		try {
 			if (currentUser != null && currentUser.getUsername().equals(userIdOrUsername)) {
-				repositories = getCurrentUserRepositories();
+				repositories = getCurrentUserRepositories(repositorySourceType);
 			} else if (!connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
 				repositoryService = new RepositoryService(githubclientApi);
 				List<org.eclipse.egit.github.core.Repository> lRepositories = repositoryService
@@ -269,14 +269,14 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	}
 
 	@Override
-	public Collection<datamodel.Repository> getAllGroupRepositories(String groupName)
+	public Collection<datamodel.Repository> getAllGroupRepositories(String groupName, RepositorySourceType repositorySourceType)
 			throws RepositoryDataSourceException {
 		// API github for group and user work same way
-		return getAllUserRepositories(groupName);
+		return getAllUserRepositories(groupName, repositorySourceType);
 	}
 
 	@Override
-	public datamodel.Repository getRepository(String repositoryHTTPSURL) throws RepositoryDataSourceException {
+	public datamodel.Repository getRepository(String repositoryHTTPSURL, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		Long projectId;
 		if (!connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
 			projectId = getProjectId(repositoryHTTPSURL);
@@ -342,7 +342,7 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	 * @return Repository.
 	 */
 	@Override
-	public datamodel.Repository getRepository(Long repositoryId) throws RepositoryDataSourceException {
+	public datamodel.Repository getRepository(Long repositoryId, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		if (!connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
 			// Con Gihub API no se puede obtener el RepositorioID.
 			// El ID es un dato calculado que se obtiene con la Fabrica RepositoryID
@@ -359,11 +359,11 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	}
 
 	@Override
-	public RepositoryInternalMetrics getRepositoryInternalMetrics(datamodel.Repository repository)
+	public RepositoryInternalMetrics getRepositoryInternalMetrics(datamodel.Repository repository, RepositorySourceType repositorySourceType)
 			throws RepositoryDataSourceException {
 		repositoryService = new RepositoryService(githubclientApi);
 
-		getRepository(repository.getId());
+		getRepository(repository.getId(), repositorySourceType);
 		Long projectId = repository.getId();
 
 		Integer totalNumberOfIssues = getTotalNumberOfIssues(projectId);

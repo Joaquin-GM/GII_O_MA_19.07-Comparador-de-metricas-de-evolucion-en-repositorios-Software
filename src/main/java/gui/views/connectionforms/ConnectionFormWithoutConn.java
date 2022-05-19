@@ -3,6 +3,7 @@ package gui.views.connectionforms;
 import com.vaadin.flow.component.icon.VaadinIcon;
 
 import app.RepositoryDataSourceService;
+import datamodel.RepositorySourceType;
 import exceptions.RepositoryDataSourceException;
 import repositorydatasource.RepositoryDataSource;
 import repositorydatasource.RepositoryDataSource.EnumConnectionType;
@@ -28,12 +29,14 @@ public class ConnectionFormWithoutConn extends ConnectionFormTemplate {
 	
 	private static final String BUTTON_TEXT = "Proceed";
 	
-	public ConnectionFormWithoutConn() {
+	public ConnectionFormWithoutConn(RepositorySourceType repositorySourceType) {
 		super(
 				TAB_NAME, 
 				DESCRIPTION, 
 				BUTTON_ICON, 
-				BUTTON_TEXT);
+				BUTTON_TEXT,
+				repositorySourceType
+				);
 	}
 
 	/* (non-Javadoc)
@@ -51,8 +54,8 @@ public class ConnectionFormWithoutConn extends ConnectionFormTemplate {
 	@Override
 	protected void connect() throws RepositoryDataSourceException {
 		RepositoryDataSource rds = RepositoryDataSourceService.getInstance();
-		if (!rds.getConnectionType().equals(EnumConnectionType.NOT_CONNECTED))
-			rds.disconnect();
+		if (!rds.getConnectionType(getRepositorySource()).equals(EnumConnectionType.NOT_CONNECTED))
+			rds.disconnect(getRepositorySource());
 	}
 
 }

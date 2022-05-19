@@ -3,10 +3,12 @@ package gui.views.connectionforms;
 import com.vaadin.flow.component.icon.VaadinIcon;
 
 import app.RepositoryDataSourceService;
+import datamodel.RepositorySourceType;
 import exceptions.RepositoryDataSourceException;
 
 /**
- * @author Miguel Ángel León Bardavío - mlb0029
+ * @author Miguel Ángel León Bardavío - mlb0029	 	 
+ * @author Joaquin Garcia Molina - Joaquin-GM
  *
  */
 public class ConnectionFormUsingPublicConn extends ConnectionFormTemplate {
@@ -26,12 +28,14 @@ public class ConnectionFormUsingPublicConn extends ConnectionFormTemplate {
 	
 	private static final String BUTTON_TEXT = "Connect";
 	
-	public ConnectionFormUsingPublicConn() {
+	public ConnectionFormUsingPublicConn(RepositorySourceType repositorySourceType) {
 		super(
 				TAB_NAME, 
 				DESCRIPTION, 
 				BUTTON_ICON, 
-				BUTTON_TEXT);
+				BUTTON_TEXT,
+				repositorySourceType
+				);
 	}
 
 	/* (non-Javadoc)
@@ -49,7 +53,7 @@ public class ConnectionFormUsingPublicConn extends ConnectionFormTemplate {
 
 	@Override
 	protected void connect() throws RepositoryDataSourceException {
-		RepositoryDataSourceService.getInstance().connect();
+		RepositoryDataSourceService.getInstance().connect(getRepositorySource());
 	}
 
 }

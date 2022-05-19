@@ -5,28 +5,28 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import datamodel.RepositorySourceType;
+import repositorydatasource.RepositoyDataSourceFactoryGitlab;
 import repositorydatasource.RepositoryDataSource;
 import repositorydatasource.RepositoryDataSource.EnumConnectionType;
 import repositorydatasource.RepositoryDataSourceFactory;
-import repositorydatasource.RepositoryDataSourceFactoryGithub;
 
 /**
  * Test for GitLabRepositoyDataSourceFactory.
  * 
- * @author Joaquin Garcia Molina - Joaquin-GM
+ * @author Miguel Ángel León Bardavío - mlb0029
  *
  */
-public class GitLabRepositoyDataSourceFactoryTest {
+public class GitHubRepositoyDataSourceFactoryTest {
 	
 	/**
-	 * Test method for {@link repositorydatasource.RepositoyDataSourceFactoryGithub#getRepositoryDataSource()}.
+	 * Test method for {@link repositorydatasource.RepositoyDataSourceFactoryGitlab#getRepositoryDataSource()}.
 	 * 
-	 * @author Joaquin Garcia Molina - Joaquin-GM
+	 * @author Miguel Ángel León Bardavío - mlb0029
 	 */
 	@Test
 	public void testCreateRepositoryDataSource() {
-		RepositoryDataSourceFactory rdsf = new RepositoryDataSourceFactoryGithub();
+		RepositoryDataSourceFactory rdsf = new RepositoyDataSourceFactoryGitlab();
 		RepositoryDataSource rds = rdsf.getRepositoryDataSource();
-		assertTrue(rds != null && rds.getConnectionType(RepositorySourceType.GitHub) == EnumConnectionType.NOT_CONNECTED);
+		assertTrue(rds != null && rds.getConnectionType(RepositorySourceType.GitLab) == EnumConnectionType.NOT_CONNECTED);
 	}
 }

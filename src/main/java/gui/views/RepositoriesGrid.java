@@ -38,6 +38,7 @@ import app.MetricsService;
 import app.RepositoriesCollectionService;
 import app.RepositoryDataSourceService;
 import datamodel.Repository;
+import datamodel.RepositorySourceType;
 import exceptions.RepositoryDataSourceException;
 import metricsengine.Measure;
 import metricsengine.Metric;
@@ -355,7 +356,12 @@ public class RepositoriesGrid extends Grid<Repository> {
 	 */
 	private void updateRepositoryInfo(Repository repository) {
 		try {
-			RepositoryDataSourceService.getInstance().updateRepository(repository);
+			if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitLab)) {
+				RepositoryDataSourceService.getInstance().updateRepository(repository, RepositorySourceType.GitLab);
+			} else if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitHub)) {
+				RepositoryDataSourceService.getInstance().updateRepository(repository, RepositorySourceType.GitHub);
+			}
+			
 			MetricsService.getMetricsService().obtainAndEvaluateRepositoryMetrics(repository);
 			getDataProvider().refreshAll();
 			ConfirmDialog.createInfo().withCaption("Sucessful").withMessage("Repository metrics achieved")

@@ -83,7 +83,7 @@ public class MetricTotalNumberOfJobTypes extends NumericValueMetricTemplate {
 	public Boolean check(Repository repository) {
 		// If not authenticated the metric is not calculated, GitLabApi requires authentication for 
 		RepositoryDataSourceService rds = RepositoryDataSourceService.getInstance();
-		if (rds.getConnectionType() != EnumConnectionType.LOGGED) {
+		if (rds.getConnectionType(repository.getRepositoryDataSourceType()) != EnumConnectionType.LOGGED) {
 			return false;
 		}
 		

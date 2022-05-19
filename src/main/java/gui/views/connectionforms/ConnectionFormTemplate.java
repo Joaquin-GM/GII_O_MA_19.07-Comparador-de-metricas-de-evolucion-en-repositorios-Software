@@ -19,8 +19,14 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.tabs.Tab;
 
 import app.RepositoryDataSourceService;
+import datamodel.RepositorySourceType;
 import exceptions.RepositoryDataSourceException;
 
+/**
+ * 
+ * @author Joaquin Garcia Molina - Joaquin-GM
+ *
+ */
 public abstract class ConnectionFormTemplate implements ConnectionForm {
 	
 	
@@ -55,8 +61,15 @@ public abstract class ConnectionFormTemplate implements ConnectionForm {
 	private Button button = new Button();
 	private Label result = new Label();
 	private Div page = new Div();
+	
+	private RepositorySourceType repositorySourceType;
+	
+	public RepositorySourceType getRepositorySource() {
+		return repositorySourceType;
+	}
 
-	protected ConnectionFormTemplate(String tabName, String description, VaadinIcon buttonIcon, String buttonText) {
+	protected ConnectionFormTemplate(String tabName, String description, VaadinIcon buttonIcon, String buttonText, RepositorySourceType repositorySourceType) {
+		this.repositorySourceType = repositorySourceType;
 		this.tab.setLabel(tabName);
 
 		this.form.setResponsiveSteps(new ResponsiveStep("0", 1, LabelsPosition.TOP),
@@ -72,7 +85,9 @@ public abstract class ConnectionFormTemplate implements ConnectionForm {
 			this.button.setIcon(new Icon(buttonIcon));
 		this.button.setText(buttonText);
 		this.button.addClickListener(event -> {
-			onConnectButtonClick();
+			LOGGER.info("EN EL EVENT LISTENER!!!!");
+			LOGGER.info(repositorySourceType.toString());
+			onConnectButtonClick(repositorySourceType);
 		});
 		this.form.add(this.button);
 		
@@ -87,11 +102,16 @@ public abstract class ConnectionFormTemplate implements ConnectionForm {
 	 * 
 	 * @author Miguel Ángel León Bardavío - mlb0029
 	 */
-	private void onConnectButtonClick() {
+	private void onConnectButtonClick(RepositorySourceType repositorySourceType) {
 		try {
 			if (isValid()) {
+				LOGGER.info("XXX");
+				LOGGER.info(repositorySourceType.toString());
+				LOGGER.info(RepositoryDataSourceService.getInstance().getConnectionType(repositorySourceType).toString());
 				connect();
-				listeners.forEach(l -> l.onConnectionSuccessful(RepositoryDataSourceService.getInstance().getConnectionType()));
+				LOGGER.info("DESPUES DE CONNECT!!!");
+				listeners.forEach(l -> l.onConnectionSuccessful(RepositoryDataSourceService.getInstance().getConnectionType(repositorySourceType)));
+				LOGGER.info("YYYYYYYYYYYYY");
 			}
 		} catch (RepositoryDataSourceException e) {
 			String errorMessage = "";
@@ -107,7 +127,17 @@ public abstract class ConnectionFormTemplate implements ConnectionForm {
 			getResult().setText(errorMessage);
 			getResult().setTitle(errorMessage);
 		} catch (Exception e) {
-			LOGGER.error("" + e.getMessage());
+			LOGGER.info(repositorySourceType.toString());
+			LOGGER.error("Error aqui!!!! " + e.getMessage());
+			LOGGER.error("Error aqui!!!! " + e.toString());
+			
+			String exception = "";
+		    for (StackTraceElement s : e.getStackTrace()) {
+		        exception = exception + s.toString() + "\n\t\t";
+		    }
+			
+			LOGGER.error(exception);
+			
 			String errorMessage = "An error has occurred. Please, contact the application administrator.";
 			getResult().setClassName("errorMessage");
 			getResult().setText(errorMessage);

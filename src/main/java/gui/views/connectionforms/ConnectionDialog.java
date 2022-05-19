@@ -24,20 +24,20 @@ import datamodel.RepositorySourceType;
 public class ConnectionDialog extends Dialog {
 
 	private static final long serialVersionUID = -2348702400211722166L;
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionDialog.class);
-	
+
 	private RepositorySourceType repositorySourceType;
-	
+
 	public RepositorySourceType getRepositorySource() {
 		return repositorySourceType;
 	}
 
 	private List<ConnectionForm> connectionForms = new ArrayList<>();
-	
+
 	public ConnectionDialog(RepositorySourceType repositorySourceType) {
 		this.repositorySourceType = repositorySourceType;
-		
+
 		try {
 			createConnectionForms();
 
@@ -67,22 +67,20 @@ public class ConnectionDialog extends Dialog {
 					}
 				}
 			});
-			
+
 			addOpenedChangeListener(event -> {
-				if(event.isOpened()) {
+				if (event.isOpened()) {
 					connectionForms.forEach(connForm -> connForm.getPage().setVisible(false));
 					tabs.setSelectedTab(connectionForms.get(0).getTab());
-					connectionForms.get(0).getPage().setVisible(true);				
+					connectionForms.get(0).getPage().setVisible(true);
 				}
 			});
 
 			DialogHeader dialogHeader = new DialogHeader("Set a connection with " + repositorySourceType.toString());
 			dialogHeader.addCloseListener(e -> close());
 
-
 			HorizontalLayout connFormsHLayout = new HorizontalLayout(tabs, forms);
 			connFormsHLayout.setSizeFull();
-
 
 			VerticalLayout root = new VerticalLayout(dialogHeader.headerLayout, connFormsHLayout);
 
@@ -94,26 +92,26 @@ public class ConnectionDialog extends Dialog {
 			setCloseOnOutsideClick(false);
 		} catch (Exception e) {
 			LOGGER.error("Error initializing ConnectionDialog" + e.getMessage());
-			ConfirmDialog.createError()
-			.withCaption("Error")
-			.withMessage("An error has occurred. Please, contact the application administrator.")
-			.withOkButton()
-			.open();
+			ConfirmDialog.createError().withCaption("Error")
+					.withMessage("An error has occurred. Please, contact the application administrator.").withOkButton()
+					.open();
 		}
 	}
 
 	private void createConnectionForms() {
 
-		ConnectionForm userPasswordConnForm = new ConnectionFormUsingUserPassword();
+		LOGGER.info("--------createConnectionForms-----------");
+		LOGGER.info(repositorySourceType.toString());
+		ConnectionForm userPasswordConnForm = new ConnectionFormUsingUserPassword(repositorySourceType);
 		connectionForms.add(userPasswordConnForm);
 
-		ConnectionForm paTokenConnForm = new ConnectionFormUsingPAToken();
+		ConnectionForm paTokenConnForm = new ConnectionFormUsingPAToken(repositorySourceType);
 		connectionForms.add(paTokenConnForm);
 
-		ConnectionForm publicConnForm = new ConnectionFormUsingPublicConn();
+		ConnectionForm publicConnForm = new ConnectionFormUsingPublicConn(repositorySourceType);
 		connectionForms.add(publicConnForm);
 
-		ConnectionForm noConnForm = new ConnectionFormWithoutConn();
+		ConnectionForm noConnForm = new ConnectionFormWithoutConn(repositorySourceType);
 		connectionForms.add(noConnForm);
 	}
 

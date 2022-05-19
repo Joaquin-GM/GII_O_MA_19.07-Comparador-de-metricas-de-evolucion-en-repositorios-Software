@@ -6,6 +6,7 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 
 import app.RepositoryDataSourceService;
+import datamodel.RepositorySourceType;
 import exceptions.RepositoryDataSourceException;
 
 /**
@@ -30,12 +31,13 @@ public class ConnectionFormUsingUserPassword extends ConnectionFormTemplate {
 	private Label passwordLabel;
 	private PasswordField passwordField;
 
-	public ConnectionFormUsingUserPassword() {
+	public ConnectionFormUsingUserPassword(RepositorySourceType repositorySourceType) {
 		super(
 				TAB_NAME, 
 				DESCRIPTION, 
 				BUTTON_ICON, 
-				BUTTON_TEXT
+				BUTTON_TEXT,
+				repositorySourceType
 		);
 	}
 
@@ -85,6 +87,6 @@ public class ConnectionFormUsingUserPassword extends ConnectionFormTemplate {
 
 	@Override
 	protected void connect() throws RepositoryDataSourceException {
-		RepositoryDataSourceService.getInstance().connect(usernameField.getValue(), passwordField.getValue());
+		RepositoryDataSourceService.getInstance().connect(usernameField.getValue(), passwordField.getValue(), getRepositorySource());
 	}
 }

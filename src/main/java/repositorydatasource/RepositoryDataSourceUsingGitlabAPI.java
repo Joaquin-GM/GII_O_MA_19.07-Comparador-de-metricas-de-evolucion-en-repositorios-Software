@@ -25,13 +25,14 @@ import datamodel.CustomGitlabApiJob;
 import datamodel.CustomGitlabApiRelease;
 import datamodel.Repository;
 import datamodel.RepositoryInternalMetrics;
+import datamodel.RepositorySourceType;
 import datamodel.User;
 import exceptions.RepositoryDataSourceException;
 
 /**
  * Implements IRepositoryDataSource that obtains the data from GitLab
  * 
- * @author migue	 
+ * @author Miguel Ángel León Bardavío - mlb0029	 	 
  * @author Joaquin Garcia Molina - Joaquin-GM
  *
  */
@@ -104,7 +105,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @see repositorydatasource.IRepositoryDataSource#connect()
 	 */
 	@Override
-	public void connect() throws RepositoryDataSourceException {
+	public void connect(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		if (connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
 			gitLabApi = new GitLabApi(RepositoryDataSourceUsingGitlabAPI.HOST_URL, "");
 			currentUser = null;
@@ -122,7 +123,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * java.lang.String)
 	 */
 	@Override
-	public void connect(String username, String password) throws RepositoryDataSourceException {
+	public void connect(String username, String password, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		try {
 			if (username == null || password == null || username.isBlank() || password.isBlank())
 				throw new RepositoryDataSourceException(RepositoryDataSourceException.LOGIN_ERROR);
@@ -149,12 +150,14 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @see repositorydatasource.IRepositoryDataSource#connect(java.lang.String)
 	 */
 	@Override
-	public void connect(String token) throws RepositoryDataSourceException {
+	public void connect(String token, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		try {
 			if (connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
 				gitLabApi = new GitLabApi(RepositoryDataSourceUsingGitlabAPI.HOST_URL, token);
 				currentUser = getCurrentUser(gitLabApi.getUserApi().getCurrentUser());
 				connectionType = EnumConnectionType.LOGGED;
+				LOGGER.info("..........rrrrrrrrrrrr............");
+				LOGGER.info(currentUser.toString());
 				LOGGER.info("Login to GitLab");
 			} else {
 				throw new RepositoryDataSourceException(RepositoryDataSourceException.ALREADY_CONNECTED);
@@ -173,7 +176,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @see repositorydatasource.IRepositoryDataSource#disconnect()
 	 */
 	@Override
-	public void disconnect() throws RepositoryDataSourceException {
+	public void disconnect(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		if (connectionType != EnumConnectionType.NOT_CONNECTED) {
 			reset();
 		} else {
@@ -187,7 +190,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @see repositorydatasource.IRepositoryDataSource#getConnectionType()
 	 */
 	@Override
-	public EnumConnectionType getConnectionType() {
+	public EnumConnectionType getConnectionType(RepositorySourceType repositorySourceType) {
 		return connectionType;
 	}
 
@@ -197,7 +200,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @see repositorydatasource.IRepositoryDataSource#getCurrentUser()
 	 */
 	@Override
-	public User getCurrentUser() {
+	public User getCurrentUser(RepositorySourceType repositorySourceType) {
 		return currentUser;
 	}
 
@@ -219,7 +222,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @see repositorydatasource.IRepositoryDataSource#getAllUserRepositories()
 	 */
 	@Override
-	public Collection<Repository> getCurrentUserRepositories() throws RepositoryDataSourceException {
+	public Collection<Repository> getCurrentUserRepositories(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		try {
 			if (connectionType != EnumConnectionType.NOT_CONNECTED) {
 				return gitLabApi.getProjectApi().getUserProjectsStream(currentUser.getId(), new ProjectFilter())
@@ -240,11 +243,11 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * String)
 	 */
 	@Override
-	public Collection<Repository> getAllUserRepositories(String userIdOrUsername) throws RepositoryDataSourceException {
+	public Collection<Repository> getAllUserRepositories(String userIdOrUsername, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		Collection<Repository> repositories;
 		try {
 			if (currentUser != null && currentUser.getUsername().equals(userIdOrUsername)) {
-				repositories = getCurrentUserRepositories();
+				repositories = getCurrentUserRepositories(repositorySourceType);
 			} else if (!connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
 				repositories = gitLabApi.getProjectApi().getUserProjectsStream(userIdOrUsername, new ProjectFilter())
 						.map(p -> new Repository(p.getWebUrl(), p.getName(), p.getId())).collect(Collectors.toList());
@@ -260,7 +263,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	}
 
 	@Override
-	public Collection<Repository> getAllGroupRepositories(String groupIdOrPath) throws RepositoryDataSourceException {
+	public Collection<Repository> getAllGroupRepositories(String groupIdOrPath, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		Collection<Repository> repositories;
 		try {
 			if (!connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
@@ -285,7 +288,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * repositorydatasource.IRepositoryDataSource#getRepository(java.lang.String)
 	 */
 	@Override
-	public Repository getRepository(String repositoryHTTPSURL) throws RepositoryDataSourceException {
+	public Repository getRepository(String repositoryHTTPSURL, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		LOGGER.info("--getRepository---");
 		LOGGER.info(repositoryHTTPSURL);
 		Long projectId;
@@ -303,7 +306,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	}
 
 	@Override
-	public Repository getRepository(Long repositoryId) throws RepositoryDataSourceException {
+	public Repository getRepository(Long repositoryId, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		try {
 			LOGGER.info("--getRepository 2---");
 			LOGGER.info(String.valueOf(repositoryId));
@@ -330,10 +333,10 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * model.Repository)
 	 */
 	@Override
-	public RepositoryInternalMetrics getRepositoryInternalMetrics(Repository repository) throws RepositoryDataSourceException {
+	public RepositoryInternalMetrics getRepositoryInternalMetrics(Repository repository, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		LOGGER.info("getRepositoryInternalMetrics");
 		// LOGGER.info(String.valueOf(repository));
-		getRepository(repository.getId()); // Si no se obtiene, lanza una excepción
+		getRepository(repository.getId(), repositorySourceType); // Si no se obtiene, lanza una excepción
 		Long projectId = repository.getId();
 		Integer totalNumberOfIssues = getTotalNumberOfIssues(projectId);
 		Integer totalNumberOfCommits = getTotalNumberOfCommits(projectId);
@@ -346,9 +349,9 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 		RepositoryInternalMetrics repositoryInternalMetrics = null;
 		RepositoryDataSourceService rds = RepositoryDataSourceService.getInstance();
 
-		LOGGER.info("--------RepositoryInternalMetrics rds.getConnectionType()-----" + rds.getConnectionType().toString());
+		LOGGER.info("--------RepositoryInternalMetrics rds.getConnectionType()-----" + rds.getConnectionType(repositorySourceType).toString());
 		
-		if (rds.getConnectionType() == EnumConnectionType.CONNECTED) {
+		if (rds.getConnectionType(repositorySourceType) == EnumConnectionType.CONNECTED) {
 			repositoryInternalMetrics = new RepositoryInternalMetrics(
 					totalNumberOfIssues,
 					totalNumberOfCommits,
@@ -357,7 +360,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 					commitDates,
 					lifeSpanMonths
 			);
-		} else if (rds.getConnectionType() == EnumConnectionType.LOGGED) {
+		} else if (rds.getConnectionType(repositorySourceType) == EnumConnectionType.LOGGED) {
 			// With logged connection we can get jobs (and releases) of the repository
 			List<CustomGitlabApiJob> jobs = getRepositoryJobs(projectId);
 			List<CustomGitlabApiRelease> releases = getRepositoryReleases(projectId);

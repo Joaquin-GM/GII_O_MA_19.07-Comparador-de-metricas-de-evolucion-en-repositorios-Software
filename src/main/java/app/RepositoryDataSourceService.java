@@ -5,6 +5,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import app.listeners.ConnectionChangedEvent;
 import app.listeners.Listener;
 import datamodel.Repository;
@@ -12,6 +15,7 @@ import datamodel.RepositoryInternalMetrics;
 import datamodel.RepositorySourceType;
 import datamodel.User;
 import exceptions.RepositoryDataSourceException;
+import gui.views.connectionforms.ConnectionInfoComponent;
 import repositorydatasource.RepositoryDataSource;
 import repositorydatasource.RepositoryDataSourceFactory;
 import repositorydatasource.RepositoryDataSourceFactoryGithub;
@@ -24,6 +28,7 @@ import repositorydatasource.RepositoyDataSourceFactoryGitlab;
  *
  */
 public class RepositoryDataSourceService implements Serializable, RepositoryDataSource {
+	private static final Logger LOGGER = LoggerFactory.getLogger(RepositoryDataSourceService.class);
 
 	private static final long serialVersionUID = -6197642368639361682L;
 
@@ -31,6 +36,14 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 
 	private RepositoryDataSource repositoryDataSourceGitLab;
 	private RepositoryDataSource repositoryDataSourceGitHub;
+
+	public RepositoryDataSource getRepositoryDataSourceGitLab() {
+		return repositoryDataSourceGitLab;
+	}
+
+	public RepositoryDataSource getRepositoryDataSourceGitHub() {
+		return repositoryDataSourceGitHub;
+	}
 
 	private Set<Listener<ConnectionChangedEvent>> connectionChangedEventListeners = new HashSet<>();
 
@@ -108,7 +121,7 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 			this.repositoryDataSourceGitHub.connect(repositorySourceType);
 		}
 		EnumConnectionType after = getConnectionType(repositorySourceType);
-		connectionChangedEventListeners.forEach(l -> l.on(new ConnectionChangedEvent(before, after)));
+		connectionChangedEventListeners.forEach(l -> l.on(new ConnectionChangedEvent(before, after, repositorySourceType)));
 	}
 
 	/*
@@ -128,7 +141,7 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 		}
 
 		EnumConnectionType after = getConnectionType(repositorySourceType);
-		connectionChangedEventListeners.forEach(l -> l.on(new ConnectionChangedEvent(before, after)));
+		connectionChangedEventListeners.forEach(l -> l.on(new ConnectionChangedEvent(before, after, repositorySourceType)));
 	}
 
 	/*
@@ -145,7 +158,12 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 			this.repositoryDataSourceGitHub.connect(token, repositorySourceType);
 		}
 		EnumConnectionType after = getConnectionType(repositorySourceType);
-		connectionChangedEventListeners.forEach(l -> l.on(new ConnectionChangedEvent(before, after)));
+		LOGGER.info("connect en el service:");
+		LOGGER.info(before.toString());
+		LOGGER.info(after.toString());
+		LOGGER.info(repositorySourceType.toString());
+		LOGGER.info(repositorySourceType.toString());
+		connectionChangedEventListeners.forEach(l -> l.on(new ConnectionChangedEvent(before, after, repositorySourceType)));
 	}
 
 	/*
@@ -162,7 +180,7 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 			this.repositoryDataSourceGitHub.disconnect(repositorySourceType);
 		}
 		EnumConnectionType after = getConnectionType(repositorySourceType);
-		connectionChangedEventListeners.forEach(l -> l.on(new ConnectionChangedEvent(before, after)));
+		connectionChangedEventListeners.forEach(l -> l.on(new ConnectionChangedEvent(before, after, repositorySourceType)));
 	}
 
 	/*
@@ -186,7 +204,11 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 	 */
 	@Override
 	public User getCurrentUser(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
+		LOGGER.info("get currentUser en el serviceeee...");
+		LOGGER.info(this.repositoryDataSourceGitLab.getCurrentUser(repositorySourceType).toString());
+		LOGGER.info("ES gitlab?? " + String.valueOf(repositorySourceType.equals(RepositorySourceType.GitLab)));
 		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			LOGGER.info("ueueueu");
 			return this.repositoryDataSourceGitLab.getCurrentUser(repositorySourceType);
 		} else {
 			return this.repositoryDataSourceGitHub.getCurrentUser(repositorySourceType);

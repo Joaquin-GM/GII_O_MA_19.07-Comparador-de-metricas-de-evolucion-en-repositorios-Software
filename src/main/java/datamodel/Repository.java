@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Objects;
 
+import app.RepositoryDataSourceService;
 import metricsengine.EvaluationResult;
 import metricsengine.Measure;
 import metricsengine.Metric;
@@ -260,5 +261,14 @@ public class Repository implements Serializable {
 				return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
 			}
 		};
+	}
+	
+	public RepositorySourceType getRepositoryDataSourceType() {
+		if (getUrl().contains("https://gitlab.com")) {
+			return RepositorySourceType.GitLab;
+		} else if (getUrl().contains("https://github.com")) {
+			return RepositorySourceType.GitHub;
+		}
+		return null;
 	}
 }

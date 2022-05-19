@@ -1,5 +1,9 @@
 package gui.views.connectionforms;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
@@ -7,16 +11,21 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
 import app.RepositoryDataSourceService;
+import app.listeners.ConnectionChangedEvent;
 import datamodel.RepositorySourceType;
 import datamodel.User;
 import exceptions.RepositoryDataSourceException;
+import repositorydatasource.RepositoryDataSource;
 import repositorydatasource.RepositoryDataSource.EnumConnectionType;
+import repositorydatasource.RepositoryDataSourceUsingGitlabAPI;
 
 /**
  * @author Miguel Ángel León Bardavío - mlb0029
  *
  */
 public class ConnectionInfoComponent extends Div {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionInfoComponent.class);
 
 	/**
 	 * Description.
@@ -26,15 +35,15 @@ public class ConnectionInfoComponent extends Div {
 	private static final long serialVersionUID = 5985569310011263808L;
 
 	private Image userAvatar = new Image();
-	
+
 	private Label connectionInfoLabel = new Label();
-	
+
 	private RepositorySourceType repositorySourceType;
-	
+
 	public RepositorySourceType getRepositorySource() {
 		return repositorySourceType;
 	}
-	
+
 	/**
 	 * Constructor.
 	 *
@@ -42,9 +51,18 @@ public class ConnectionInfoComponent extends Div {
 	 */
 	public ConnectionInfoComponent(RepositorySourceType repositorySourceType) {
 		this.repositorySourceType = repositorySourceType;
+
 		RepositoryDataSourceService rds = RepositoryDataSourceService.getInstance();
-		rds.addConnectionChangedEventListener(event -> update(event.getConnectionTypeAfter()));
+		rds.addConnectionChangedEventListener(event -> update(event)
+
+		);
+
+		LOGGER.info("ANTES DE UPDATE");
+		LOGGER.info(repositorySourceType.toString());
+		
+		// TODO este update no sé si tengo que quitarlo o ponerle más condiciones, es el primero
 		update(rds.getConnectionType(repositorySourceType));
+		
 		userAvatar.setWidth("50px");
 		userAvatar.setHeight("50px");
 		userAvatar.setAlt("User Avatar");
@@ -74,22 +92,31 @@ public class ConnectionInfoComponent extends Div {
 		return connectionInfoLabel;
 	}
 
+	/**
+	 * @author Joaquin Garcia Molina - Joaquin-GM
+	 * @param event ConnectionChangedEvent
+	 */
+	public void update(ConnectionChangedEvent event) {
+		if (event.getRepositorySourceType() == repositorySourceType) {
+			update(event.getConnectionTypeAfter());
+		}
+	}
+	
 	public void update(EnumConnectionType connectionType) {
 		switch (connectionType) {
 		case NOT_CONNECTED:
 			userAvatar.setVisible(false);
 			userAvatar.setSrc("");
-			
+
 			connectionInfoLabel.setText("No connection to " + repositorySourceType);
-			
+
 			/*
-			if (repositorySource.equals("GitLab")) {
-				connectionInfoLabel.setText("No connection to GitLab");
-			} else if (repositorySource.equals("GitHub")) {
-				connectionInfoLabel.setText("No connection to GitHub");
-			}
-			*/
-			
+			 * if (repositorySource.equals("GitLab")) {
+			 * connectionInfoLabel.setText("No connection to GitLab"); } else if
+			 * (repositorySource.equals("GitHub")) {
+			 * connectionInfoLabel.setText("No connection to GitHub"); }
+			 */
+
 			break;
 		case CONNECTED:
 			userAvatar.setVisible(false);
@@ -98,10 +125,15 @@ public class ConnectionInfoComponent extends Div {
 			break;
 		case LOGGED:
 			try {
+				LOGGER.info("......................");
+				LOGGER.info(repositorySourceType.toString());
+				LOGGER.info(RepositoryDataSourceService.getInstance().toString());
 				User user = RepositoryDataSourceService.getInstance().getCurrentUser(repositorySourceType);
+				LOGGER.info(String.valueOf(user == null));
 				userAvatar.setVisible(true);
-				userAvatar.setSrc((user.getAvatarUrl() != null)?user.getAvatarUrl():"");
+				userAvatar.setSrc((user.getAvatarUrl() != null) ? user.getAvatarUrl() : "");
 				connectionInfoLabel.setText("Connected as: " + user.getUsername());
+				LOGGER.info("..........FIN............");
 			} catch (RepositoryDataSourceException e) {
 				userAvatar.setVisible(false);
 				userAvatar.setSrc("");

@@ -1,21 +1,27 @@
 package gui.views.connectionforms;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.textfield.PasswordField;
 
 import app.RepositoryDataSourceService;
+import datamodel.RepositorySourceType;
 import exceptions.RepositoryDataSourceException;
 
 /**
- * @author Miguel Ángel León Bardavío - mlb0029
+ * @author Miguel Ángel León Bardavío - mlb0029	 	 
+ * @author Joaquin Garcia Molina - Joaquin-GM
  *
  */
 public class ConnectionFormUsingPAToken extends ConnectionFormTemplate {
 	/**
 	 * Description.
 	 * 
-	 * @author Miguel Ángel León Bardavío - mlb0029
+	 * @author Miguel Ángel León Bardavío - mlb0029	 
+	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 */
 	private static final long serialVersionUID = 8537961583258938107L;
 
@@ -30,12 +36,16 @@ public class ConnectionFormUsingPAToken extends ConnectionFormTemplate {
 	private Label tokenLabel;
 	private PasswordField tokenField;
 	
-	public ConnectionFormUsingPAToken() {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionFormUsingPAToken.class);
+	
+	public ConnectionFormUsingPAToken(RepositorySourceType repositorySourceType) {
 		super(
 				TAB_NAME, 
 				DESCRIPTION, 
 				BUTTON_ICON, 
-				BUTTON_TEXT);
+				BUTTON_TEXT,
+				repositorySourceType
+				);
 	}
 
 	/* (non-Javadoc)
@@ -73,7 +83,10 @@ public class ConnectionFormUsingPAToken extends ConnectionFormTemplate {
 
 	@Override
 	protected void connect() throws RepositoryDataSourceException {
-		RepositoryDataSourceService.getInstance().connect(tokenField.getValue());
+		LOGGER.info("-- connect en ConnectionFormUsingPAToken --");
+		LOGGER.info(tokenField.getValue());
+		LOGGER.info(getRepositorySource().toString());
+		RepositoryDataSourceService.getInstance().connect(tokenField.getValue(), getRepositorySource());
 	}
 
 }

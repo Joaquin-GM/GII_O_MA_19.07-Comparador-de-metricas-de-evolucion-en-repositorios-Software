@@ -14,6 +14,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import app.RepositoriesCollectionService;
 import app.RepositoryDataSourceService;
 import datamodel.Repository;
+import datamodel.RepositorySourceType;
 import exceptions.RepositoryDataSourceException;
 import repositorydatasource.RepositoryDataSource;
 
@@ -44,14 +45,15 @@ public class AddRepositoryFormByUsername extends AddRepositoryFormTemplate {
 	 * @param buttonIcon
 	 * @param buttonText
 	 */
-	public AddRepositoryFormByUsername() {
+	public AddRepositoryFormByUsername(RepositorySourceType repositorySourceType) {
 		super(
 				TAB_NAME, 
-				DESCRIPTION 
+				DESCRIPTION,
+				repositorySourceType
 		);
 		addAddedSuccessfulListener(x -> {
 			repositoryComboBox.clear();
-			updateUserRepositories();
+			updateUserRepositories(repositorySourceType);
 		});
 	}
 
@@ -70,12 +72,12 @@ public class AddRepositoryFormByUsername extends AddRepositoryFormTemplate {
 	 * @see gui.views.addrepositoryform.AddRepositoryFormTemplate#addFormElements()
 	 */
 	@Override
-	protected void addFormElements() {
+	protected void addFormElements(RepositorySourceType repositorySourceType) {
 		usernameTextField = new TextField();
 		usernameTextField.setWidth("50%");
 		usernameTextField.setPlaceholder("User ID or username");
 		usernameTextField.setClearButtonVisible(true);
-		usernameTextField.addValueChangeListener(event -> updateUserRepositories());
+		usernameTextField.addValueChangeListener(event -> updateUserRepositories(repositorySourceType));
 		usernameTextField.setRequired(true);
 		
 		repositoryComboBox = new ComboBox<Repository>();
@@ -94,17 +96,17 @@ public class AddRepositoryFormByUsername extends AddRepositoryFormTemplate {
 	 * @see gui.views.addrepositoryform.AddRepositoryFormTemplate#connect()
 	 */
 	@Override
-	protected Repository getRepositoryFromForms() throws RepositoryDataSourceException {
+	protected Repository getRepositoryFromForms(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		return repositoryComboBox.getOptionalValue().orElse(null);
 	}
 
-	private void updateUserRepositories() {
+	private void updateUserRepositories(RepositorySourceType repositorySourceType) {
 		try {
 			RepositoryDataSource repositoryDataSource = RepositoryDataSourceService.getInstance();
 			RepositoriesCollectionService repositoriesService = RepositoriesCollectionService.getInstance();
 			if (!usernameTextField.isEmpty()) {
 				Collection<Repository> repositories = new ArrayList<Repository>();
-				repositories = repositoryDataSource.getAllUserRepositories(usernameTextField.getValue())
+				repositories = repositoryDataSource.getAllUserRepositories(usernameTextField.getValue(), repositorySourceType)
 						.stream()
 						.filter(r -> !repositoriesService.getRepositories().contains(r))
 						.sorted(Repository.getComparatorByName())

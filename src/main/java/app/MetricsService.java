@@ -19,6 +19,7 @@ import app.listeners.CurrentMetricProfileChangedEvent;
 import app.listeners.Listener;
 import datamodel.Repository;
 import datamodel.RepositoryInternalMetrics;
+import datamodel.RepositorySourceType;
 import exceptions.MetricsServiceException;
 import exceptions.RepositoryDataSourceException;
 import metricsengine.Measure;
@@ -47,6 +48,7 @@ import repositorydatasource.RepositoryDataSource;
  * Facade for the use of the metric motor.
  * 
  * @author Miguel Ángel León Bardavío - mlb0029
+ * @author Joaquin Garcia Molina - Joaquin-GM
  *
  */
 public class MetricsService implements Serializable {
@@ -248,7 +250,15 @@ public class MetricsService implements Serializable {
 		RepositoryDataSource repositoryDataSource = RepositoryDataSourceService.getInstance();
 		RepositoryInternalMetrics repositoryInternalMetrics = null;
 		
-		repositoryInternalMetrics = repositoryDataSource.getRepositoryInternalMetrics(repository);
+		
+		if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitLab)) {
+			repositoryInternalMetrics = repositoryDataSource.getRepositoryInternalMetrics(repository, RepositorySourceType.GitLab);
+		} else if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitHub)) {
+			repositoryInternalMetrics = repositoryDataSource.getRepositoryInternalMetrics(repository, RepositorySourceType.GitHub);
+		}
+		
+		
+		repositoryInternalMetrics = repositoryDataSource.getRepositoryInternalMetrics(repository, repository.getRepositoryDataSourceType());
 		repository.setRepositoryInternalMetrics(repositoryInternalMetrics);
 		
 		evaluateRepositoryMetrics(repository);

@@ -14,11 +14,13 @@ import com.vaadin.flow.component.textfield.TextField;
 import app.RepositoriesCollectionService;
 import app.RepositoryDataSourceService;
 import datamodel.Repository;
+import datamodel.RepositorySourceType;
 import exceptions.RepositoryDataSourceException;
 import repositorydatasource.RepositoryDataSource;
 
 /**
- * @author Miguel Ángel León Bardavío - mlb0029
+ * @author Miguel Ángel León Bardavío - mlb0029	 	 
+ * @author Joaquin Garcia Molina - Joaquin-GM
  *
  */
 public class AddRepositoryFormByGroup extends AddRepositoryFormTemplate {
@@ -49,14 +51,15 @@ public class AddRepositoryFormByGroup extends AddRepositoryFormTemplate {
 	 * @param buttonIcon
 	 * @param buttonText
 	 */
-	public AddRepositoryFormByGroup() {
+	public AddRepositoryFormByGroup(RepositorySourceType repositorySourceType) {
 		super(
 				TAB_NAME, 
-				DESCRIPTION 
+				DESCRIPTION,
+				repositorySourceType
 		);
 		addAddedSuccessfulListener(x -> {
 			repositoryComboBox.clear();
-			updateGroupRepositories();
+			updateGroupRepositories(repositorySourceType);
 		});
 	}
 
@@ -75,7 +78,7 @@ public class AddRepositoryFormByGroup extends AddRepositoryFormTemplate {
 	 * @see gui.views.addrepositoryform.AddRepositoryFormTemplate#addFormElements()
 	 */
 	@Override
-	protected void addFormElements() {
+	protected void addFormElements(RepositorySourceType repositorySourceType) {
 		groupNameTextField = new TextField();
 		repositoryComboBox = new ComboBox<Repository>();
 		
@@ -83,7 +86,7 @@ public class AddRepositoryFormByGroup extends AddRepositoryFormTemplate {
 		groupNameTextField.setWidth("50%");
 		groupNameTextField.setPlaceholder("Group ID or groupname");
 		groupNameTextField.setClearButtonVisible(true);
-		groupNameTextField.addValueChangeListener(event -> updateGroupRepositories());
+		groupNameTextField.addValueChangeListener(event -> updateGroupRepositories(repositorySourceType));
 		groupNameTextField.setRequired(true);
 		
 		repositoryComboBox = new ComboBox<Repository>();
@@ -102,17 +105,17 @@ public class AddRepositoryFormByGroup extends AddRepositoryFormTemplate {
 	 * @see gui.views.addrepositoryform.AddRepositoryFormTemplate#connect()
 	 */
 	@Override
-	protected Repository getRepositoryFromForms() {
+	protected Repository getRepositoryFromForms(RepositorySourceType repositorySourceType) {
 		return repositoryComboBox.getOptionalValue().orElse(null);
 	}
 	
-	private void updateGroupRepositories() {
+	private void updateGroupRepositories(RepositorySourceType repositorySourceType) {
 		try {
 			RepositoryDataSource repositoryDataSource = RepositoryDataSourceService.getInstance();
 			RepositoriesCollectionService repositoriesService = RepositoriesCollectionService.getInstance();
 			if (!groupNameTextField.isEmpty()) {
 				Collection<Repository> repositories = new ArrayList<Repository>();
-				repositories = repositoryDataSource.getAllGroupRepositories(groupNameTextField.getValue())
+				repositories = repositoryDataSource.getAllGroupRepositories(groupNameTextField.getValue(), repositorySourceType)
 						.stream()
 						.filter(r -> !repositoriesService.getRepositories().contains(r))
 						.sorted(Repository.getComparatorByName())

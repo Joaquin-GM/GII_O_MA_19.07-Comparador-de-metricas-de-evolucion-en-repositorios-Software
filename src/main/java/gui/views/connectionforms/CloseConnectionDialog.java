@@ -47,7 +47,7 @@ public class CloseConnectionDialog extends Dialog {
 		
 		addOpenedChangeListener(event ->{
 			if(event.isOpened()) {
-				if (rds.getConnectionType().equals(EnumConnectionType.NOT_CONNECTED)) {
+				if (rds.getConnectionType(repositorySourceType).equals(EnumConnectionType.NOT_CONNECTED)) {
 					closeConnectionButton.setText("Connect");
 					closeConnectionButton.setIcon(VaadinIcon.CONNECT.create());
 				} else {
@@ -59,9 +59,9 @@ public class CloseConnectionDialog extends Dialog {
 		
 		closeConnectionButton.addClickListener(event ->  
 		{
-			if(rds.getConnectionType() != EnumConnectionType.NOT_CONNECTED) {
+			if(rds.getConnectionType(repositorySourceType) != EnumConnectionType.NOT_CONNECTED) {
 				try {
-					rds.disconnect();
+					rds.disconnect(repositorySourceType);
 				} catch (RepositoryDataSourceException e) {
 					LOGGER.error("" + e.getMessage());
 					ConfirmDialog.createError()

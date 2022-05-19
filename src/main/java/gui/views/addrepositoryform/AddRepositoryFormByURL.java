@@ -4,6 +4,7 @@ import com.vaadin.flow.component.textfield.TextField;
 
 import app.RepositoryDataSourceService;
 import datamodel.Repository;
+import datamodel.RepositorySourceType;
 import exceptions.RepositoryDataSourceException;
 
 /**
@@ -34,10 +35,11 @@ public class AddRepositoryFormByURL extends AddRepositoryFormTemplate {
 	 * @param buttonIcon
 	 * @param buttonText
 	 */
-	public AddRepositoryFormByURL() {
+	public AddRepositoryFormByURL(RepositorySourceType repositorySourceType) {
 		super(
 				TAB_NAME, 
-				DESCRIPTION 
+				DESCRIPTION,
+				repositorySourceType
 		);
 		addAddedSuccessfulListener(x -> clearFields());
 	}
@@ -55,7 +57,7 @@ public class AddRepositoryFormByURL extends AddRepositoryFormTemplate {
 	 * @see gui.views.addrepositoryform.AddRepositoryFormTemplate#addFormElements()
 	 */
 	@Override
-	protected void addFormElements() {
+	protected void addFormElements(RepositorySourceType repositorySourceType) {
 		this.urlTextField = new TextField();
 		urlTextField.setPlaceholder("Project URL");
 		urlTextField.setWidthFull();
@@ -67,7 +69,7 @@ public class AddRepositoryFormByURL extends AddRepositoryFormTemplate {
 	 * @see gui.views.addrepositoryform.AddRepositoryFormTemplate#createRepository()
 	 */
 	@Override
-	protected Repository getRepositoryFromForms() throws RepositoryDataSourceException {
-		return RepositoryDataSourceService.getInstance().getRepository(urlTextField.getOptionalValue().orElse(""));
+	protected Repository getRepositoryFromForms(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
+		return RepositoryDataSourceService.getInstance().getRepository(urlTextField.getOptionalValue().orElse(""), repositorySourceType);
 	}
 }
