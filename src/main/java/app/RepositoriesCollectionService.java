@@ -25,9 +25,14 @@ import metricsengine.numeric_value_metrics.MetricAverageDaysToCloseAnIssue;
 import metricsengine.numeric_value_metrics.MetricChangeActivityRange;
 import metricsengine.numeric_value_metrics.MetricCommitsPerIssue;
 import metricsengine.numeric_value_metrics.MetricDaysBetweenFirstAndLastCommit;
+import metricsengine.numeric_value_metrics.MetricJobsLastYear;
 import metricsengine.numeric_value_metrics.MetricPeakChange;
 import metricsengine.numeric_value_metrics.MetricPercentageClosedIssues;
+import metricsengine.numeric_value_metrics.MetricReleasesLastYear;
 import metricsengine.numeric_value_metrics.MetricTotalNumberOfIssues;
+import metricsengine.numeric_value_metrics.MetricTotalNumberOfJobTypes;
+import metricsengine.numeric_value_metrics.MetricTotalNumberOfJobs;
+import metricsengine.numeric_value_metrics.MetricTotalNumberOfReleases;
 import metricsengine.numeric_value_metrics.ProjectEvaluation;
 import metricsengine.values.IValue;
 import metricsengine.values.NumericValue;
@@ -131,6 +136,8 @@ public class RepositoriesCollectionService implements Serializable {
 	 * Exports the repositories to a csv file and return the input stream..
 	 * 
 	 * @author Miguel Ángel León Bardavío - mlb0029
+	 * @author Joaquin Garcia Molina - Joaquin-GM
+	 * 
 	 * @return An input stream containing the csv file.
 	 * @throws RepositoriesCollectionServiceException when problems occur when exporting.
 	 */
@@ -143,6 +150,7 @@ public class RepositoriesCollectionService implements Serializable {
 			header += "Name" + ";";
 			header += "URL" + ";";
 			header += "Date" + ";";
+			
 			header +=  MetricTotalNumberOfIssues.DEFAULT_METRIC_DESCRIPTION.getName() + ";";
 			header +=  MetricCommitsPerIssue.DEFAULT_METRIC_DESCRIPTION.getName() + ";";
 			header +=  MetricPercentageClosedIssues.DEFAULT_METRIC_DESCRIPTION.getName() + ";";
@@ -151,6 +159,13 @@ public class RepositoriesCollectionService implements Serializable {
 			header +=  MetricDaysBetweenFirstAndLastCommit.DEFAULT_METRIC_DESCRIPTION.getName() + ";";
 			header +=  MetricChangeActivityRange.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0].trim() + ";";
 			header +=  MetricPeakChange.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0].trim() + ";";
+
+			header +=  MetricTotalNumberOfJobs.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0].trim() + ";";
+			header +=  MetricJobsLastYear.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0].trim() + ";";
+			header +=  MetricTotalNumberOfJobTypes.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0].trim() + ";";
+			header +=  MetricTotalNumberOfReleases.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0].trim() + ";";
+			header +=  MetricReleasesLastYear.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0].trim() + ";";
+			
 			sb.append(header + "\n");
 			String line;
 			for (Repository repository : repositoriesCollection) {
@@ -165,7 +180,14 @@ public class RepositoriesCollectionService implements Serializable {
 				line += getValueMeasuredForMetric(repository, MetricAverageDaysBetweenCommits.class) + ";";
 				line += getValueMeasuredForMetric(repository, MetricDaysBetweenFirstAndLastCommit.class) + ";";
 				line += getValueMeasuredForMetric(repository, MetricChangeActivityRange.class) + ";";
-				line += getValueMeasuredForMetric(repository, MetricPeakChange.class);
+				line += getValueMeasuredForMetric(repository, MetricPeakChange.class) + ";";
+				
+				line += getValueMeasuredForMetric(repository, MetricTotalNumberOfJobs.class) + ";";
+				line += getValueMeasuredForMetric(repository, MetricJobsLastYear.class) + ";";
+				line += getValueMeasuredForMetric(repository, MetricTotalNumberOfJobTypes.class) + ";";
+				line += getValueMeasuredForMetric(repository, MetricTotalNumberOfReleases.class) + ";";
+				line += getValueMeasuredForMetric(repository, MetricReleasesLastYear.class) + ";";
+			
 				sb.append(line + "\n");
 			}
 			bos.write(sb.toString().getBytes());
