@@ -196,19 +196,6 @@ public class RepositoriesGrid extends Grid<Repository> {
 
 		Div procOrientHeader = new Div(new Span("Process Orientation"));
 
-		Icon questionIcon = VaadinIcon.INFO_CIRCLE_O.create();
-		questionIcon.setSize("16px");
-		questionIcon.setColor("blue");
-		questionIcon.setClassName("info-hover-icon");
-
-		Tooltip tooltip = new Tooltip();
-		tooltip.attachToComponent(questionIcon);
-		tooltip.setClassName("custom-tooltip");
-		tooltip.add(new Paragraph(
-				"Metrics P1 and P2 need authenticated connection of GiLab (username and password or personal access token)"));
-
-		procOrientHeader.add(questionIcon, tooltip);
-
 		procOrientHeader.getStyle().set("text-align", "center");
 		procOrientHeader.setSizeFull();
 		metricsClassification.join(i1MetricColumn, i2MetricColumn, i3MetricColumn)
@@ -230,8 +217,21 @@ public class RepositoriesGrid extends Grid<Repository> {
 		metricsClassification.join(ti1MetricColumn, tc1MetricColumn, tc2MetricColumn, tc3MetricColumn, c1MetricColumn)
 				.setComponent(timeConstraintsHeader);
 		
-		
 		Div CICDHeader = new Div(new Span("CI/CD"));
+		
+		Icon questionIcon = VaadinIcon.INFO_CIRCLE_O.create();
+		questionIcon.setSize("16px");
+		questionIcon.setColor("blue");
+		questionIcon.setClassName("info-hover-icon");
+
+		Tooltip tooltip = new Tooltip();
+		tooltip.attachToComponent(questionIcon);
+		tooltip.setClassName("custom-tooltip");
+		tooltip.add(new Paragraph(
+				"CI/CD related metrics need authenticated connection of GiLab (username and password or personal access token)"));
+
+		CICDHeader.add(questionIcon, tooltip);
+		
 		CICDHeader.getStyle().set("text-align", "center");
 		CICDHeader.setSizeFull();
 		metricsClassification.join(ic1MetricColumn, ic2MetricColumn, ic3MetricColumn, dc1MetricColumn, dc2MetricColumn)
