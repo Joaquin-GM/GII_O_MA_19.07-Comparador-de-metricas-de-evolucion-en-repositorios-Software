@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import org.kohsuke.github.GHRelease;
+import org.kohsuke.github.GHWorkflowJob;
+
 
 /**
  * Stores the metrics that can be obtained directly from the repository and used to calculate the rest of the metrics.
@@ -60,6 +63,16 @@ public class RepositoryInternalMetrics implements Serializable{
 	 * Releases (default successful ones).
 	 */
 	private Collection<CustomGitlabApiRelease> releases = null;
+	
+	/**
+	 * Jobs (default successful ones).
+	 */
+	private Collection<GHWorkflowJob> ghJobs = null;
+	
+	/**
+	 * Releases (default successful ones).
+	 */
+	private Collection<GHRelease> ghReleases = null;
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -112,7 +125,7 @@ public class RepositoryInternalMetrics implements Serializable{
 	/**
 	 * Sets all the metrics.
 	 *
-	 * @author Miguel Ángel León Bardavío - mlb0029
+	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 * @param totalNumberOfIssues Total number of issues.
 	 * @param totalNumberOfCommits Total number of commits.
 	 * @param numberOfClosedIssues Number of closed issues.
@@ -319,5 +332,45 @@ public class RepositoryInternalMetrics implements Serializable{
 	 */
 	public void setReleases(List<CustomGitlabApiRelease> releases) {
 		this.releases = releases;
+	}
+	
+	/**
+	 * Gets the jobs of a repository.
+	 * 
+	 * @author Joaquin Garcia Molina - Joaquin-GM
+	 * @return list of the jobs of the repository
+	 */
+	public Collection<GHWorkflowJob> getGHJobs() {
+		return ghJobs;
+	}
+	
+	/**
+	 * Sets the jobs of a repository.
+	 * 
+	 * @author Joaquin Garcia Molina - Joaquin-GM
+	 * @param jobs list of the jobs of the repository
+	 */
+	public void setGHJobs(List<GHWorkflowJob> jobs) {
+		this.ghJobs = jobs;
+	}
+	
+	/**
+	 * Gets the releases of a repository.
+	 * 
+	 * @author Joaquin Garcia Molina - Joaquin-GM
+	 * @return list of the releases of the repository
+	 */
+	public Collection<GHRelease> getGHReleases() {
+		return ghReleases;
+	}
+
+	/**
+	 * Sets the jobs of a repository.
+	 * 
+	 * @author Joaquin Garcia Molina - Joaquin-GM
+	 * @param releases list of the releases of the repository
+	 */
+	public void setGHReleases(List<GHRelease> releases) {
+		this.ghReleases = releases;
 	}
 }

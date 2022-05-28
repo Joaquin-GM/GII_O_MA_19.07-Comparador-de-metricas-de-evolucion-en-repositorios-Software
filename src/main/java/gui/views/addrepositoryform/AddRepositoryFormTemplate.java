@@ -1,5 +1,7 @@
 package gui.views.addrepositoryform;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -116,6 +118,11 @@ public abstract class AddRepositoryFormTemplate implements AddRepositoryForm{
 		} catch (Exception e) {
 			LOGGER.error("error aqui!!!!!!!!!");
 			LOGGER.error("" + e.getMessage());
+			LOGGER.error("" + e.toString());
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			String exceptionAsString = sw.toString();
+			LOGGER.error(exceptionAsString);
 			String errorMessage = "An error has occurred. Please, contact the application administrator.";
 			getResult().setClassName("errorMessage");
 			getResult().setText(errorMessage);

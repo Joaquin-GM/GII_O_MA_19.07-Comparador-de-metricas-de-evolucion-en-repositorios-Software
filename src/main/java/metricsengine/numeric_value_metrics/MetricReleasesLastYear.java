@@ -5,9 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.kohsuke.github.GHRelease;
+
 import app.RepositoryDataSourceService;
 import datamodel.CustomGitlabApiRelease;
 import datamodel.Repository;
+import datamodel.RepositorySourceType;
 import metricsengine.MetricDescription;
 import metricsengine.values.NumericValue;
 import metricsengine.values.ValueDecimal;
@@ -109,17 +112,35 @@ public class MetricReleasesLastYear extends NumericValueMetricTemplate {
 		long day365 = 365l * 24 * 60 * 60 * 1000;
 		Date currentYearLimitDate = new Date((now.getTime() - day365));
 
-		List<CustomGitlabApiRelease> releasesLastYear = new ArrayList<CustomGitlabApiRelease>();
-		List<CustomGitlabApiRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getReleases().stream()
-				.collect(Collectors.toList());
 
-		for (int i = 0; i < repositoryReleases.size(); i++) {
-			CustomGitlabApiRelease release = repositoryReleases.get(i);
+		if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitLab)) {
+			List<CustomGitlabApiRelease> releasesLastYear = new ArrayList<CustomGitlabApiRelease>();
+			List<CustomGitlabApiRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getReleases().stream()
+					.collect(Collectors.toList());
 
-			if (release.getRelease() != null && release.getRelease().getReleasedAt() != null && release.getRelease().getReleasedAt().after(currentYearLimitDate)) {
-				releasesLastYear.add(release);
+			for (int i = 0; i < repositoryReleases.size(); i++) {
+				CustomGitlabApiRelease release = repositoryReleases.get(i);
+
+				if (release.getRelease() != null && release.getRelease().getReleasedAt() != null && release.getRelease().getReleasedAt().after(currentYearLimitDate)) {
+					releasesLastYear.add(release);
+				}
 			}
+			return new ValueInteger(releasesLastYear.size());
+			
+		} else {
+			// GitHub
+			List<GHRelease> releasesLastYear = new ArrayList<GHRelease>();
+			List<GHRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getGHReleases().stream()
+					.collect(Collectors.toList());
+
+			for (int i = 0; i < repositoryReleases.size(); i++) {
+				GHRelease release = repositoryReleases.get(i);
+
+				if (release != null && release.getPublished_at() != null && release.getPublished_at().after(currentYearLimitDate)) {
+					releasesLastYear.add(release);
+				}
+			}
+			return new ValueInteger(releasesLastYear.size());
 		}
-		return new ValueInteger(releasesLastYear.size());
 	}
 }

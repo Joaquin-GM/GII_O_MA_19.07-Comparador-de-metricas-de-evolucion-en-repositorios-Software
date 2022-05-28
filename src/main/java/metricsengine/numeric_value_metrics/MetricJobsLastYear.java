@@ -5,9 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.kohsuke.github.GHWorkflowJob;
+
 import app.RepositoryDataSourceService;
 import datamodel.CustomGitlabApiJob;
 import datamodel.Repository;
+import datamodel.RepositorySourceType;
 import metricsengine.MetricDescription;
 import metricsengine.values.NumericValue;
 import metricsengine.values.ValueDecimal;
@@ -109,17 +112,35 @@ public class MetricJobsLastYear extends NumericValueMetricTemplate {
 		long day365 = 365l * 24 * 60 * 60 * 1000;
 		Date currentYearLimitDate = new Date((now.getTime() - day365));
 
-		List<CustomGitlabApiJob> jobsLastYear = new ArrayList<CustomGitlabApiJob>();
-		List<CustomGitlabApiJob> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
-				.collect(Collectors.toList());
 
-		for (int i = 0; i < repositoryJobs.size(); i++) {
-			CustomGitlabApiJob job = repositoryJobs.get(i);
+		if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitLab)) {
+			List<CustomGitlabApiJob> jobsLastYear = new ArrayList<CustomGitlabApiJob>();
+			List<CustomGitlabApiJob> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
+					.collect(Collectors.toList());
 
-			if (job.getJob() != null && job.getJob().getFinishedAt() != null && job.getJob().getFinishedAt().after(currentYearLimitDate)) {
-				jobsLastYear.add(job);
+			for (int i = 0; i < repositoryJobs.size(); i++) {
+				CustomGitlabApiJob job = repositoryJobs.get(i);
+
+				if (job.getJob() != null && job.getJob().getFinishedAt() != null && job.getJob().getFinishedAt().after(currentYearLimitDate)) {
+					jobsLastYear.add(job);
+				}
 			}
+			return new ValueInteger(jobsLastYear.size());
+			
+		} else {
+			// GitHub
+			List<GHWorkflowJob> jobsLastYear = new ArrayList<GHWorkflowJob>();
+			List<GHWorkflowJob> repositoryJobs = repository.getRepositoryInternalMetrics().getGHJobs().stream()
+					.collect(Collectors.toList());
+
+			for (int i = 0; i < repositoryJobs.size(); i++) {
+				GHWorkflowJob job = repositoryJobs.get(i);
+
+				if (job != null && job.getCompletedAt() != null && job.getCompletedAt().after(currentYearLimitDate)) {
+					jobsLastYear.add(job);
+				}
+			}
+			return new ValueInteger(jobsLastYear.size());
 		}
-		return new ValueInteger(jobsLastYear.size());
 	}
 }

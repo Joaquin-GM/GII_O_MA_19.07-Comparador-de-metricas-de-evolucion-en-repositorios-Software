@@ -106,6 +106,7 @@ public class AddRepositoryFormByUsername extends AddRepositoryFormTemplate {
 			RepositoriesCollectionService repositoriesService = RepositoriesCollectionService.getInstance();
 			if (!usernameTextField.isEmpty()) {
 				Collection<Repository> repositories = new ArrayList<Repository>();
+				LOGGER.info("Buscando con el usuario: " + usernameTextField.getValue());
 				repositories = repositoryDataSource.getAllUserRepositories(usernameTextField.getValue(), repositorySourceType)
 						.stream()
 						.filter(r -> !repositoriesService.getRepositories().contains(r))

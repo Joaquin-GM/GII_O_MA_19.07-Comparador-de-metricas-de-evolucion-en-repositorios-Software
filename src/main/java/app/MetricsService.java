@@ -253,7 +253,7 @@ public class MetricsService implements Serializable {
 		LOGGER.info("repositoryDataSource obtenido");
 		RepositoryInternalMetrics repositoryInternalMetrics = null;
 		
-		
+		/*
 		if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitLab)) {
 			LOGGER.info("en el caso GitLab");
 			repositoryInternalMetrics = repositoryDataSource.getRepositoryInternalMetrics(repository, RepositorySourceType.GitLab);
@@ -262,7 +262,7 @@ public class MetricsService implements Serializable {
 
 			repositoryInternalMetrics = repositoryDataSource.getRepositoryInternalMetrics(repository, RepositorySourceType.GitHub);
 		}
-		
+		*/
 		
 		repositoryInternalMetrics = repositoryDataSource.getRepositoryInternalMetrics(repository, repository.getRepositoryDataSourceType());
 		LOGGER.info("despues de en el caso GitHub");

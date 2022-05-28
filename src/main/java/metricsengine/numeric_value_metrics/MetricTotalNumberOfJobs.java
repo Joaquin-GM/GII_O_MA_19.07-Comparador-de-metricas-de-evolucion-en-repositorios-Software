@@ -3,13 +3,19 @@ package metricsengine.numeric_value_metrics;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.kohsuke.github.GHWorkflowJob;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import app.RepositoryDataSourceService;
 import datamodel.CustomGitlabApiJob;
 import datamodel.Repository;
+import datamodel.RepositorySourceType;
 import metricsengine.MetricDescription;
 import metricsengine.values.NumericValue;
 import metricsengine.values.ValueDecimal;
 import metricsengine.values.ValueInteger;
+import repositorydatasource.RepositoryDataSourceUsingGitlabAPI;
 import repositorydatasource.RepositoryDataSource.EnumConnectionType;
 
 /**
@@ -19,6 +25,11 @@ import repositorydatasource.RepositoryDataSource.EnumConnectionType;
  *
  */
 public class MetricTotalNumberOfJobs extends NumericValueMetricTemplate {
+	/**
+	 * Logger.
+	 */
+	private static final Logger LOGGER = LoggerFactory.getLogger(MetricTotalNumberOfJobs.class);
+
 	/**
 	 * Description.
 	 * 
@@ -103,9 +114,20 @@ public class MetricTotalNumberOfJobs extends NumericValueMetricTemplate {
 	 */
 	@Override
 	public NumericValue run(Repository repository) {
-		List<CustomGitlabApiJob> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
-				.collect(Collectors.toList());
+		LOGGER.info("MetricTotalNumberOfJobs numericValue");
+		
+		if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitLab)) {
+			List<CustomGitlabApiJob> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
+					.collect(Collectors.toList());
 
-		return new ValueInteger(repositoryJobs.size());
+			return new ValueInteger(repositoryJobs.size());
+		} else {
+			// GitHub
+			List<GHWorkflowJob> repositoryJobs = repository.getRepositoryInternalMetrics().getGHJobs().stream()
+					.collect(Collectors.toList());
+
+			return new ValueInteger(repositoryJobs.size());
+		}
+		
 	}
 }

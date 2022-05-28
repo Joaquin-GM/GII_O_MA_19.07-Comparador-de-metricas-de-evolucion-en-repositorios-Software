@@ -5,9 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.kohsuke.github.GHWorkflowJob;
+
 import app.RepositoryDataSourceService;
 import datamodel.CustomGitlabApiJob;
 import datamodel.Repository;
+import datamodel.RepositorySourceType;
 import metricsengine.MetricDescription;
 import metricsengine.values.NumericValue;
 import metricsengine.values.ValueDecimal;
@@ -108,15 +111,29 @@ public class MetricTotalNumberOfJobTypes extends NumericValueMetricTemplate {
 		
 		List<String> jobTypesList = new ArrayList<String>();
 		
-		List<CustomGitlabApiJob> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
-				.collect(Collectors.toList());
-				
-		for (int i = 0; i < repositoryJobs.size(); i++) {
-			CustomGitlabApiJob job = repositoryJobs.get(i);
-			if (job.getName() != null && !jobTypesList.contains(job.getName())) {
-				jobTypesList.add(job.getName());
+		if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitLab)) {
+			List<CustomGitlabApiJob> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
+					.collect(Collectors.toList());
+					
+			for (int i = 0; i < repositoryJobs.size(); i++) {
+				CustomGitlabApiJob job = repositoryJobs.get(i);
+				if (job.getName() != null && !jobTypesList.contains(job.getName())) {
+					jobTypesList.add(job.getName());
+				}
+			}
+		} else {
+			// GitHub
+			List<GHWorkflowJob> repositoryJobs = repository.getRepositoryInternalMetrics().getGHJobs().stream()
+					.collect(Collectors.toList());
+			
+			for (int i = 0; i < repositoryJobs.size(); i++) {
+				GHWorkflowJob job = repositoryJobs.get(i);
+				if (job.getName() != null && !jobTypesList.contains(job.getName())) {
+					jobTypesList.add(job.getName());
+				}
 			}
 		}
+		
 		return new ValueInteger(jobTypesList.size());
 	}
 }

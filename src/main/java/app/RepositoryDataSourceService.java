@@ -155,6 +155,7 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
 			this.repositoryDataSourceGitLab.connect(token, repositorySourceType);
 		} else {
+			LOGGER.info("Voy a iniciar con token en GitHub");
 			this.repositoryDataSourceGitHub.connect(token, repositorySourceType);
 		}
 		EnumConnectionType after = getConnectionType(repositorySourceType);

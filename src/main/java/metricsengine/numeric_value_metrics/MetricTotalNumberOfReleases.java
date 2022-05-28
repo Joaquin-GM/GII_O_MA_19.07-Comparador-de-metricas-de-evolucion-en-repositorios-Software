@@ -3,9 +3,12 @@ package metricsengine.numeric_value_metrics;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.kohsuke.github.GHRelease;
+
 import app.RepositoryDataSourceService;
 import datamodel.CustomGitlabApiRelease;
 import datamodel.Repository;
+import datamodel.RepositorySourceType;
 import metricsengine.MetricDescription;
 import metricsengine.values.NumericValue;
 import metricsengine.values.ValueDecimal;
@@ -29,19 +32,10 @@ public class MetricTotalNumberOfReleases extends NumericValueMetricTemplate {
 	/**
 	 * Default metric description.
 	 */
-	public static final MetricDescription DEFAULT_METRIC_DESCRIPTION = new MetricDescription(
-			"DC1",
-			"Total number of releases released",
-			"Need GitLab connection with authorization", 
-			"Joaquin Garcia Molina",
-			"CI/CD",
-			"How many releases have been successfully released?",
-			"NRR = Number of releases released",
-			"Repository", 
-			"NRR >= 0, better greater values.",
-			MetricDescription.EnumTypeOfScale.ABSOLUTE,
-			"NRR: Count"
-	);
+	public static final MetricDescription DEFAULT_METRIC_DESCRIPTION = new MetricDescription("DC1",
+			"Total number of releases released", "Need GitLab connection with authorization", "Joaquin Garcia Molina",
+			"CI/CD", "How many releases have been successfully released?", "NRR = Number of releases released",
+			"Repository", "NRR >= 0, better greater values.", MetricDescription.EnumTypeOfScale.ABSOLUTE, "NRR: Count");
 
 	/**
 	 * Minimum acceptable value.
@@ -79,12 +73,13 @@ public class MetricTotalNumberOfReleases extends NumericValueMetricTemplate {
 	 */
 	@Override
 	public Boolean check(Repository repository) {
-		// If not authenticated the metric is not calculated, GitLabApi requires authentication for 
+		// If not authenticated the metric is not calculated, GitLabApi requires
+		// authentication for
 		RepositoryDataSourceService rds = RepositoryDataSourceService.getInstance();
 		if (rds.getConnectionType(repository.getRepositoryDataSourceType()) != EnumConnectionType.LOGGED) {
 			return false;
 		}
-		
+
 		// Checks the repository is not empty
 		Integer totalNumberOfCommits = repository.getRepositoryInternalMetrics().getTotalNumberOfCommits();
 
@@ -103,9 +98,18 @@ public class MetricTotalNumberOfReleases extends NumericValueMetricTemplate {
 	 */
 	@Override
 	public NumericValue run(Repository repository) {
-		List<CustomGitlabApiRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getReleases().stream()
-				.collect(Collectors.toList());
 
-		return new ValueInteger(repositoryReleases.size());
+		if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitLab)) {
+			List<CustomGitlabApiRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getReleases()
+					.stream().collect(Collectors.toList());
+
+			return new ValueInteger(repositoryReleases.size());
+		} else {
+			// GitHub
+			List<GHRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getGHReleases()
+					.stream().collect(Collectors.toList());
+
+			return new ValueInteger(repositoryReleases.size());
+		}
 	}
 }
