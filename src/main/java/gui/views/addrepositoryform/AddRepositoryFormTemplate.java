@@ -85,8 +85,11 @@ public abstract class AddRepositoryFormTemplate implements AddRepositoryForm{
 		try {
 			Repository repository = getRepositoryFromForms(repositorySourceType);
 			if(repository != null) {
-				RepositoriesCollectionService.getInstance().addRepository(repository);
+				LOGGER.error("entro");
+				RepositoriesCollectionService.getInstance().addRepository(repository);	
+				LOGGER.error("he añadido el repository");
 				MetricsService.getMetricsService().obtainAndEvaluateRepositoryMetrics(repository);
+				LOGGER.error("despues de obtainAndEvaluateRepositoryMetrics");
 				listeners.forEach(l -> l.onAddedSuccessful(repository));
 				result.setText("Project added correctly");
 				result.setClassName("");				
@@ -111,6 +114,7 @@ public abstract class AddRepositoryFormTemplate implements AddRepositoryForm{
 			getResult().setText(errorMessage);
 			getResult().setTitle(errorMessage);
 		} catch (Exception e) {
+			LOGGER.error("error aqui!!!!!!!!!");
 			LOGGER.error("" + e.getMessage());
 			String errorMessage = "An error has occurred. Please, contact the application administrator.";
 			getResult().setClassName("errorMessage");

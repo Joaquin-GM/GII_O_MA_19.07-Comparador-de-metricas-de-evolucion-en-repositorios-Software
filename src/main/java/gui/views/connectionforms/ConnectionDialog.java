@@ -5,6 +5,10 @@ import java.util.List;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import gui.customcomponents.DialogHeader;
+import gui.views.addrepositoryform.AddRepositoryFormByGroup;
+import gui.views.addrepositoryform.AddRepositoryFormByURL;
+import gui.views.addrepositoryform.AddRepositoryFormByUsername;
+
 import org.claspina.confirmdialog.ConfirmDialog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,20 +103,34 @@ public class ConnectionDialog extends Dialog {
 	}
 
 	private void createConnectionForms() {
-
 		LOGGER.info("--------createConnectionForms-----------");
 		LOGGER.info(repositorySourceType.toString());
-		ConnectionForm userPasswordConnForm = new ConnectionFormUsingUserPassword(repositorySourceType);
-		connectionForms.add(userPasswordConnForm);
+		
+		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			ConnectionForm userPasswordConnForm = new ConnectionFormUsingUserPassword(repositorySourceType);
+			connectionForms.add(userPasswordConnForm);
 
-		ConnectionForm paTokenConnForm = new ConnectionFormUsingPAToken(repositorySourceType);
-		connectionForms.add(paTokenConnForm);
+			ConnectionForm paTokenConnForm = new ConnectionFormUsingPAToken(repositorySourceType);
+			connectionForms.add(paTokenConnForm);
 
-		ConnectionForm publicConnForm = new ConnectionFormUsingPublicConn(repositorySourceType);
-		connectionForms.add(publicConnForm);
+			ConnectionForm publicConnForm = new ConnectionFormUsingPublicConn(repositorySourceType);
+			connectionForms.add(publicConnForm);
 
-		ConnectionForm noConnForm = new ConnectionFormWithoutConn(repositorySourceType);
-		connectionForms.add(noConnForm);
+			ConnectionForm noConnForm = new ConnectionFormWithoutConn(repositorySourceType);
+			connectionForms.add(noConnForm);
+			
+		} else if (repositorySourceType.equals(RepositorySourceType.GitHub)) {
+			// Conection with username and password deprecated for GitHub
+			ConnectionForm paTokenConnForm = new ConnectionFormUsingPAToken(repositorySourceType);
+			connectionForms.add(paTokenConnForm);
+
+			ConnectionForm publicConnForm = new ConnectionFormUsingPublicConn(repositorySourceType);
+			connectionForms.add(publicConnForm);
+
+			ConnectionForm noConnForm = new ConnectionFormWithoutConn(repositorySourceType);
+			connectionForms.add(noConnForm);
+		}
+	
 	}
 
 }

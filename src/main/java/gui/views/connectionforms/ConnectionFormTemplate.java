@@ -101,6 +101,7 @@ public abstract class ConnectionFormTemplate implements ConnectionForm {
 	 * Description.
 	 * 
 	 * @author Miguel Ángel León Bardavío - mlb0029
+	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 */
 	private void onConnectButtonClick(RepositorySourceType repositorySourceType) {
 		try {

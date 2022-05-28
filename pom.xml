@@ -109,22 +109,32 @@
 			<version>5.0.1</version>
 			<scope>compile</scope>
 		</dependency>
-		
-		<!-- Github API -->
+
+		<!-- Github API so old, last update at 2013! -->
 		<!-- https://mvnrepository.com/artifact/org.eclipse.mylyn.github/org.eclipse.egit.github.core -->
 		<dependency>
-		    <groupId>org.eclipse.mylyn.github</groupId>
-		    <artifactId>org.eclipse.egit.github.core</artifactId>
-		    <version>2.1.5</version>
+			<groupId>org.eclipse.mylyn.github</groupId>
+			<artifactId>org.eclipse.egit.github.core</artifactId>
+			<version>2.1.5</version>
 		</dependency>
+
+		<!-- Github API alternative updated 2022 -->
+		<!-- https://mvnrepository.com/artifact/org.kohsuke/github-api -->
+		<dependency>
+			<groupId>org.kohsuke</groupId>
+			<artifactId>github-api</artifactId>
+			<version>1.306</version>
+		</dependency>
+
+
 		<!-- gson -->
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
-		    <groupId>com.google.code.gson</groupId>
-		    <artifactId>gson</artifactId>
-		    <version>2.3.1</version>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.3.1</version>
 		</dependency>
-		
+
 		<!-- LOGGER -->
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
 		<dependency>

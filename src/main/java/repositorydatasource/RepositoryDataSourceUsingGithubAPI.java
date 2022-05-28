@@ -11,14 +11,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.egit.github.core.Issue;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryCommit;
 import org.eclipse.egit.github.core.RepositoryId;
 import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.client.IGitHubConstants;
 import org.eclipse.egit.github.core.service.CommitService;
 import org.eclipse.egit.github.core.service.IssueService;
+import org.eclipse.egit.github.core.;
 
 import org.eclipse.egit.github.core.service.RepositoryService;
 import org.eclipse.egit.github.core.service.UserService;
@@ -75,7 +78,7 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 
 	private static final String HOST_URL = "https://github.com";
 
-	private Map<Integer, org.eclipse.egit.github.core.Repository> mapUrlIdRepo;
+	private Map<Long, org.eclipse.egit.github.core.Repository> mapUrlIdRepo;
 
 	/**
 	 * Constructor that returns a not connected githubrepositorydatasource.
@@ -84,7 +87,7 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 		connectionType = EnumConnectionType.NOT_CONNECTED;
 		githubclientApi = null;
 		currentUser = null;
-		mapUrlIdRepo = new HashMap<Integer, org.eclipse.egit.github.core.Repository>();
+		mapUrlIdRepo = new HashMap<Long, org.eclipse.egit.github.core.Repository>();
 	}
 
 	/**
@@ -112,7 +115,8 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	}
 
 	@Override
-	public void connect(String username, String password, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
+	public void connect(String username, String password, RepositorySourceType repositorySourceType)
+			throws RepositoryDataSourceException {
 		try {
 			if (username == null || password == null || username.isBlank() || password.isBlank())
 				throw new RepositoryDataSourceException(RepositoryDataSourceException.LOGIN_ERROR);
@@ -216,7 +220,8 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	}
 
 	@Override
-	public Collection<datamodel.Repository> getCurrentUserRepositories(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
+	public Collection<datamodel.Repository> getCurrentUserRepositories(RepositorySourceType repositorySourceType)
+			throws RepositoryDataSourceException {
 
 		try {
 			Collection<datamodel.Repository> resultrepositories = new ArrayList<datamodel.Repository>();
@@ -226,9 +231,8 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 						.getRepositories(currentUser.getUsername());
 
 				for (org.eclipse.egit.github.core.Repository repo : lRepositories) {
-					mapUrlIdRepo.put((int) repo.getId(), repo);
-					resultrepositories
-							.add(new datamodel.Repository(repo.getHtmlUrl(), repo.getName(), repo.getId()));
+					mapUrlIdRepo.put(repo.getId(), repo);
+					resultrepositories.add(new datamodel.Repository(repo.getHtmlUrl(), repo.getName(), repo.getId()));
 				}
 				return resultrepositories;
 			} else {
@@ -240,8 +244,8 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	}
 
 	@Override
-	public Collection<datamodel.Repository> getAllUserRepositories(String userIdOrUsername, RepositorySourceType repositorySourceType)
-			throws RepositoryDataSourceException {
+	public Collection<datamodel.Repository> getAllUserRepositories(String userIdOrUsername,
+			RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		Collection<datamodel.Repository> repositories;
 		try {
 			if (currentUser != null && currentUser.getUsername().equals(userIdOrUsername)) {
@@ -252,9 +256,8 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 						.getRepositories(userIdOrUsername);
 				Collection<datamodel.Repository> resultrepositories = new ArrayList<datamodel.Repository>();
 				for (org.eclipse.egit.github.core.Repository repo : lRepositories) {
-					mapUrlIdRepo.put((int) repo.getId(), repo);
-					resultrepositories
-							.add(new datamodel.Repository(repo.getHtmlUrl(), repo.getName(), repo.getId()));
+					mapUrlIdRepo.put(repo.getId(), repo);
+					resultrepositories.add(new datamodel.Repository(repo.getHtmlUrl(), repo.getName(), repo.getId()));
 				}
 				return resultrepositories;
 			} else {
@@ -269,14 +272,15 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	}
 
 	@Override
-	public Collection<datamodel.Repository> getAllGroupRepositories(String groupName, RepositorySourceType repositorySourceType)
-			throws RepositoryDataSourceException {
+	public Collection<datamodel.Repository> getAllGroupRepositories(String groupName,
+			RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		// API github for group and user work same way
 		return getAllUserRepositories(groupName, repositorySourceType);
 	}
 
 	@Override
-	public datamodel.Repository getRepository(String repositoryHTTPSURL, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
+	public datamodel.Repository getRepository(String repositoryHTTPSURL, RepositorySourceType repositorySourceType)
+			throws RepositoryDataSourceException {
 		Long projectId;
 		if (!connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
 			projectId = getProjectId(repositoryHTTPSURL);
@@ -306,7 +310,7 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 			String nombreProyecto = sProyecto.split("/")[sProyecto.split("/").length - 1];
 			String propietarioYGrupo = sProyecto.replaceAll("/" + nombreProyecto, "");
 			Repository repo = repositoryService.getRepository(propietarioYGrupo, nombreProyecto);
-			mapUrlIdRepo.put((int) repo.getId(), repo);
+			mapUrlIdRepo.put(repo.getId(), repo);
 			return repo.getId();
 		} catch (IOException e) {
 			return null;
@@ -342,11 +346,9 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	 * @return Repository.
 	 */
 	@Override
-	public datamodel.Repository getRepository(Long repositoryId, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
+	public datamodel.Repository getRepository(Long repositoryId, RepositorySourceType repositorySourceType)
+			throws RepositoryDataSourceException {
 		if (!connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
-			// Con Gihub API no se puede obtener el RepositorioID.
-			// El ID es un dato calculado que se obtiene con la Fabrica RepositoryID
-
 			if (mapUrlIdRepo.containsKey(repositoryId)) {
 				Repository repository = mapUrlIdRepo.get(repositoryId);
 				return new datamodel.Repository(repository.getUrl(), repository.getName(), repositoryId);
@@ -359,21 +361,50 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	}
 
 	@Override
-	public RepositoryInternalMetrics getRepositoryInternalMetrics(datamodel.Repository repository, RepositorySourceType repositorySourceType)
-			throws RepositoryDataSourceException {
+	public RepositoryInternalMetrics getRepositoryInternalMetrics(datamodel.Repository repository,
+			RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
+		
+		LOGGER.info("getRepositoryInternalMetrics en RepositoryDataSourceUsingGithubAPI");
+
+		
 		repositoryService = new RepositoryService(githubclientApi);
+		LOGGER.info("despues de instanciar el servico");
 
 		getRepository(repository.getId(), repositorySourceType);
+		LOGGER.info("despues de  getRepository");
 		Long projectId = repository.getId();
 
+		LOGGER.info("projectId obtenida: " + projectId);
+		
+		
 		Integer totalNumberOfIssues = getTotalNumberOfIssues(projectId);
+		LOGGER.info("totalNumberOfIssues obtenidas: " + String.valueOf(totalNumberOfIssues));
+		
 		Integer totalNumberOfCommits = getTotalNumberOfCommits(projectId);
 		Integer numberOfClosedIssues = getNumberOfClosedIssues(projectId);
 		List<Integer> daysToCloseEachIssue = getDaysToCloseEachIssue(projectId);
 		Set<Date> commitDates = getCommitsDates(projectId);
 		Integer lifeSpanMonths = getRepositoryLifeInMonths(projectId);
-		RepositoryInternalMetrics repositoryInternalMetrics = new RepositoryInternalMetrics(totalNumberOfIssues,
-				totalNumberOfCommits, numberOfClosedIssues, daysToCloseEachIssue, commitDates, lifeSpanMonths);
+		
+		
+		List<Job> jobs = getRepositoryJobs(projectId);
+		List<Release> releases = getRepositoryReleases(projectId);
+		
+		
+		RepositoryInternalMetrics repositoryInternalMetrics = new RepositoryInternalMetrics(
+				totalNumberOfIssues,
+				totalNumberOfCommits,
+				numberOfClosedIssues,
+				daysToCloseEachIssue,
+				commitDates,
+				lifeSpanMonths
+		);
+		
+
+
+		LOGGER.info("repositoryInternalMetrics obtenidas: ");
+		LOGGER.info(repositoryInternalMetrics.toString());
+		
 		return repositoryInternalMetrics;
 	}
 
