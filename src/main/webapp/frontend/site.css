@@ -61,3 +61,8 @@
 .custom-tooltip {
 	inset: 18px 0 auto auto !important;
 }
+
+.bold-label {
+	font-weight: bold;
+    padding-left: 12px;
+}

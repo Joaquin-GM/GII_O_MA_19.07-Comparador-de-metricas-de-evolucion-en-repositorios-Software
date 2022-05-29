@@ -505,16 +505,29 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	/**
 	 * Gets days to close each issue of a project.
 	 * 
+	 * Added second condition for Issued closed by milestones, they have closed
+	 * status but all the closed parameter set to null, the only parameter revealing
+	 * the date in with the status changed to closed is updated at.
+	 * 
 	 * @param projectId ID of the project.
 	 * @return Days to close each issue of a project or null if fail.
 	 */
 	private List<Integer> getDaysToCloseEachIssue(Long projectId) {
 		try {
 			return gitLabApi.getIssuesApi().getIssuesStream(projectId, new IssueFilter().withState(IssueState.CLOSED))
-					.filter(issue -> issue.getCreatedAt() != null && issue.getClosedAt() != null)
-					.map(issue -> (int) ((issue.getClosedAt().getTime() - issue.getCreatedAt().getTime())
-							/ (1000 * 60 * 60 * 24)))
-					.collect(Collectors.toList());
+					.filter(issue -> (issue.getCreatedAt() != null && issue.getClosedAt() != null)
+							|| (issue.getState().equals(IssueState.CLOSED) && issue.getUpdatedAt() != null))
+					.map(issue -> {
+						if ((issue.getCreatedAt() != null && issue.getClosedAt() != null)) {
+							return (int) Math.abs((issue.getClosedAt().getTime() - issue.getCreatedAt().getTime())
+									/ (1000 * 60 * 60 * 24));
+
+						} else if (issue.getState().equals(IssueState.CLOSED) && issue.getUpdatedAt() != null) {
+							return (int) Math.abs((issue.getUpdatedAt().getTime() - issue.getCreatedAt().getTime())
+									/ (1000 * 60 * 60 * 24));
+						}
+						return null;
+					}).collect(Collectors.toList());
 		} catch (GitLabApiException e) {
 			return null;
 		}
