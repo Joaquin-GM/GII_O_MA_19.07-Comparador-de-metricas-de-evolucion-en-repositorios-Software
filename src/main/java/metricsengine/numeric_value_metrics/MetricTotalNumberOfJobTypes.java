@@ -1,7 +1,6 @@
 package metricsengine.numeric_value_metrics;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 

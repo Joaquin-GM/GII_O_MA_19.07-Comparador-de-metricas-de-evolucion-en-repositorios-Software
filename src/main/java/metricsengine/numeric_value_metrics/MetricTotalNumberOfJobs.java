@@ -15,7 +15,6 @@ import metricsengine.MetricDescription;
 import metricsengine.values.NumericValue;
 import metricsengine.values.ValueDecimal;
 import metricsengine.values.ValueInteger;
-import repositorydatasource.RepositoryDataSourceUsingGitlabAPI;
 import repositorydatasource.RepositoryDataSource.EnumConnectionType;
 
 /**

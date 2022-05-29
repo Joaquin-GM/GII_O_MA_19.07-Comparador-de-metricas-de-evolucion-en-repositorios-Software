@@ -14,6 +14,7 @@ import metricsengine.values.ValueDecimal;
  *
  */
 public class MetricAverageDaysToCloseAnIssue extends NumericValueMetricTemplate {
+	
 	/**
 	 * Description.
 	 * 
@@ -91,6 +92,7 @@ public class MetricAverageDaysToCloseAnIssue extends NumericValueMetricTemplate 
 	@Override
 	public NumericValue run(Repository repository) {
 		double result = repository.getRepositoryInternalMetrics().getDaysToCloseEachIssue().stream().mapToInt(i -> i).average().orElseThrow();
+
 		return new ValueDecimal(result);
 	}
 }

@@ -355,9 +355,11 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 			String sProyecto = repositoryURL.replaceAll(RepositoryDataSourceUsingGithubAPI.HOST_URL + "/", "");
 			String nombreProyecto = sProyecto.split("/")[sProyecto.split("/").length - 1];
 			String propietarioYGrupo = sProyecto.replaceAll("/" + nombreProyecto, "");
-
+		
 			// Repository repo = repositoryService.getRepository(propietarioYGrupo, nombreProyecto);
-			GHRepository ghRepo = githubclientApi.getRepository(nombreProyecto);
+			GHRepository ghRepo = githubclientApi.getRepository(sProyecto);
+			
+			
 			Repository repo = new datamodel.Repository(ghRepo.getHtmlUrl().toString(), ghRepo.getName(), ghRepo.getId());
 			
 			mapUrlIdRepo.put(ghRepo.getId(), ghRepo);
@@ -382,7 +384,7 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 			String nombreProyecto = sProyecto.split("/")[sProyecto.split("/").length - 1];
 			String propietarioYGrupo = sProyecto.replaceAll("/" + nombreProyecto, "");
 			
-			GHRepository ghRepo = githubclientApi.getRepository(nombreProyecto);
+			GHRepository ghRepo = githubclientApi.getRepository(sProyecto);
 			
 			return ghRepo.getName();
 
@@ -561,7 +563,7 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 			List<Integer> ldaystoclose = new ArrayList<Integer>();
 			
 			for (GHIssue issue : issues) {
-				long ldays = (issue.getClosedAt().getTime() - issue.getCreatedAt().getTime()) / (1000 * 60 * 60 * 24);
+				long ldays = Math.abs((issue.getClosedAt().getTime() - issue.getCreatedAt().getTime()) / (1000 * 60 * 60 * 24));
 				ldaystoclose.add((int) ldays);
 			}
 			return ldaystoclose;

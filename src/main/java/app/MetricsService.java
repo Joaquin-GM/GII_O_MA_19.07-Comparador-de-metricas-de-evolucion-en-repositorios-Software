@@ -19,7 +19,6 @@ import app.listeners.CurrentMetricProfileChangedEvent;
 import app.listeners.Listener;
 import datamodel.Repository;
 import datamodel.RepositoryInternalMetrics;
-import datamodel.RepositorySourceType;
 import exceptions.MetricsServiceException;
 import exceptions.RepositoryDataSourceException;
 import metricsengine.Measure;
