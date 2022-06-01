@@ -88,7 +88,8 @@ public class AddRepositoryDialog extends Dialog {
 			add(root);
 
 			setWidth("600px");
-			setHeight("295px");
+			setMinHeight("295px");
+			setMaxHeight("80%");
 		} catch (Exception e) {
 			LOGGER.error("" + e.getMessage());
 			ConfirmDialog.createError()

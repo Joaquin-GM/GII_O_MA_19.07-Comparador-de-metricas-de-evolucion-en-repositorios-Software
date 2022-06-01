@@ -45,7 +45,7 @@ public class MainAppView extends VerticalLayout implements PageConfigurator {
 
 	private Image logoImage = new Image("images/LOGOAPP.png", "Logo Evolution Metrics Gauge");
 
-	private Label appNameLabel = new Label("Evolution Metrics Gauge v2");
+	private Label appNameLabel = new Label("Evolution Metrics Gauge 2");
 
 	private Button connectionButton = new Button();
 
@@ -72,6 +72,7 @@ public class MainAppView extends VerticalLayout implements PageConfigurator {
 			setUpHeader();
 			setUpContent();
 			setUpFooter();
+			addClassName("main-container");
 			add(header, content, footer);
 			if (!IS_INITIALIZED)
 				connectionFormDialog.open();
@@ -141,21 +142,30 @@ public class MainAppView extends VerticalLayout implements PageConfigurator {
 		HorizontalLayout footerHLayout = new HorizontalLayout();
 		Div footerLeftSection = new Div();
 		Div footerRightSection = new Div();
-
+		footerLeftSection.addClassName("footer-left-section");
+		footerRightSection.addClassName("footer-right-section");
 		footerHLayout.add(footerLeftSection);
 		footerHLayout.add(footerRightSection);
 
 		footerLeftSection.setWidth("50%");
 		footerRightSection.setWidth("50%");
 
+		VerticalLayout namesContainer = new VerticalLayout();
 		Div authorNameLabel = new Div();
 		Div tutorNameLabel = new Div();
-		footerLeftSection.add(authorNameLabel);
-		footerLeftSection.add(tutorNameLabel);
 		authorNameLabel.setText("Autor: Joaquín García Molina");
 		authorNameLabel.setId("Author");
 		tutorNameLabel.setText("Tutor: Carlos López");
 		tutorNameLabel.setId("Tutor");
+		namesContainer.add(authorNameLabel);
+		namesContainer.add(tutorNameLabel);
+		footerLeftSection.add(namesContainer);
+
+		Div versionLabel = new Div();
+		versionLabel.addClassName("version-container");
+		versionLabel.setText("Versión: 1.0.0");
+		versionLabel.setId("Version");
+		footerLeftSection.add(versionLabel);
 
 		HorizontalLayout keyLayout = new HorizontalLayout();
 		Div keyContainer = new Div();
