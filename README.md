@@ -13,6 +13,8 @@ Aplicación Java desarrollada empelada el framework Vaadin que toma como entrada
 
 ## Metricas de evolución
 
+Leyenda I=Issues C=Commits IC=Integración Continua DC=Despliegue Continuo 
+   
 *   I1 total number of issues. (6-44)
 
 *   I2  commits  per  issue.  I1  divided  by  total  number  of commits. (0.5-1)
@@ -28,6 +30,16 @@ Aplicación Java desarrollada empelada el framework Vaadin que toma como entrada
 *   TC3 change activity range per month: total number of commits divided by lifespan number of months. (6-26.4)
 
 *   C1 peak change: count number of commits in the peak month divided by total number of commits. (30%-40%)
+
+*   IC1 total number of jobs executed (1-1000)
+
+*   IC2 number of jobs executed last year (1-200)
+
+*   IC3 number of executed job types (1-8)
+
+*   DC1 total number of releases
+
+*   DC2 number of releases released last year
 
 ## Trabajos previos
 
