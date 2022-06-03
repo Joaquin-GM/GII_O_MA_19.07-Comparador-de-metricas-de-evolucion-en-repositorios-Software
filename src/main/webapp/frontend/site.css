@@ -18,7 +18,6 @@
 
 .metricEvaluation {
 	font-weight: bold;
-	padding-right: 18px;
 }
 
 .metricEvaluationGood {
@@ -60,4 +59,142 @@
 
 .custom-tooltip {
 	inset: 18px 0 auto auto !important;
+}
+
+.bold-label {
+	font-weight: bold;
+	padding-left: 12px;
+}
+
+vaadin-grid-cell-content {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#items {
+	border-top-width: 116px;
+}
+
+:root { 
+	--light-gray-border: 1px solid rgba(0,0,0,.1);
+}
+
+.left-lightgray-border {
+	border-left: var(--light-gray-border);
+}
+
+.right-lightgray-border {
+	border-right: var(--light-gray-border);
+}
+
+flow-component-renderer {
+	width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.metricEvaluation {
+	width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.custom-header {
+	min-height: 86px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+vaadin-grid-cell-content {
+	padding: 0;
+	min-height: 54px;
+}
+
+th {
+    border-right: none;
+    border-left: none;
+}
+
+.metrics-group-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+vaadin-grid-sorter {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 6px;
+}
+
+.custom-sorter {
+	width: 100%;
+    padding: 0;
+    position: absolute;
+    right: -1px;
+    height: 100%;
+    top: 0;
+    margin: 0 auto;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: var(--light-gray-border);
+}
+
+.metric-sorter {
+	padding: 0;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    top: 0;
+    margin: 0 auto;
+    z-index: 99;
+    display: flex;
+    align-items: center !important;
+    justify-content: center;
+}
+
+.border-metric-sorter {
+    border-right: var(--light-gray-border);
+}
+
+
+body > vaadin-vertical-layout > div:nth-child(2) > vaadin-vertical-layout > vaadin-grid > vaadin-grid-cell-content:nth-child(75)
+body > vaadin-vertical-layout > div:nth-child(2) > vaadin-vertical-layout > vaadin-grid > vaadin-grid-cell-content:nth-child(11)
+body > vaadin-vertical-layout > div:nth-child(n+2) > vaadin-vertical-layout > vaadin-grid > vaadin-grid-cell-content {
+	padding: 0;
+	min-height: 52px;
+}
+
+.footer-left-section {
+    display: flex;
+    flex-flow: column;
+    align-items: space-between;
+    justify-content: space-between;
+    padding-bottom: 16px;
+}
+
+.footer-right-section {
+    padding-bottom: 16px;
+}
+
+.version-container {
+	padding: 0 16px 0 16px;
+}
+
+.main-container {
+    overflow-x: hidden;
 }

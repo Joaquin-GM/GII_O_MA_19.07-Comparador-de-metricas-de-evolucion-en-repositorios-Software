@@ -5,7 +5,7 @@
 
 	<groupId>es.ubu.lsi</groupId>
 	<artifactId>evolution-metrics-gauge-v2</artifactId>
-	<version>0.0.1</version>
+	<version>1.0.0</version>
 	<packaging>war</packaging>
 
 	<!--	<scm>-->

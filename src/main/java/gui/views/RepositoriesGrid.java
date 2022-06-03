@@ -15,9 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.vaadin.componentfactory.Tooltip;
-import com.vaadin.componentfactory.TooltipAlignment;
-import com.vaadin.componentfactory.TooltipPosition;
-import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
@@ -25,7 +22,6 @@ import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.grid.HeaderRow;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H5;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -103,17 +99,22 @@ public class RepositoriesGrid extends Grid<Repository> {
 
 		header = new Span("Project");
 		header.setTitle("Project name");
+		header.setClassName("custom-header");
 		addComponentColumn(r -> createProjectNameLink(r)).setKey("repositoryNameColumn").setWidth("12em")
 				.setSortable(true).setComparator(Repository::getName).setHeader(header);
 
+		VerticalLayout headerL = new VerticalLayout();
+		headerL.setClassName("custom-sorter");
 		header = new Span("Date");
 		header.setTitle("Measurement date");
+		header.setClassName("sorter-header-with-border");
+		headerL.add(header);
 		addComponentColumn(r -> {
 			String date = getLastMeasurementDate(r);
 			Label dateLbl = new Label(date);
 			dateLbl.setTitle(date);
 			return dateLbl;
-		}).setKey("lastMeasurementDateColumn").setHeader(header).setSortable(true)
+		}).setKey("lastMeasurementDateColumn").setHeader(headerL).setSortable(true)
 				.setComparator(r -> r.getRepositoryInternalMetrics().getDate()).setWidth("6em")
 				.setTextAlign(ColumnTextAlign.CENTER);
 
@@ -132,7 +133,7 @@ public class RepositoriesGrid extends Grid<Repository> {
 		headerTitle = MetricPercentageClosedIssues.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		Grid.Column<Repository> i3MetricColumn = addMetricColumn("i3MetricColumn", headerText, headerTitle, "%",
 				MetricPercentageClosedIssues.class);
-		
+
 		headerText = MetricAverageDaysToCloseAnIssue.DEFAULT_METRIC_DESCRIPTION.getName();
 		headerTitle = MetricAverageDaysToCloseAnIssue.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		Grid.Column<Repository> ti1MetricColumn = addMetricColumn("ti1MetricColumn", headerText, headerTitle, "",
@@ -158,34 +159,36 @@ public class RepositoriesGrid extends Grid<Repository> {
 		headerTitle = MetricPeakChange.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		Grid.Column<Repository> c1MetricColumn = addMetricColumn("c1MetricColumn", headerText, headerTitle, "",
 				MetricPeakChange.class);
-		
+
 		// CI/CD metrics
 		Grid.Column<Repository> ic1MetricColumn = null;
 		headerText = MetricTotalNumberOfJobs.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
 		headerTitle = MetricTotalNumberOfJobs.DEFAULT_METRIC_DESCRIPTION.getDescription();
-		ic1MetricColumn = addMetricColumn("ic1MetricColumn", headerText, headerTitle, "", MetricTotalNumberOfJobs.class);
-		
+		ic1MetricColumn = addMetricColumn("ic1MetricColumn", headerText, headerTitle, "",
+				MetricTotalNumberOfJobs.class);
+
 		Grid.Column<Repository> ic2MetricColumn = null;
 		headerText = MetricJobsLastYear.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
 		headerTitle = MetricJobsLastYear.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		ic2MetricColumn = addMetricColumn("ic2MetricColumn", headerText, headerTitle, "", MetricJobsLastYear.class);
-		
+
 		Grid.Column<Repository> ic3MetricColumn = null;
 		headerText = MetricTotalNumberOfJobTypes.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
 		headerTitle = MetricTotalNumberOfJobTypes.DEFAULT_METRIC_DESCRIPTION.getDescription();
-		ic3MetricColumn = addMetricColumn("ic3MetricColumn", headerText, headerTitle, "", MetricTotalNumberOfJobTypes.class);
-	
+		ic3MetricColumn = addMetricColumn("ic3MetricColumn", headerText, headerTitle, "",
+				MetricTotalNumberOfJobTypes.class);
+
 		Grid.Column<Repository> dc1MetricColumn = null;
 		headerText = MetricTotalNumberOfReleases.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
 		headerTitle = MetricTotalNumberOfReleases.DEFAULT_METRIC_DESCRIPTION.getDescription();
-		dc1MetricColumn = addMetricColumn("dc1MetricColumn", headerText, headerTitle, "", MetricTotalNumberOfReleases.class);
-		
+		dc1MetricColumn = addMetricColumn("dc1MetricColumn", headerText, headerTitle, "",
+				MetricTotalNumberOfReleases.class);
+
 		Grid.Column<Repository> dc2MetricColumn = null;
 		headerText = MetricReleasesLastYear.DEFAULT_METRIC_DESCRIPTION.getName().split("-")[0];
 		headerTitle = MetricReleasesLastYear.DEFAULT_METRIC_DESCRIPTION.getDescription();
 		dc2MetricColumn = addMetricColumn("dc2MetricColumn", headerText, headerTitle, "", MetricReleasesLastYear.class);
-		
-		
+
 		/* Grid.Column<Repository> projectEvaluation = */ addProjectEvalColumn();
 
 		addComponentColumn(repository -> createCalculateButton(repository)).setKey("calculateButtonColumn")
@@ -196,30 +199,24 @@ public class RepositoriesGrid extends Grid<Repository> {
 		HeaderRow metricsClassification = prependHeaderRow();
 
 		Div procOrientHeader = new Div(new Span("Process Orientation"));
-
 		procOrientHeader.getStyle().set("text-align", "center");
 		procOrientHeader.setSizeFull();
-		metricsClassification.join(i1MetricColumn, i2MetricColumn, i3MetricColumn)
-				.setComponent(procOrientHeader);
-
-		/*
-		 * if (rds.getConnectionType() == EnumConnectionType.LOGGED) {
-		 * LOGGER.info("--------hago join con el header-----");
-		 * metricsClassification.join(i1MetricColumn, i2MetricColumn,
-		 * i3MetricColumn).setComponent(procOrientHeader); } else {
-		 * LOGGER.info("--------else 2-----");
-		 * metricsClassification.join(i1MetricColumn, i2MetricColumn,
-		 * i3MetricColumn).setComponent(procOrientHeader); }
-		 */
+		procOrientHeader.addClassName("metrics-group-header");
+		procOrientHeader.addClassName("left-lightgray-border");
+		procOrientHeader.addClassName("right-lightgray-border");
+		metricsClassification.join(i1MetricColumn, i2MetricColumn, i3MetricColumn).setComponent(procOrientHeader);
 
 		Div timeConstraintsHeader = new Div(new Span("Time Constraints"));
 		timeConstraintsHeader.getStyle().set("text-align", "center");
 		timeConstraintsHeader.setSizeFull();
+		timeConstraintsHeader.addClassName("metrics-group-header");
+		timeConstraintsHeader.addClassName("right-lightgray-border");
 		metricsClassification.join(ti1MetricColumn, tc1MetricColumn, tc2MetricColumn, tc3MetricColumn, c1MetricColumn)
 				.setComponent(timeConstraintsHeader);
-		
+
 		Div CICDHeader = new Div(new Span("CI/CD"));
-		
+		CICDHeader.addClassName("metrics-group-header");
+		CICDHeader.addClassName("right-lightgray-border");
 		Icon questionIcon = VaadinIcon.INFO_CIRCLE_O.create();
 		questionIcon.setSize("16px");
 		questionIcon.setColor("blue");
@@ -232,7 +229,7 @@ public class RepositoriesGrid extends Grid<Repository> {
 				"CI/CD related metrics need authenticated connection of GiLab (username and password or personal access token)"));
 
 		CICDHeader.add(questionIcon, tooltip);
-		
+
 		CICDHeader.getStyle().set("text-align", "center");
 		CICDHeader.setSizeFull();
 		metricsClassification.join(ic1MetricColumn, ic2MetricColumn, ic3MetricColumn, dc1MetricColumn, dc2MetricColumn)
@@ -242,6 +239,12 @@ public class RepositoriesGrid extends Grid<Repository> {
 	private Grid.Column<Repository> addMetricColumn(String key, String headerText, String headerTitle,
 			String metricUnits, Class<? extends Metric> metricType) {
 		VerticalLayout header = new VerticalLayout();
+		
+		header.addClassName("metric-sorter");
+		if(headerText.equals("I3") || headerText.equals("C1 ") || headerText.equals("DC2")) {
+			header.addClassName("border-metric-sorter");
+		}
+
 		Label descriptionLabel = new Label(headerText);
 		descriptionLabel.setTitle(headerTitle);
 		header.add(descriptionLabel);
@@ -408,20 +411,33 @@ public class RepositoriesGrid extends Grid<Repository> {
 	private String getClassNameByEvaluation(Repository repository, Class<? extends Metric> metricType) {
 		String classNames = "metricEvaluation ";
 		Measure measureForMetric = getMeasureForMetric(repository, metricType);
+
 		if (measureForMetric != null) {
 			switch (measureForMetric.evaluate()) {
 			case GOOD:
-				return classNames + "metricEvaluationGood";
+				classNames = classNames + "metricEvaluationGood";
 			case WARNING:
-				return classNames + "metricEvaluationWarning";
+				classNames = classNames + "metricEvaluationWarning";
 			case BAD:
-				return classNames + "metricEvaluationBad";
+				classNames = classNames + "metricEvaluationBad";
 			default:
-				return classNames;
+				break;
 			}
 		} else {
-			return classNames + "metricEvaluationBad";
+			classNames = classNames + "metricEvaluationBad";
 		}
+
+		if (metricType.toString().equals("class metricsengine.numeric_value_metrics.MetricTotalNumberOfIssues")) {
+			classNames = classNames + " left-lightgray-border";
+		}
+		
+		if (metricType.toString().equals("class metricsengine.numeric_value_metrics.MetricPercentageClosedIssues") || 
+				metricType.toString().equals("class metricsengine.numeric_value_metrics.MetricPeakChange") || 
+				metricType.toString().equals("class metricsengine.numeric_value_metrics.MetricReleasesLastYear")) {
+			classNames = classNames + " right-lightgray-border";
+		}
+
+		return classNames;
 	}
 
 	private String getValueMeasuredForMetric(Repository repository, Class<? extends Metric> metricType) {

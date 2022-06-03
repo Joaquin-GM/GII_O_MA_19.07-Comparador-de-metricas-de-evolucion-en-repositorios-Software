@@ -91,7 +91,8 @@ public class ConnectionDialog extends Dialog {
 			add(root);
 
 			setWidth("550px");
-			setHeight("375px");
+			setMinHeight("375px");
+			setMaxHeight("80%");
 			setCloseOnEsc(false);
 			setCloseOnOutsideClick(false);
 		} catch (Exception e) {
