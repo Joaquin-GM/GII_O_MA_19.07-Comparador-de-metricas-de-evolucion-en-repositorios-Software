@@ -49,7 +49,7 @@ public class RepositoriesListView extends VerticalLayout {
 			.ofCollection(RepositoriesCollectionService.getInstance().getRepositories());
 
 	private enum RepositoryMenuItems {
-		ADD("Add new"), ADDGITLAB("Add new GitLab repository"), ADDGITHUB("Add new GitHub repository"),
+		ADDGITLAB("Add new GitLab repository"), ADDGITHUB("Add new GitHub repository"),
 		IMPORT("Import"), EXPORT("Export"), EXPORT_CSV("Export to CSV");
 
 		private String display;
@@ -278,6 +278,12 @@ public class RepositoriesListView extends VerticalLayout {
 						"evolution-metrics_reposiories_.emr").open();
 			} catch (Exception e) {
 				LOGGER.error("Error exporting a repository. Exception occurred: " + e.getMessage());
+				String exception = "";
+			    for (StackTraceElement s : e.getStackTrace()) {
+			        exception = exception + s.toString() + "\n\t\t";
+			    }
+				
+				LOGGER.error(exception);
 				ConfirmDialog.createError().withCaption("Error")
 						.withMessage("An error has occurred. Please, contact the application administrator.")
 						.withOkButton().open();

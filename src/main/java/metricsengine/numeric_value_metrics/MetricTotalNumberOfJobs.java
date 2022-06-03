@@ -3,11 +3,11 @@ package metricsengine.numeric_value_metrics;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.kohsuke.github.GHWorkflowJob;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import app.RepositoryDataSourceService;
+import datamodel.CustomGithubApiJob;
 import datamodel.CustomGitlabApiJob;
 import datamodel.Repository;
 import datamodel.RepositorySourceType;
@@ -122,7 +122,7 @@ public class MetricTotalNumberOfJobs extends NumericValueMetricTemplate {
 			return new ValueInteger(repositoryJobs.size());
 		} else {
 			// GitHub
-			List<GHWorkflowJob> repositoryJobs = repository.getRepositoryInternalMetrics().getGHJobs().stream()
+			List<CustomGithubApiJob> repositoryJobs = repository.getRepositoryInternalMetrics().getGHJobs().stream()
 					.collect(Collectors.toList());
 
 			return new ValueInteger(repositoryJobs.size());

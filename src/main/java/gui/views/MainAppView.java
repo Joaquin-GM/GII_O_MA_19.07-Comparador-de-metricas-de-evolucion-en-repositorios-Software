@@ -47,7 +47,7 @@ public class MainAppView extends VerticalLayout implements PageConfigurator {
 
 	private Image logoImage = new Image("images/LOGOAPP.png", "Logo Evolution Metrics Gauge");
 
-	private Label appNameLabel = new Label("Evolution Metrics Gauge v2");
+	private Label appNameLabel = new Label("Evolution Metrics Gauge 2");
 
 	private Button connectionButtonGitLab = new Button();
 	

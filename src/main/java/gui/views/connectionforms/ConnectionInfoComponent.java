@@ -56,11 +56,7 @@ public class ConnectionInfoComponent extends Div {
 		rds.addConnectionChangedEventListener(event -> update(event)
 
 		);
-
-		LOGGER.info("ANTES DE UPDATE");
-		LOGGER.info(repositorySourceType.toString());
 		
-		// TODO este update no sé si tengo que quitarlo o ponerle más condiciones, es el primero
 		update(rds.getConnectionType(repositorySourceType));
 		
 		userAvatar.setWidth("50px");
@@ -107,16 +103,7 @@ public class ConnectionInfoComponent extends Div {
 		case NOT_CONNECTED:
 			userAvatar.setVisible(false);
 			userAvatar.setSrc("");
-
 			connectionInfoLabel.setText("No connection to " + repositorySourceType);
-
-			/*
-			 * if (repositorySource.equals("GitLab")) {
-			 * connectionInfoLabel.setText("No connection to GitLab"); } else if
-			 * (repositorySource.equals("GitHub")) {
-			 * connectionInfoLabel.setText("No connection to GitHub"); }
-			 */
-
 			break;
 		case CONNECTED:
 			userAvatar.setVisible(false);
@@ -125,15 +112,10 @@ public class ConnectionInfoComponent extends Div {
 			break;
 		case LOGGED:
 			try {
-				LOGGER.info("......................");
-				LOGGER.info(repositorySourceType.toString());
-				LOGGER.info(RepositoryDataSourceService.getInstance().toString());
 				User user = RepositoryDataSourceService.getInstance().getCurrentUser(repositorySourceType);
-				LOGGER.info(String.valueOf(user == null));
 				userAvatar.setVisible(true);
 				userAvatar.setSrc((user.getAvatarUrl() != null) ? user.getAvatarUrl() : "");
 				connectionInfoLabel.setText("Connected as: " + user.getUsername());
-				LOGGER.info("..........FIN............");
 			} catch (RepositoryDataSourceException e) {
 				userAvatar.setVisible(false);
 				userAvatar.setSrc("");

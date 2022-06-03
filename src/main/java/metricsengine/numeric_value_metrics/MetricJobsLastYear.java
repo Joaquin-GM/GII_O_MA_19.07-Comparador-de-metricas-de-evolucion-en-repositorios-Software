@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.kohsuke.github.GHWorkflowJob;
 
 import app.RepositoryDataSourceService;
+import datamodel.CustomGithubApiJob;
 import datamodel.CustomGitlabApiJob;
 import datamodel.Repository;
 import datamodel.RepositorySourceType;
@@ -129,14 +130,14 @@ public class MetricJobsLastYear extends NumericValueMetricTemplate {
 			
 		} else {
 			// GitHub
-			List<GHWorkflowJob> jobsLastYear = new ArrayList<GHWorkflowJob>();
-			List<GHWorkflowJob> repositoryJobs = repository.getRepositoryInternalMetrics().getGHJobs().stream()
+			List<CustomGithubApiJob> jobsLastYear = new ArrayList<CustomGithubApiJob>();
+			List<CustomGithubApiJob> repositoryJobs = repository.getRepositoryInternalMetrics().getGHJobs().stream()
 					.collect(Collectors.toList());
 
 			for (int i = 0; i < repositoryJobs.size(); i++) {
-				GHWorkflowJob job = repositoryJobs.get(i);
+				CustomGithubApiJob job = repositoryJobs.get(i);
 
-				if (job != null && job.getCompletedAt() != null && job.getCompletedAt().after(currentYearLimitDate)) {
+				if (job != null && job.getJob() != null && job.getJob().getCompletedAt() != null && job.getJob().getCompletedAt().after(currentYearLimitDate)) {
 					jobsLastYear.add(job);
 				}
 			}

@@ -1,6 +1,7 @@
 package app;
 
 import java.io.InputStream;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -12,11 +13,15 @@ import java.util.Iterator;
 import javax.ws.rs.NotSupportedException;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import app.listeners.Listener;
 import app.listeners.RepositoriesCollectionUpdatedEvent;
 import datamodel.Repository;
 import exceptions.RepositoriesCollectionServiceException;
+import gui.views.RepositoriesGrid;
 import metricsengine.Measure;
 import metricsengine.Metric;
 import metricsengine.MetricsResults;
@@ -46,7 +51,8 @@ import metricsengine.values.ValueUncalculated;
  * @author Miguel Ángel León Bardavío - mlb0029
  */
 public class RepositoriesCollectionService implements Serializable {
-	
+	private static final Logger LOGGER = LoggerFactory.getLogger(RepositoriesCollectionService.class);
+
 	private static final long serialVersionUID = 6585069143415079761L;
 	
 	/**
@@ -128,6 +134,13 @@ public class RepositoriesCollectionService implements Serializable {
 			objectOut.flush();
 			return bos.toInputStream();
 		} catch (Exception e) {
+			LOGGER.info("ERROR EXPORTANDO!");
+			String exception = "";
+		    for (StackTraceElement s : e.getStackTrace()) {
+		        exception = exception + s.toString() + "\n\t\t";
+		    }
+			
+			LOGGER.error(exception);
 			throw new RepositoriesCollectionServiceException(RepositoriesCollectionServiceException.EXPORT_ERROR, e);
 		}
 	}

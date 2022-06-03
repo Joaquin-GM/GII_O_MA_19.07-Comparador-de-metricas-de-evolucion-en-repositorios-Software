@@ -6,9 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import org.kohsuke.github.GHRelease;
-import org.kohsuke.github.GHWorkflowJob;
-
 
 /**
  * Stores the metrics that can be obtained directly from the repository and used to calculate the rest of the metrics.
@@ -67,12 +64,12 @@ public class RepositoryInternalMetrics implements Serializable{
 	/**
 	 * Jobs (default successful ones).
 	 */
-	private Collection<GHWorkflowJob> ghJobs = null;
+	private Collection<CustomGithubApiJob> ghJobs = null;
 	
 	/**
 	 * Releases (default successful ones).
 	 */
-	private Collection<GHRelease> ghReleases = null;
+	private Collection<CustomGithubApiRelease> ghReleases = null;
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -340,7 +337,7 @@ public class RepositoryInternalMetrics implements Serializable{
 	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 * @return list of the jobs of the repository
 	 */
-	public Collection<GHWorkflowJob> getGHJobs() {
+	public Collection<CustomGithubApiJob> getGHJobs() {
 		return ghJobs;
 	}
 	
@@ -350,7 +347,7 @@ public class RepositoryInternalMetrics implements Serializable{
 	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 * @param jobs list of the jobs of the repository
 	 */
-	public void setGHJobs(List<GHWorkflowJob> jobs) {
+	public void setGHJobs(List<CustomGithubApiJob> jobs) {
 		this.ghJobs = jobs;
 	}
 	
@@ -360,7 +357,7 @@ public class RepositoryInternalMetrics implements Serializable{
 	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 * @return list of the releases of the repository
 	 */
-	public Collection<GHRelease> getGHReleases() {
+	public Collection<CustomGithubApiRelease> getGHReleases() {
 		return ghReleases;
 	}
 
@@ -370,7 +367,7 @@ public class RepositoryInternalMetrics implements Serializable{
 	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 * @param releases list of the releases of the repository
 	 */
-	public void setGHReleases(List<GHRelease> releases) {
+	public void setGHReleases(List<CustomGithubApiRelease> releases) {
 		this.ghReleases = releases;
 	}
 }

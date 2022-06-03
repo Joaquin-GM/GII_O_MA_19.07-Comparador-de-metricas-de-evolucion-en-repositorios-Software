@@ -104,9 +104,6 @@ public class ConnectionDialog extends Dialog {
 	}
 
 	private void createConnectionForms() {
-		LOGGER.info("--------createConnectionForms-----------");
-		LOGGER.info(repositorySourceType.toString());
-		
 		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
 			ConnectionForm userPasswordConnForm = new ConnectionFormUsingUserPassword(repositorySourceType);
 			connectionForms.add(userPasswordConnForm);
@@ -121,12 +118,9 @@ public class ConnectionDialog extends Dialog {
 			connectionForms.add(noConnForm);
 			
 		} else if (repositorySourceType.equals(RepositorySourceType.GitHub)) {
-			// Conection with username and password deprecated for GitHub
+			// Conection with username and password deprecated for GitHub, public connection also not allowed
 			ConnectionForm paTokenConnForm = new ConnectionFormUsingPAToken(repositorySourceType);
 			connectionForms.add(paTokenConnForm);
-
-			ConnectionForm publicConnForm = new ConnectionFormUsingPublicConn(repositorySourceType);
-			connectionForms.add(publicConnForm);
 
 			ConnectionForm noConnForm = new ConnectionFormWithoutConn(repositorySourceType);
 			connectionForms.add(noConnForm);

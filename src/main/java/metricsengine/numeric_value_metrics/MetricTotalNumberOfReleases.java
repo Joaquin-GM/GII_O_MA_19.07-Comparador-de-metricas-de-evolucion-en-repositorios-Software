@@ -3,9 +3,8 @@ package metricsengine.numeric_value_metrics;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.kohsuke.github.GHRelease;
-
 import app.RepositoryDataSourceService;
+import datamodel.CustomGithubApiRelease;
 import datamodel.CustomGitlabApiRelease;
 import datamodel.Repository;
 import datamodel.RepositorySourceType;
@@ -106,7 +105,7 @@ public class MetricTotalNumberOfReleases extends NumericValueMetricTemplate {
 			return new ValueInteger(repositoryReleases.size());
 		} else {
 			// GitHub
-			List<GHRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getGHReleases()
+			List<CustomGithubApiRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getGHReleases()
 					.stream().collect(Collectors.toList());
 
 			return new ValueInteger(repositoryReleases.size());

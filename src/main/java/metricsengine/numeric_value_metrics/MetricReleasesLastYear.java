@@ -5,9 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.kohsuke.github.GHRelease;
-
 import app.RepositoryDataSourceService;
+import datamodel.CustomGithubApiRelease;
 import datamodel.CustomGitlabApiRelease;
 import datamodel.Repository;
 import datamodel.RepositorySourceType;
@@ -129,14 +128,14 @@ public class MetricReleasesLastYear extends NumericValueMetricTemplate {
 			
 		} else {
 			// GitHub
-			List<GHRelease> releasesLastYear = new ArrayList<GHRelease>();
-			List<GHRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getGHReleases().stream()
+			List<CustomGithubApiRelease> releasesLastYear = new ArrayList<CustomGithubApiRelease>();
+			List<CustomGithubApiRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getGHReleases().stream()
 					.collect(Collectors.toList());
 
 			for (int i = 0; i < repositoryReleases.size(); i++) {
-				GHRelease release = repositoryReleases.get(i);
+				CustomGithubApiRelease release = repositoryReleases.get(i);
 
-				if (release != null && release.getPublished_at() != null && release.getPublished_at().after(currentYearLimitDate)) {
+				if (release != null && release.getRelease() != null && release.getRelease().getPublished_at() != null && release.getRelease().getPublished_at().after(currentYearLimitDate)) {
 					releasesLastYear.add(release);
 				}
 			}

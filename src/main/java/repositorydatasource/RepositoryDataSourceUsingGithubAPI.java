@@ -11,15 +11,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.gitlab4j.api.GitLabApiException;
-import org.gitlab4j.api.models.Job;
-import org.gitlab4j.api.models.Release;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHIssue;
 import org.kohsuke.github.GHIssueState;
-import org.kohsuke.github.GHMyself;
 import org.kohsuke.github.GHRelease;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
@@ -445,10 +439,10 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 		LOGGER.info("lifeSpanMonths obtenido: " + String.valueOf(lifeSpanMonths));
 		
 
-		List<GHWorkflowJob> jobs = getRepositoryJobs(projectId);
+		List<CustomGithubApiJob> jobs = getRepositoryJobs(projectId);
 		LOGGER.info("jobs obtenidos: " + String.valueOf(jobs));
 		
-		List<GHRelease> releases = getRepositoryReleases(projectId);
+		List<CustomGithubApiRelease> releases = getRepositoryReleases(projectId);
 		LOGGER.info("releases obtenidas: " + String.valueOf(releases.size()));
 
 		RepositoryInternalMetrics repositoryInternalMetrics = new RepositoryInternalMetrics(totalNumberOfIssues,
@@ -656,23 +650,21 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	 * @param projectId ID of the project.
 	 * @return List of jobs of a project or null if fail.
 	 */
-	private List<GHWorkflowJob> getRepositoryJobs(Long projectId) {
+	private List<CustomGithubApiJob> getRepositoryJobs(Long projectId) {
 		LOGGER.info("--getRepositoryJobs GitHub---");
 		try {
 			List<GHWorkflowRun> ghWorkFlowRuns = githubclientApi.getRepositoryById(projectId).queryWorkflowRuns().status(Status.COMPLETED).list().toList();
-			List<GHWorkflowJob> ghWorkflowJobs = new ArrayList<GHWorkflowJob>();
+			List<CustomGithubApiJob> ghWorkflowJobs = new ArrayList<CustomGithubApiJob>();
 					
 					
 			// List<CustomGitlabApiJob> customGitlabApiJobs = new ArrayList<CustomGitlabApiJob>();
 			
 			for (GHWorkflowRun ghWorkFlowRun : ghWorkFlowRuns) {
 				List<GHWorkflowJob> ghCurrentWorkflowJobs = ghWorkFlowRun.listAllJobs().toList();
-				ghWorkflowJobs.addAll(ghCurrentWorkflowJobs);
 				
-				// TODO puede que tambien tenga que hacerme una clase custom para los JOBS para que sean serializables, y seria iterar por esta lista e ir añadiendolos como en la version para GitLab
-		
-				// CustomGitlabApiJob newCustomGitlabApiJob = new CustomGitlabApiJob(job);
-				// customGitlabApiJobs.add(newCustomGitlabApiJob);
+				for (GHWorkflowJob job: ghCurrentWorkflowJobs) {
+					ghWorkflowJobs.add(new CustomGithubApiJob(job));
+				}
 			}
 			
 			return ghWorkflowJobs;
@@ -687,21 +679,21 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	 * @param projectId ID of the project.
 	 * @return List of releases of a project or null if fail.
 	 */
-	private List<GHRelease> getRepositoryReleases(Long projectId) {
+	private List<CustomGithubApiRelease> getRepositoryReleases(Long projectId) {
 		LOGGER.info("--getRepositoryReleases GitHub---");
 		try {
 			List<GHRelease> releases = githubclientApi.getRepositoryById(projectId).listReleases().toList();
 			
-			// List<CustomGitlabApiRelease> customGitlabApiReleases = new ArrayList<CustomGitlabApiRelease>();
+			List<CustomGithubApiRelease> customGitlabApiReleases = new ArrayList<CustomGithubApiRelease>();
 			
 			// TODO puede que tambien tenga que hacerme una clase custom para las Releases para que sean serializables
-			/*
-			for (Release release : releases) {
-				CustomGitlabApiRelease newCustomGitlabApiRelease= new CustomGitlabApiRelease(release);
+			
+			for (GHRelease release : releases) {
+				CustomGithubApiRelease newCustomGitlabApiRelease= new CustomGithubApiRelease(release);
 				customGitlabApiReleases.add(newCustomGitlabApiRelease);
 			}
-			*/
-			return releases;
+			
+			return customGitlabApiReleases;
 		} catch (IOException e) {
 			return null;
 		}

@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.kohsuke.github.GHWorkflowJob;
-
 import app.RepositoryDataSourceService;
+import datamodel.CustomGithubApiJob;
 import datamodel.CustomGitlabApiJob;
 import datamodel.Repository;
 import datamodel.RepositorySourceType;
@@ -122,11 +121,11 @@ public class MetricTotalNumberOfJobTypes extends NumericValueMetricTemplate {
 			}
 		} else {
 			// GitHub
-			List<GHWorkflowJob> repositoryJobs = repository.getRepositoryInternalMetrics().getGHJobs().stream()
+			List<CustomGithubApiJob> repositoryJobs = repository.getRepositoryInternalMetrics().getGHJobs().stream()
 					.collect(Collectors.toList());
 			
 			for (int i = 0; i < repositoryJobs.size(); i++) {
-				GHWorkflowJob job = repositoryJobs.get(i);
+				CustomGithubApiJob job = repositoryJobs.get(i);
 				if (job.getName() != null && !jobTypesList.contains(job.getName())) {
 					jobTypesList.add(job.getName());
 				}
