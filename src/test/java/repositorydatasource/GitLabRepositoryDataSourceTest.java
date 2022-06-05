@@ -200,7 +200,7 @@ public class GitLabRepositoryDataSourceTest {
 		assumeTrue(token != null && !token.equals(""), "The test can not be performed if a correct token is not specified");
 		assertDoesNotThrow(() -> {
 			repositoryDataSource.connect(token, RepositorySourceType.GitLab);
-		}, getErrorMsg("testConnectPivateTokenOK", "IWrong token or the test threw an exception when it should not"));
+		}, getErrorMsg("testConnectPivateTokenOK", "Wrong token or the test threw an exception when it should not"));
 		assertEquals(EnumConnectionType.LOGGED, repositoryDataSource.getConnectionType(RepositorySourceType.GitLab), getErrorMsg("testConnectPivateTokenOK", "Connection type must be 'LOGGED'"));
 	}
 

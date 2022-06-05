@@ -28,7 +28,7 @@ import repositorydatasource.RepositoryDataSource.EnumConnectionType;
  * @author Carlos López Nozal - clopezno
  *
  */
-public class GithubRepositoryDataSourceTest {
+public class GitHubRepositoryDataSourceTest {
 
 	/**
 	 * RepositoryDataSource under test.
@@ -122,20 +122,6 @@ public class GithubRepositoryDataSourceTest {
 	public void testGetGithubRepositoryDataSource() {
 		assertTrue(repositoryDataSource == RepositoryDataSourceUsingGithubAPI.getGithubRepositoryDataSource(), getErrorMsg("testGetGithubRepositoryDataSource", "Only one instance of repositoryDataSource is allowed"));
 	}
-
-	/**
-	 * Test method for {@link repositorydatasource.RepositoryDataSourceUsingGitlabAPI#connect()}.
-	 * <p>
-	 * It ensures that a correct connection does not throw an exception and that the connection type is 'CONNECTED'.
-	 * 
-	 * @author Miguel Ángel León Bardavío - mlb0029
-	 */
-	@Test
-	public void testConnectOK() {
-		// TODO Asumir que hay conexión a Internet
-		assertDoesNotThrow(() ->{ repositoryDataSource.connect(RepositorySourceType.GitHub);}, getErrorMsg("testConnectOK", "Exception when trying to connect"));
-		assertEquals(EnumConnectionType.CONNECTED, repositoryDataSource.getConnectionType(RepositorySourceType.GitHub), getErrorMsg("testConnectOK", "Connection type must be 'CONNECTED'"));
-	}
 	
 	/**
 	 * Test method for {@link repositorydatasource.RepositoryDataSourceUsingGitlabAPI#connect()}.
@@ -151,40 +137,7 @@ public class GithubRepositoryDataSourceTest {
 		assertThrows(RepositoryDataSourceException.class, () -> {}, getErrorMsg("testConnectFAILED", "Exception must be thrown if connection error occurs"));
 		assertEquals(EnumConnectionType.NOT_CONNECTED, repositoryDataSource.getConnectionType(RepositorySourceType.GitHub), getErrorMsg("testConnectFAILED", "Connection type must be 'NOT_CONNECTED'"));
 	}
-
-	/**
-	 * Test method for {@link repositorydatasource.RepositoryDataSourceUsingGitlabAPI#connect(java.lang.String, java.lang.String)}.
-	 * <p>
-	 * 
-	 * If user and password are specified, it ensures that no exception is thrown and that the connection type is 'LOGGED'.
-	 * 
-	 * @author Miguel Ángel León Bardavío - mlb0029
-	 */
-	@Test
-	public void testConnectUserPasswordOk() {
-		assumeTrue(user != null && !user.equals("") && password != null && !password.equals(""), "The test can not be performed if a correct username and password are not specified");
-		assertDoesNotThrow(() -> {
-			repositoryDataSource.connect(user, password, RepositorySourceType.GitHub);
-		}, getErrorMsg("testConnectUserPasswordOk", "Incorrect username and password or the test threw an exception when it should not"));
-		assertEquals(EnumConnectionType.LOGGED, repositoryDataSource.getConnectionType(RepositorySourceType.GitHub), getErrorMsg("testConnectUserPasswordOk", "Connection type must be 'LOGGED'"));
-	}
-
-	/**
-	 * Test method for {@link repositorydatasource.RepositoryDataSourceUsingGitlabAPI#connect(java.lang.String, java.lang.String)}.
-	 * <p>
-	 * Test the method using a set of wrong user-password pairs that should raise an exception and the connection type is 'NOT_CONNECTED'.
-	 * 
-	 * @author Miguel Ángel León Bardavío - mlb0029
-	 */
-	@ParameterizedTest(name = "Run with User = \"{0}\" and Password = \"{1}\" must throw an exception.")
-	@CsvFileSource(resources = "/testConnectUserPasswordWrong.csv", numLinesToSkip = 1, delimiter = ';', encoding = "UTF-8")
-	public void testConnectUserPasswordWrong(String user, String password) {
-		assertThrows(RepositoryDataSourceException.class, () -> {
-			repositoryDataSource.connect(user, password, RepositorySourceType.GitHub);
-		}, getErrorMsg("testConnectUserPasswordWrong", "Wrong user-password should throw an exception"));
-		assertEquals(EnumConnectionType.NOT_CONNECTED, repositoryDataSource.getConnectionType(RepositorySourceType.GitHub), getErrorMsg("testConnectUserPasswordWrong", "Connection type must be 'NOT_CONNECTED'"));
-	}
-		
+	
 	/**
 	 * Test method for {@link repositorydatasource.RepositoryDataSourceUsingGitlabAPI#connect(java.lang.String)}.
 	 * <p>
@@ -197,7 +150,7 @@ public class GithubRepositoryDataSourceTest {
 		assumeTrue(token != null && !token.equals(""), "The test can not be performed if a correct token is not specified");
 		assertDoesNotThrow(() -> {
 			repositoryDataSource.connect(token, RepositorySourceType.GitHub);
-		}, getErrorMsg("testConnectPivateTokenOK", "IWrong token or the test threw an exception when it should not"));
+		}, getErrorMsg("testConnectPivateTokenOK", "Wrong token or the test threw an exception when it should not"));
 		assertEquals(EnumConnectionType.LOGGED, repositoryDataSource.getConnectionType(RepositorySourceType.GitHub), getErrorMsg("testConnectPivateTokenOK", "Connection type must be 'LOGGED'"));
 	}
 
@@ -227,8 +180,9 @@ public class GithubRepositoryDataSourceTest {
 	@Test
 	public void testDisconnectOK() {
 		// TODO Assumption?
+		assumeTrue(token != null && !token.equals(""), "The test can not be performed if a correct token is not specified");
 		try {
-			repositoryDataSource.connect(RepositorySourceType.GitHub);
+			repositoryDataSource.connect(token, RepositorySourceType.GitHub);
 		} catch (RepositoryDataSourceException e) {
 			fail(getErrorMsg("testDisconnectOK", "Connection error"));
 		}
@@ -293,29 +247,6 @@ public class GithubRepositoryDataSourceTest {
 		assertThrows(RepositoryDataSourceException.class, () -> {
 			repositoryDataSource.getRepository("https://gitlab.com/mlb0029/KnowRlt", RepositorySourceType.GitHub);
 		}, getErrorMsg("testGetNonExistentRepositoryWhenDisconnected", "An exception must be thrown when trying to obtain a non-existent repository without connection."));
-	}
-
-	/**
-	 * Test method for {@link repositorydatasource.RepositoryDataSourceUsingGitlabAPI#getRepository(java.lang.String)}.
-	 * <p>
-	 * 
-	 * 
-	 * @author Miguel Ángel León Bardavío - mlb0029
-	 */
-	@Test
-	public void testGetPublicRepositoryWhenConnected() {
-		try {
-			repositoryDataSource.connect(RepositorySourceType.GitHub);
-		} catch (RepositoryDataSourceException e) {
-			fail(getErrorMsg("testGetPublicRepositoryWhenConnected", "Connection error"));
-		}
-		try {
-			Repository repository = repositoryDataSource.getRepository("https://github.com/clopezno/libre-gift", RepositorySourceType.GitHub);
-			assertNotNull(repository, "Returns null when obtaining a public repository with public connection");
-			//assertEquals(8760234, repository.getId().intValue(), "It does not return the correct ID.");
-		}catch (RepositoryDataSourceException e) {
-			fail(getErrorMsg("testGetPublicRepositoryWhenConnected", "Exception when obtaining a public repository with public connection"));
-		}
 	}
 	
 	/**
