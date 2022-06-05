@@ -1,6 +1,7 @@
 package metricsengine.numeric_value_metrics;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,19 +34,11 @@ public class MetricReleasesLastYear extends NumericValueMetricTemplate {
 	/**
 	 * Default metric description.
 	 */
-	public static final MetricDescription DEFAULT_METRIC_DESCRIPTION = new MetricDescription(
-			"DC2",
-			"Releases released last year",
-			"Need GitLab connection with authorization", 
-			"Joaquin Garcia Molina",
-			"CI/CD",
-			"How many releases have been successfully released last year?",
-			"NRRLY = Releases released last year",
-			"Repository", 
-			"NRRLY >= 0, better greater values.",
-			MetricDescription.EnumTypeOfScale.ABSOLUTE,
-			"NRRLY: Count"
-	);
+	public static final MetricDescription DEFAULT_METRIC_DESCRIPTION = new MetricDescription("DC2",
+			"Releases released last year", "Need GitLab connection with authorization", "Joaquin Garcia Molina",
+			"CI/CD", "How many releases have been successfully released last year?",
+			"NRRLY = Releases released last year", "Repository", "NRRLY >= 0, better greater values.",
+			MetricDescription.EnumTypeOfScale.ABSOLUTE, "NRRLY: Count");
 
 	/**
 	 * Minimum acceptable value.
@@ -83,12 +76,16 @@ public class MetricReleasesLastYear extends NumericValueMetricTemplate {
 	 */
 	@Override
 	public Boolean check(Repository repository) {
-		// If not authenticated the metric is not calculated, GitLabApi requires authentication for 
-		RepositoryDataSourceService rds = RepositoryDataSourceService.getInstance();
-		if (rds.getConnectionType(repository.getRepositoryDataSourceType()) != EnumConnectionType.LOGGED) {
-			return false;
+		// If not authenticated the metric is not calculated, GitLabApi requires
+		// authentication for returning releases, so it can be calculated
+		if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitLab)) {
+			Collection<CustomGitlabApiRelease> repositoryReleases = repository.getRepositoryInternalMetrics()
+					.getReleases();
+			if (repositoryReleases == null) {
+				return false;
+			}
 		}
-		
+
 		// Checks the repository is not empty
 		Integer totalNumberOfCommits = repository.getRepositoryInternalMetrics().getTotalNumberOfCommits();
 
@@ -111,31 +108,32 @@ public class MetricReleasesLastYear extends NumericValueMetricTemplate {
 		long day365 = 365l * 24 * 60 * 60 * 1000;
 		Date currentYearLimitDate = new Date((now.getTime() - day365));
 
-
 		if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitLab)) {
 			List<CustomGitlabApiRelease> releasesLastYear = new ArrayList<CustomGitlabApiRelease>();
-			List<CustomGitlabApiRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getReleases().stream()
-					.collect(Collectors.toList());
+			List<CustomGitlabApiRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getReleases()
+					.stream().collect(Collectors.toList());
 
 			for (int i = 0; i < repositoryReleases.size(); i++) {
 				CustomGitlabApiRelease release = repositoryReleases.get(i);
 
-				if (release.getRelease() != null && release.getRelease().getReleasedAt() != null && release.getRelease().getReleasedAt().after(currentYearLimitDate)) {
+				if (release.getRelease() != null && release.getRelease().getReleasedAt() != null
+						&& release.getRelease().getReleasedAt().after(currentYearLimitDate)) {
 					releasesLastYear.add(release);
 				}
 			}
 			return new ValueInteger(releasesLastYear.size());
-			
+
 		} else {
 			// GitHub
 			List<CustomGithubApiRelease> releasesLastYear = new ArrayList<CustomGithubApiRelease>();
-			List<CustomGithubApiRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getGHReleases().stream()
-					.collect(Collectors.toList());
+			List<CustomGithubApiRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getGHReleases()
+					.stream().collect(Collectors.toList());
 
 			for (int i = 0; i < repositoryReleases.size(); i++) {
 				CustomGithubApiRelease release = repositoryReleases.get(i);
 
-				if (release != null && release.getRelease() != null && release.getRelease().getPublished_at() != null && release.getRelease().getPublished_at().after(currentYearLimitDate)) {
+				if (release != null && release.getRelease() != null && release.getRelease().getPublished_at() != null
+						&& release.getRelease().getPublished_at().after(currentYearLimitDate)) {
 					releasesLastYear.add(release);
 				}
 			}

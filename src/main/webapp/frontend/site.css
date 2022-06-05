@@ -171,7 +171,6 @@ vaadin-grid-sorter {
     border-right: var(--light-gray-border);
 }
 
-
 body > vaadin-vertical-layout > div:nth-child(2) > vaadin-vertical-layout > vaadin-grid > vaadin-grid-cell-content:nth-child(75)
 body > vaadin-vertical-layout > div:nth-child(2) > vaadin-vertical-layout > vaadin-grid > vaadin-grid-cell-content:nth-child(11)
 body > vaadin-vertical-layout > div:nth-child(n+2) > vaadin-vertical-layout > vaadin-grid > vaadin-grid-cell-content {
@@ -197,4 +196,9 @@ body > vaadin-vertical-layout > div:nth-child(n+2) > vaadin-vertical-layout > va
 
 .main-container {
     overflow-x: hidden;
+}
+
+.project-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

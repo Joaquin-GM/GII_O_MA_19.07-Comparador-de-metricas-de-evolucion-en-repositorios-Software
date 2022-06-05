@@ -36,6 +36,7 @@ import app.RepositoryDataSourceService;
 import datamodel.Repository;
 import datamodel.RepositorySourceType;
 import exceptions.RepositoryDataSourceException;
+import metricsengine.EvaluationResult;
 import metricsengine.Measure;
 import metricsengine.Metric;
 import metricsengine.MetricConfiguration;
@@ -339,6 +340,7 @@ public class RepositoriesGrid extends Grid<Repository> {
 			div.add(repositoryNameLabel);
 		}
 		div.setTitle(repository.getName());
+		div.setClassName("project-title");
 		return div;
 	}
 
@@ -355,6 +357,7 @@ public class RepositoriesGrid extends Grid<Repository> {
 	 * Description.
 	 * 
 	 * @author Miguel Ángel León Bardavío - mlb0029
+	 * @author Joaquin Garcia Molina - Joaquin-GM
 	 * @param repository
 	 */
 	private void updateRepositoryInfo(Repository repository) {
@@ -375,18 +378,24 @@ public class RepositoriesGrid extends Grid<Repository> {
 				ConfirmDialog.createWarning().withCaption("Error")
 						.withMessage("The repository can not be accessed with the current connection.").withOkButton()
 						.open();
+			} else if(e.getErrorCode() == RepositoryDataSourceException.NOT_CONNECTED) {
+				LOGGER.error("An error occurred while obtaining the metrics of the repository. Exception occurred: "
+						+ e.getMessage());
+				ConfirmDialog.createError().withCaption("Error").withMessage(
+						"You are not connected to " + repository.getRepositoryDataSourceType().toString() + ", please check your connection to uptade the repository data.")
+						.withOkButton().open();
 			} else {
 				LOGGER.error("An error occurred while obtaining the metrics of the repository. Exception occurred: "
 						+ e.getMessage());
 				ConfirmDialog.createError().withCaption("Error").withMessage(
-						"An error occurred while obtaining the metrics of the repository. Please, contact the application administrator.")
+						"An error occurred while obtaining the metrics of the repository. Check the connection with " + repository.getRepositoryDataSourceType().toString() + " and if the problem persists please, contact the application administrator.")
 						.withOkButton().open();
 			}
 		} catch (Exception e) {
 			LOGGER.error("An error occurred while obtaining the metrics of the repository. Exception occurred: "
 					+ e.getMessage());
 			ConfirmDialog.createError().withCaption("Error").withMessage(
-					"An error occurred while obtaining the metrics of the repository. Please, contact the application administrator.")
+					"An error occurred while obtaining the metrics of the repository. Check the connection with " + repository.getRepositoryDataSourceType().toString() + " and if the problem persists please, contact the application administrator.")
 					.withOkButton().open();
 		}
 	}
@@ -411,20 +420,24 @@ public class RepositoriesGrid extends Grid<Repository> {
 	private String getClassNameByEvaluation(Repository repository, Class<? extends Metric> metricType) {
 		String classNames = "metricEvaluation ";
 		Measure measureForMetric = getMeasureForMetric(repository, metricType);
-
+		
 		if (measureForMetric != null) {
-			switch (measureForMetric.evaluate()) {
+			EvaluationResult result = measureForMetric.evaluate();
+			switch (result) {
 			case GOOD:
-				classNames = classNames + "metricEvaluationGood";
+				classNames = classNames + " metricEvaluationGood";
+				break;
 			case WARNING:
-				classNames = classNames + "metricEvaluationWarning";
+				classNames = classNames + " metricEvaluationWarning";
+				break;
 			case BAD:
-				classNames = classNames + "metricEvaluationBad";
+				classNames = classNames + " metricEvaluationBad";
+				break;
 			default:
 				break;
 			}
 		} else {
-			classNames = classNames + "metricEvaluationBad";
+			classNames = classNames + " metricEvaluationBad";
 		}
 
 		if (metricType.toString().equals("class metricsengine.numeric_value_metrics.MetricTotalNumberOfIssues")) {
@@ -436,7 +449,7 @@ public class RepositoriesGrid extends Grid<Repository> {
 				metricType.toString().equals("class metricsengine.numeric_value_metrics.MetricReleasesLastYear")) {
 			classNames = classNames + " right-lightgray-border";
 		}
-
+		
 		return classNames;
 	}
 

@@ -1,5 +1,6 @@
 package metricsengine.numeric_value_metrics;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,10 +74,13 @@ public class MetricTotalNumberOfReleases extends NumericValueMetricTemplate {
 	@Override
 	public Boolean check(Repository repository) {
 		// If not authenticated the metric is not calculated, GitLabApi requires
-		// authentication for
-		RepositoryDataSourceService rds = RepositoryDataSourceService.getInstance();
-		if (rds.getConnectionType(repository.getRepositoryDataSourceType()) != EnumConnectionType.LOGGED) {
-			return false;
+		// authentication for returning releases, so it can be calculated
+		if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitLab)) {
+			Collection<CustomGitlabApiRelease> repositoryReleases = repository.getRepositoryInternalMetrics()
+					.getReleases();
+			if (repositoryReleases == null) {
+				return false;
+			}
 		}
 
 		// Checks the repository is not empty

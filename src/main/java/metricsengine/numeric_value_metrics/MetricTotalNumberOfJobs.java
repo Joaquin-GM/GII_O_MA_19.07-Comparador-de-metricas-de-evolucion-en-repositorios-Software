@@ -1,12 +1,12 @@
 package metricsengine.numeric_value_metrics;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import app.RepositoryDataSourceService;
 import datamodel.CustomGithubApiJob;
 import datamodel.CustomGitlabApiJob;
 import datamodel.Repository;
@@ -15,7 +15,6 @@ import metricsengine.MetricDescription;
 import metricsengine.values.NumericValue;
 import metricsengine.values.ValueDecimal;
 import metricsengine.values.ValueInteger;
-import repositorydatasource.RepositoryDataSource.EnumConnectionType;
 
 /**
  * Computes the total number of jobs successfully executed.
@@ -39,19 +38,10 @@ public class MetricTotalNumberOfJobs extends NumericValueMetricTemplate {
 	/**
 	 * Default metric description.
 	 */
-	public static final MetricDescription DEFAULT_METRIC_DESCRIPTION = new MetricDescription(
-			"IC1",
-			"Total number of jobs executed",
-			"Need GitLab connection with authorization",
-			"Joaquin Garcia Molina", 
-			"CI/CD",
-			"How many jobs have been successfully executed?",
-			"NJE = Number of jobs executed",
-			"Repository", 
-			"NJE >= 0, better greater values.",
-			MetricDescription.EnumTypeOfScale.ABSOLUTE,
-			"NJE: Count"
-	);
+	public static final MetricDescription DEFAULT_METRIC_DESCRIPTION = new MetricDescription("IC1",
+			"Total number of jobs executed", "Need GitLab connection with authorization", "Joaquin Garcia Molina",
+			"CI/CD", "How many jobs have been successfully executed?", "NJE = Number of jobs executed", "Repository",
+			"NJE >= 0, better greater values.", MetricDescription.EnumTypeOfScale.ABSOLUTE, "NJE: Count");
 
 	/**
 	 * Minimum acceptable value.
@@ -89,12 +79,15 @@ public class MetricTotalNumberOfJobs extends NumericValueMetricTemplate {
 	 */
 	@Override
 	public Boolean check(Repository repository) {
-		// If not authenticated the metric is not calculated, GitLabApi requires authentication for 
-		RepositoryDataSourceService rds = RepositoryDataSourceService.getInstance();
-		if (rds.getConnectionType(repository.getRepositoryDataSourceType()) != EnumConnectionType.LOGGED) {
-			return false;
+		// If not authenticated the metric is not calculated, GitLabApi requires
+		// authentication for returning jobs, so it can be calculated
+		if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitLab)) {
+			Collection<CustomGitlabApiJob> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs();
+			if (repositoryJobs == null) {
+				return false;
+			}
 		}
-		
+
 		// Checks the repository is not empty
 		Integer totalNumberOfCommits = repository.getRepositoryInternalMetrics().getTotalNumberOfCommits();
 
@@ -114,7 +107,7 @@ public class MetricTotalNumberOfJobs extends NumericValueMetricTemplate {
 	@Override
 	public NumericValue run(Repository repository) {
 		LOGGER.info("MetricTotalNumberOfJobs numericValue");
-		
+
 		if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitLab)) {
 			List<CustomGitlabApiJob> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
 					.collect(Collectors.toList());
@@ -127,6 +120,6 @@ public class MetricTotalNumberOfJobs extends NumericValueMetricTemplate {
 
 			return new ValueInteger(repositoryJobs.size());
 		}
-		
+
 	}
 }
