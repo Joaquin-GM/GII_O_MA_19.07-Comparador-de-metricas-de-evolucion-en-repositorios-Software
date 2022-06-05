@@ -27,11 +27,14 @@ jobs:
       run: | 
         mvn clean jacoco:prepare-agent install jacoco:report
         
-    - name: Deploy to Heroku
+    - name: Login to Heroku
       uses: akhileshns/heroku-deploy@v3.12.12
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "evolution-metrics-v2"
         heroku_email: "jgm1009@alu.ubu.es"
-        dontuseforce: true
-        dontautocreate: true
+        justlogin: true
+        
+    - name: Deploy to Heroku
+      run: heroku war:deploy target/evolution-metrics-gauge-v2-2.0.0.war --app evolution-metrics-v2
+
