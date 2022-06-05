@@ -85,8 +85,6 @@ public abstract class ConnectionFormTemplate implements ConnectionForm {
 			this.button.setIcon(new Icon(buttonIcon));
 		this.button.setText(buttonText);
 		this.button.addClickListener(event -> {
-			LOGGER.info("EN EL EVENT LISTENER!!!!");
-			LOGGER.info(repositorySourceType.toString());
 			onConnectButtonClick(repositorySourceType);
 		});
 		this.form.add(this.button);
@@ -106,13 +104,8 @@ public abstract class ConnectionFormTemplate implements ConnectionForm {
 	private void onConnectButtonClick(RepositorySourceType repositorySourceType) {
 		try {
 			if (isValid()) {
-				LOGGER.info("XXX");
-				LOGGER.info(repositorySourceType.toString());
-				LOGGER.info(RepositoryDataSourceService.getInstance().getConnectionType(repositorySourceType).toString());
 				connect();
-				LOGGER.info("DESPUES DE CONNECT!!!");
 				listeners.forEach(l -> l.onConnectionSuccessful(RepositoryDataSourceService.getInstance().getConnectionType(repositorySourceType)));
-				LOGGER.info("YYYYYYYYYYYYY");
 			}
 		} catch (RepositoryDataSourceException e) {
 			String errorMessage = "";
@@ -128,15 +121,11 @@ public abstract class ConnectionFormTemplate implements ConnectionForm {
 			getResult().setText(errorMessage);
 			getResult().setTitle(errorMessage);
 		} catch (Exception e) {
-			LOGGER.info(repositorySourceType.toString());
-			LOGGER.error("Error aqui!!!! " + e.getMessage());
-			LOGGER.error("Error aqui!!!! " + e.toString());
-			
+			LOGGER.error("Error on connect button click:");
 			String exception = "";
 		    for (StackTraceElement s : e.getStackTrace()) {
 		        exception = exception + s.toString() + "\n\t\t";
 		    }
-			
 			LOGGER.error(exception);
 			
 			String errorMessage = "An error has occurred. Please, contact the application administrator.";

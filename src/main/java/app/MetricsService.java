@@ -245,30 +245,13 @@ public class MetricsService implements Serializable {
 	 * @param repository Repository from which the measures are obtained.
 	 * @throws RepositoryDataSourceException When have not been able to obtain the measurements.
 	 */
-	public void obtainAndEvaluateRepositoryMetrics(Repository repository) throws RepositoryDataSourceException {
-		LOGGER.info("obtainAndEvaluateRepositoryMetrics");
-		
+	public void obtainAndEvaluateRepositoryMetrics(Repository repository) throws RepositoryDataSourceException {		
 		RepositoryDataSource repositoryDataSource = RepositoryDataSourceService.getInstance();
-		LOGGER.info("repositoryDataSource obtenido");
 		RepositoryInternalMetrics repositoryInternalMetrics = null;
 		
-		/*
-		if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitLab)) {
-			LOGGER.info("en el caso GitLab");
-			repositoryInternalMetrics = repositoryDataSource.getRepositoryInternalMetrics(repository, RepositorySourceType.GitLab);
-		} else if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitHub)) {
-			LOGGER.info("en el caso GitHub");
-
-			repositoryInternalMetrics = repositoryDataSource.getRepositoryInternalMetrics(repository, RepositorySourceType.GitHub);
-		}
-		*/
-		
 		repositoryInternalMetrics = repositoryDataSource.getRepositoryInternalMetrics(repository, repository.getRepositoryDataSourceType());
-		LOGGER.info("despues de en el caso GitHub");
 		repository.setRepositoryInternalMetrics(repositoryInternalMetrics);
-		LOGGER.info("despues de repository.setRepositoryInternalMetrics(repositoryInternalMetrics);");
 		evaluateRepositoryMetrics(repository);
-		LOGGER.info("despues de evaluateRepositoryMetrics(repository);");
 	}
 
 	/**
@@ -279,18 +262,11 @@ public class MetricsService implements Serializable {
 	 * @throws RepositoryDataSourceException When problems evaluating.
 	 */
 	public void evaluateRepositoryMetrics(Repository repository) throws RepositoryDataSourceException {
-		LOGGER.info("inicio evaluateRepositoryMetrics");
 		MetricsResults metricsResults = new MetricsResults();
-		LOGGER.info("metricsResults: " + metricsResults.toString());  
-		
 		for (MetricConfiguration metricConfiguration : currentMetricProfile.getMetricConfigurationCollection()) {
-			LOGGER.info("calculando la metrica: " + metricConfiguration.getName());  
 			metricConfiguration.calculate(repository, metricsResults);
-			LOGGER.info("calculada la metrica: " + metricConfiguration.getName());  
 		}
-		LOGGER.info("despues del loop por las métricas");  
 		repository.setMetricsResults(metricsResults);
-		LOGGER.info("despues de	repository.setMetricsResults(metricsResults)");  
 	}
 	
 	/**

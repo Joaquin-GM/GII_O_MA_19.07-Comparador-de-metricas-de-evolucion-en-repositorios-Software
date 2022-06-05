@@ -1,8 +1,5 @@
 package metricsengine.numeric_value_metrics;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import datamodel.Repository;
 import metricsengine.EvaluationResult;
 import metricsengine.Measure;
@@ -21,12 +18,6 @@ import metricsengine.values.ValueUncalculated;
  *
  */
 public abstract class NumericValueMetricTemplate implements Metric {	
-	/**
-	 * Logger.
-	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(NumericValueMetricTemplate.class);
-
-	
 	/**
 	 * Description.
 	 * 
@@ -189,10 +180,6 @@ public abstract class NumericValueMetricTemplate implements Metric {
 	 */
 	@Override
 	public IValue calculate(Repository repository, MetricConfiguration metricConfig, MetricsResults metricsResults) {
-		LOGGER.info("calculate en numeric value");
-		LOGGER.info("repository: " + repository.toString());
-		LOGGER.info("metricConfig: " + metricConfig.toString());
-		LOGGER.info("metricsResults: " + metricsResults.toString());
 		IValue value;
 		if (repository == null || metricConfig == null ||  metricsResults == null) throw new IllegalArgumentException("All parameters must be not null");
 		value = (check(repository))?run(repository):new ValueUncalculated();

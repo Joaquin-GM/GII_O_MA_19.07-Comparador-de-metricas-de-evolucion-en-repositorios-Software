@@ -21,7 +21,6 @@ import app.listeners.Listener;
 import app.listeners.RepositoriesCollectionUpdatedEvent;
 import datamodel.Repository;
 import exceptions.RepositoriesCollectionServiceException;
-import gui.views.RepositoriesGrid;
 import metricsengine.Measure;
 import metricsengine.Metric;
 import metricsengine.MetricsResults;
@@ -134,7 +133,7 @@ public class RepositoriesCollectionService implements Serializable {
 			objectOut.flush();
 			return bos.toInputStream();
 		} catch (Exception e) {
-			LOGGER.info("ERROR EXPORTANDO!");
+			LOGGER.info("An error ocurred during the export:");
 			String exception = "";
 		    for (StackTraceElement s : e.getStackTrace()) {
 		        exception = exception + s.toString() + "\n\t\t";

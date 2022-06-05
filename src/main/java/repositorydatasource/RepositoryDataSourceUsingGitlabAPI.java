@@ -133,7 +133,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 						password.toCharArray());
 				currentUser = getCurrentUser(gitLabApi.getUserApi().getCurrentUser());
 				connectionType = EnumConnectionType.LOGGED;
-				LOGGER.info("Loged to GitLab");
+				LOGGER.info("Logged to GitLab");
 			} else {
 				throw new RepositoryDataSourceException(RepositoryDataSourceException.ALREADY_CONNECTED);
 			}
@@ -157,9 +157,7 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 				gitLabApi = new GitLabApi(RepositoryDataSourceUsingGitlabAPI.HOST_URL, token);
 				currentUser = getCurrentUser(gitLabApi.getUserApi().getCurrentUser());
 				connectionType = EnumConnectionType.LOGGED;
-				LOGGER.info("..........rrrrrrrrrrrr............");
-				LOGGER.info(currentUser.toString());
-				LOGGER.info("Login to GitLab");
+				LOGGER.info("Logged to GitLab");
 			} else {
 				throw new RepositoryDataSourceException(RepositoryDataSourceException.ALREADY_CONNECTED);
 			}
@@ -294,12 +292,9 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	@Override
 	public Repository getRepository(String repositoryHTTPSURL, RepositorySourceType repositorySourceType)
 			throws RepositoryDataSourceException {
-		LOGGER.info("--getRepository---");
-		LOGGER.info(repositoryHTTPSURL);
 		Long projectId;
 		if (!connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
 			projectId = getProjectId(repositoryHTTPSURL);
-			LOGGER.info(String.valueOf(projectId));
 			if (projectId != null) {
 				return new Repository(repositoryHTTPSURL, getRepositoryName(projectId), projectId);
 			} else {
@@ -314,8 +309,6 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	public Repository getRepository(Long repositoryId, RepositorySourceType repositorySourceType)
 			throws RepositoryDataSourceException {
 		try {
-			LOGGER.info("--getRepository 2---");
-			LOGGER.info(String.valueOf(repositoryId));
 			if (!connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
 				Project pProyecto = gitLabApi.getProjectApi().getProject(repositoryId);
 				if (pProyecto != null) {
@@ -341,9 +334,8 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	@Override
 	public RepositoryInternalMetrics getRepositoryInternalMetrics(Repository repository,
 			RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
-		LOGGER.info("getRepositoryInternalMetrics");
-		// LOGGER.info(String.valueOf(repository));
-		getRepository(repository.getId(), repositorySourceType); // Si no se obtiene, lanza una excepción
+		LOGGER.info("getRepositoryInternalMetrics using GitLabAPI");
+		getRepository(repository.getId(), repositorySourceType);
 		Long projectId = repository.getId();
 		Integer totalNumberOfIssues = getTotalNumberOfIssues(projectId);
 		Integer totalNumberOfCommits = getTotalNumberOfCommits(projectId);
@@ -355,9 +347,6 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 		RepositoryInternalMetrics repositoryInternalMetrics = null;
 		RepositoryDataSourceService rds = RepositoryDataSourceService.getInstance();
 
-		LOGGER.info("--------RepositoryInternalMetrics rds.getConnectionType()-----"
-				+ rds.getConnectionType(repositorySourceType).toString());
-
 		if (rds.getConnectionType(repositorySourceType) == EnumConnectionType.CONNECTED) {
 			repositoryInternalMetrics = new RepositoryInternalMetrics(totalNumberOfIssues, totalNumberOfCommits,
 					numberOfClosedIssues, daysToCloseEachIssue, commitDates, lifeSpanMonths);
@@ -365,10 +354,8 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 			// With logged connection we can get jobs (and releases) of the repository
 			List<CustomGitlabApiJob> jobs = getRepositoryJobs(projectId);
 			List<CustomGitlabApiRelease> releases = getRepositoryReleases(projectId);
-
 			repositoryInternalMetrics = new RepositoryInternalMetrics(totalNumberOfIssues, totalNumberOfCommits,
 					numberOfClosedIssues, daysToCloseEachIssue, commitDates, lifeSpanMonths, jobs, releases);
-
 			LOGGER.info("jobs of the repository " + Integer.toString(jobs.size()));
 		}
 
@@ -402,8 +389,6 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 */
 	private Long getProjectId(String repositoryURL) {
 		try {
-			LOGGER.info("getProjectId");
-			LOGGER.info(String.valueOf(repositoryURL));
 			if (repositoryURL == null)
 				return null;
 			String sProyecto = repositoryURL.replaceAll(RepositoryDataSourceUsingGitlabAPI.HOST_URL + "/", "");
@@ -424,8 +409,6 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 */
 	private String getRepositoryName(Long projectId) {
 		try {
-			LOGGER.info("getRepositoryName");
-			LOGGER.info(String.valueOf(projectId));
 			return gitLabApi.getProjectApi().getProject(projectId).getName();
 		} catch (GitLabApiException e) {
 			return null;
@@ -440,18 +423,9 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 */
 	private Integer getTotalNumberOfIssues(Long projectId) {
 		try {
-			LOGGER.info("getTotalNumberOfIssues");
-
 			var returnedValueNoNum = gitLabApi.getIssuesApi().getIssuesStream(projectId, new IssueFilter());
-			LOGGER.info("returnedValueNoNum");
-			LOGGER.info(String.valueOf(returnedValueNoNum));
-
 			var returnedValue = (int) returnedValueNoNum.count();
-			LOGGER.info("returnedValue");
-			LOGGER.info(String.valueOf(returnedValue));
-
 			return returnedValue;
-//			return (int) gitLabApi.getIssuesApi().getIssuesStream(projectId, new IssueFilter()).count();
 		} catch (GitLabApiException e) {
 			return null;
 		}
@@ -465,18 +439,9 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 */
 	private Integer getTotalNumberOfCommits(Long projectId) {
 		try {
-			LOGGER.info("getTotalNumberOfCommits");
-
 			var returnedValueNoNum = gitLabApi.getCommitsApi().getCommitStream(projectId);
-			LOGGER.info("returnedValueNoNum");
-			LOGGER.info(String.valueOf(returnedValueNoNum));
-
 			var returnedValue = (int) returnedValueNoNum.count();
-			LOGGER.info("returnedValue");
-			LOGGER.info(String.valueOf(returnedValue));
-
 			return returnedValue;
-//			return (int) gitLabApi.getCommitsApi().getCommitStream(projectId).count();
 		} catch (GitLabApiException e) {
 			return null;
 		}
@@ -581,7 +546,6 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @return List of jobs of a project or null if fail.
 	 */
 	private List<CustomGitlabApiJob> getRepositoryJobs(Long projectId) {
-		LOGGER.info("--getRepositoryJobs---");
 		try {
 			List<Job> jobs = gitLabApi.getJobApi().getJobsStream(projectId).collect(Collectors.toList());
 			List<CustomGitlabApiJob> customGitlabApiJobs = new ArrayList<CustomGitlabApiJob>();
@@ -604,7 +568,6 @@ public class RepositoryDataSourceUsingGitlabAPI implements RepositoryDataSource 
 	 * @return List of releases of a project or null if fail.
 	 */
 	private List<CustomGitlabApiRelease> getRepositoryReleases(Long projectId) {
-		LOGGER.info("--getRepositoryReleases---");
 		try {
 			List<Release> releases = gitLabApi.getReleasesApi().getReleasesStream(projectId)
 					.collect(Collectors.toList());

@@ -1,8 +1,5 @@
 package gui.views.connectionforms;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.textfield.PasswordField;
@@ -35,8 +32,6 @@ public class ConnectionFormUsingPAToken extends ConnectionFormTemplate {
 	
 	private Label tokenLabel;
 	private PasswordField tokenField;
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionFormUsingPAToken.class);
 	
 	public ConnectionFormUsingPAToken(RepositorySourceType repositorySourceType) {
 		super(
@@ -83,10 +78,6 @@ public class ConnectionFormUsingPAToken extends ConnectionFormTemplate {
 
 	@Override
 	protected void connect() throws RepositoryDataSourceException {
-		LOGGER.info("-- connect en ConnectionFormUsingPAToken --");
-		LOGGER.info(tokenField.getValue());
-		LOGGER.info(getRepositorySource().toString());
 		RepositoryDataSourceService.getInstance().connect(tokenField.getValue(), getRepositorySource());
 	}
-
 }

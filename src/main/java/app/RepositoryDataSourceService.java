@@ -155,14 +155,9 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
 			this.repositoryDataSourceGitLab.connect(token, repositorySourceType);
 		} else {
-			LOGGER.info("Voy a iniciar con token en GitHub");
 			this.repositoryDataSourceGitHub.connect(token, repositorySourceType);
 		}
 		EnumConnectionType after = getConnectionType(repositorySourceType);
-		LOGGER.info("connect en el service:");
-		LOGGER.info(before.toString());
-		LOGGER.info(after.toString());
-		LOGGER.info(repositorySourceType.toString());
 		connectionChangedEventListeners.forEach(l -> l.on(new ConnectionChangedEvent(before, after, repositorySourceType)));
 	}
 
@@ -204,10 +199,7 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 	 */
 	@Override
 	public User getCurrentUser(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
-		LOGGER.info("get currentUser en el serviceeee...");
-		LOGGER.info("ES gitlab?? " + String.valueOf(repositorySourceType.equals(RepositorySourceType.GitLab)));
 		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
-			LOGGER.info("ueueueu");
 			return this.repositoryDataSourceGitLab.getCurrentUser(repositorySourceType);
 		} else {
 			return this.repositoryDataSourceGitHub.getCurrentUser(repositorySourceType);
@@ -330,7 +322,6 @@ public class RepositoryDataSourceService implements Serializable, RepositoryData
 		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
 			return this.repositoryDataSourceGitLab.getRepositoryInternalMetrics(repository, repositorySourceType);
 		} else {
-			LOGGER.info("getRepositoryInternalMetrics en RepositoryDataSourceService, caso GitHub");
 			return this.repositoryDataSourceGitHub.getRepositoryInternalMetrics(repository, repositorySourceType);
 		}
 	}

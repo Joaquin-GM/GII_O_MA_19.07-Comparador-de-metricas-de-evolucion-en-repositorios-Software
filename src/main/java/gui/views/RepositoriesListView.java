@@ -321,8 +321,7 @@ public class RepositoriesListView extends VerticalLayout {
 				ms.evaluateRepositoryCollection();
 				updateGrid();
 			} catch (Exception e) {
-				LOGGER.error(
-						"Error evaluating repositories with calculated profile. Exception occurred: " + e.getMessage());
+				LOGGER.error("Error evaluating repositories with calculated profile. Exception occurred: " + e.getMessage());
 				ConfirmDialog.createError().withCaption("Error")
 						.withMessage("An error has occurred. Please, contact the application administrator.")
 						.withOkButton().open();

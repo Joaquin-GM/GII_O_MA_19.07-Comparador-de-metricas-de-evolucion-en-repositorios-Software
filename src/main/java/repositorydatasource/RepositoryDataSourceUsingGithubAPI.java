@@ -160,22 +160,12 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	public void connect(String token, RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		try {
 			if (connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
-				/*
-				 * githubclientApi = new GitHubClient(); githubclientApi.setOAuth2Token(token);
-				 * userService = new UserService(githubclientApi); currentUser =
-				 * getCurrentUser(userService.getUser());
-				 */
-
 				// If you don't specify the GitHub user id then the sdk will retrieve it via user endpoint
-				LOGGER.info("voy a hacer build con token: :" + token);
 				githubclientApi = new GitHubBuilder().withOAuthToken(token).build();
-				LOGGER.info("Despues de hacer build con token");
 				ghUser = githubclientApi.getMyself();
-				LOGGER.info("Usuario recibido de la api de GitHub:" + ghUser.toString());
 				currentUser = getCurrentUser(ghUser); // esto puede que esté mal en teoría si mete el token ya con la anterior instruccion debería funcionar
-
 				connectionType = EnumConnectionType.LOGGED;
-				LOGGER.info("Login to Github");
+				LOGGER.info("Logged to Github");
 
 			} else {
 				throw new RepositoryDataSourceException(RepositoryDataSourceException.ALREADY_CONNECTED);
@@ -257,7 +247,6 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 			Collection<datamodel.Repository> resultrepositories = new ArrayList<datamodel.Repository>();
 			if (connectionType != EnumConnectionType.NOT_CONNECTED) {
 				// repositoryService = new RepositoryService(githubclientApi);
-				LOGGER.info("currentUser.getName()" + currentUser.getName());
 				List<GHRepository> lRepositories = githubclientApi.searchRepositories().user(currentUser.getName()).list().toList();
 						
 						// githubclientApi.repository()
@@ -280,13 +269,10 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	public Collection<datamodel.Repository> getAllUserRepositories(String userIdOrUsername,
 			RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
 		Collection<datamodel.Repository> repositories;
-		LOGGER.info("getAllUserRepositories inicio:" + userIdOrUsername);
 		try {
 			if (currentUser != null && currentUser.getUsername().equals(userIdOrUsername)) {
 				repositories = getCurrentUserRepositories(repositorySourceType);
 			} else if (!connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
-				
-				LOGGER.info("buscando repos del usuario: " + userIdOrUsername);
 				// repositoryService = new RepositoryService(githubclientApi);
 				List<GHRepository> lRepositories = githubclientApi.searchRepositories().user(userIdOrUsername).list().toList();
 				
@@ -295,8 +281,6 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 					mapUrlIdRepo.put(repo.getId(), repo);
 					resultrepositories.add(new datamodel.Repository(repo.getHtmlUrl().toString(), repo.getName(), repo.getId()));
 				}
-				
-				
 				return resultrepositories;
 			} else {
 				throw new RepositoryDataSourceException(RepositoryDataSourceException.NOT_CONNECTED);
@@ -411,11 +395,8 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	@Override
 	public RepositoryInternalMetrics getRepositoryInternalMetrics(datamodel.Repository repository,
 			RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
-
 		LOGGER.info("getRepositoryInternalMetrics en RepositoryDataSourceUsingGithubAPI");
-
 		getRepository(repository.getId(), repositorySourceType);
-		LOGGER.info("despues de  getRepository");
 		Long projectId = repository.getId();
 
 		LOGGER.info("projectId obtenida: " + projectId);
@@ -466,16 +447,6 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	 */
 	private Integer getTotalNumberOfIssues(Long repoId) {
 		try {
-			/*
-			issueService = new IssueService(githubclientApi);
-
-			Map<String, String> filtro = new HashMap<String, String>();
-			filtro.put("state", "all");
-			Repository repository = mapUrlIdRepo.get(repoId);
-			RepositoryId githubRepoId = RepositoryId.createFromUrl(repository.getHtmlUrl());
-
-			return this.issueService.getIssues(githubRepoId, filtro).size();
-			*/
 			return githubclientApi.getRepositoryById(repoId).queryIssues().state(GHIssueState.ALL).list().toList().size();
 		} catch (IOException e) {
 			return null;
@@ -492,16 +463,6 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	 */
 	private Integer getNumberOfClosedIssues(Long repoId) {
 		try {
-			/*
-			issueService = new IssueService(githubclientApi);
-
-			Map<String, String> filtro = new HashMap<String, String>();
-			filtro.put("state", "closed");
-			Repository repository = mapUrlIdRepo.get(repoId);
-			RepositoryId githubRepoId = RepositoryId.createFromUrl(repository.getHtmlUrl());
-
-			return this.issueService.getIssues(githubRepoId, filtro).size();
-			*/
 			return githubclientApi.getRepositoryById(repoId).queryIssues().state(GHIssueState.CLOSED).list().toList().size();
 		} catch (IOException e) {
 			return null;
@@ -516,13 +477,6 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	 */
 	private Integer getTotalNumberOfCommits(Long repoId) {
 		try {
-			/*
-			commitService = new CommitService(githubclientApi);
-			Repository repository = mapUrlIdRepo.get(repoId);
-			RepositoryId githubRepoId = RepositoryId.createFromUrl(repository.getHtmlUrl());
-
-			return commitService.getCommits(githubRepoId).size();
-			*/
 			return githubclientApi.getRepositoryById(repoId).queryCommits().list().toList().size();
 		} catch (IOException e) {
 			return null;
@@ -537,22 +491,7 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	 * @throws IOException
 	 */
 	private List<Integer> getDaysToCloseEachIssue(Long repoId) {
-		try {
-			/*
-			issueService = new IssueService(githubclientApi);
-			Map<String, String> filtro = new HashMap<String, String>();
-			filtro.put("state", "closed");
-			Repository repository = mapUrlIdRepo.get(repoId);
-			RepositoryId githubRepoId = RepositoryId.createFromUrl(repository.getHtmlUrl());
-			List<Issue> lissues = issueService.getIssues(githubRepoId, filtro);
-			List<Integer> ldaystoclose = new ArrayList<Integer>();
-
-			for (Issue issue : lissues) {
-				long ldays = (issue.getClosedAt().getTime() - issue.getCreatedAt().getTime()) / (1000 * 60 * 60 * 24);
-				ldaystoclose.add((int) ldays);
-			}
-			return ldaystoclose;*/
-			
+		try {	
 			List<GHIssue> issues = githubclientApi.getRepositoryById(repoId).queryIssues().state(GHIssueState.CLOSED).list().toList();
 			List<Integer> ldaystoclose = new ArrayList<Integer>();
 			
@@ -576,25 +515,7 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	 * @throws IOException
 	 */
 	private Set<Date> getCommitsDates(Long repoId) {
-
 		try {
-			
-			/*
-			commitService = new CommitService(githubclientApi);
-			List<RepositoryCommit> lcommits;
-			Repository repository = mapUrlIdRepo.get(repoId);
-			RepositoryId githubRepoId = RepositoryId.createFromUrl(repository.getHtmlUrl());
-
-			lcommits = commitService.getCommits(githubRepoId);
-
-			Set<Date> sdates = new HashSet<Date>();
-
-			for (int i = 0; i < lcommits.size(); i++) {
-				sdates.add(new Date(lcommits.get(i).getCommit().getAuthor().getDate().getTime()));
-			}
-			return sdates;
-			*/
-			
 			List<GHCommit> commits = githubclientApi.getRepositoryById(repoId).queryCommits().list().toList();
 			Set<Date> sdates = new HashSet<Date>();
 			for (int i = 0; i < commits.size(); i++) {
@@ -616,13 +537,7 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	 *         repository until the date of last activity.
 	 */
 	private Integer getRepositoryLifeInMonths(Long repoId) {
-		try {
-			/*
-			repositoryService = new RepositoryService(githubclientApi);
-			Repository repository = mapUrlIdRepo.get(repoId);
-			RepositoryId githubRepoId = RepositoryId.createFromUrl(repository.getHtmlUrl());
-			*/
-			
+		try {		
 			Date createdAtDate = githubclientApi.getRepositoryById(repoId).getCreatedAt();
 			Date lastActivityDate = githubclientApi.getRepositoryById(repoId).getUpdatedAt();
 
@@ -651,14 +566,10 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	 * @return List of jobs of a project or null if fail.
 	 */
 	private List<CustomGithubApiJob> getRepositoryJobs(Long projectId) {
-		LOGGER.info("--getRepositoryJobs GitHub---");
 		try {
 			List<GHWorkflowRun> ghWorkFlowRuns = githubclientApi.getRepositoryById(projectId).queryWorkflowRuns().status(Status.COMPLETED).list().toList();
 			List<CustomGithubApiJob> ghWorkflowJobs = new ArrayList<CustomGithubApiJob>();
 					
-					
-			// List<CustomGitlabApiJob> customGitlabApiJobs = new ArrayList<CustomGitlabApiJob>();
-			
 			for (GHWorkflowRun ghWorkFlowRun : ghWorkFlowRuns) {
 				List<GHWorkflowJob> ghCurrentWorkflowJobs = ghWorkFlowRun.listAllJobs().toList();
 				
@@ -680,14 +591,11 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 	 * @return List of releases of a project or null if fail.
 	 */
 	private List<CustomGithubApiRelease> getRepositoryReleases(Long projectId) {
-		LOGGER.info("--getRepositoryReleases GitHub---");
 		try {
 			List<GHRelease> releases = githubclientApi.getRepositoryById(projectId).listReleases().toList();
 			
 			List<CustomGithubApiRelease> customGitlabApiReleases = new ArrayList<CustomGithubApiRelease>();
-			
-			// TODO puede que tambien tenga que hacerme una clase custom para las Releases para que sean serializables
-			
+						
 			for (GHRelease release : releases) {
 				CustomGithubApiRelease newCustomGitlabApiRelease= new CustomGithubApiRelease(release);
 				customGitlabApiReleases.add(newCustomGitlabApiRelease);

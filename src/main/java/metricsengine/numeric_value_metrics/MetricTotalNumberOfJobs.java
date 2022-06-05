@@ -4,9 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import datamodel.CustomGithubApiJob;
 import datamodel.CustomGitlabApiJob;
 import datamodel.Repository;
@@ -23,11 +20,6 @@ import metricsengine.values.ValueInteger;
  *
  */
 public class MetricTotalNumberOfJobs extends NumericValueMetricTemplate {
-	/**
-	 * Logger.
-	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(MetricTotalNumberOfJobs.class);
-
 	/**
 	 * Description.
 	 * 
@@ -106,8 +98,6 @@ public class MetricTotalNumberOfJobs extends NumericValueMetricTemplate {
 	 */
 	@Override
 	public NumericValue run(Repository repository) {
-		LOGGER.info("MetricTotalNumberOfJobs numericValue");
-
 		if (repository.getRepositoryDataSourceType().equals(RepositorySourceType.GitLab)) {
 			List<CustomGitlabApiJob> repositoryJobs = repository.getRepositoryInternalMetrics().getJobs().stream()
 					.collect(Collectors.toList());
