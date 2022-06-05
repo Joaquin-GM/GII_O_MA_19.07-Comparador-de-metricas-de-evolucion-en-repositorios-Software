@@ -36,5 +36,7 @@ jobs:
         justlogin: true
         
     - name: Deploy to Heroku
-      run: heroku war:deploy target/evolution-metrics-gauge-v2-2.0.0.war --app evolution-metrics-v2
+      run: |
+       heroku plugins:install heroku-cli-deploy
+       heroku war:deploy target/evolution-metrics-gauge-v2-2.0.0.war --app evolution-metrics-v2
 
