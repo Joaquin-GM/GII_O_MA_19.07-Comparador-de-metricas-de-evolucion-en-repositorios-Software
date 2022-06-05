@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -23,19 +23,13 @@ jobs:
     - name: Build with Maven
       run: mvn -B package -Pproduction --file pom.xml
  
-  test:
-    runs-on: ubuntu-latest
-    steps:
     - name: Run tests
       run: | 
         mvn clean jacoco:prepare-agent install jacoco:report
         
-  deploy:
-    runs-on: ubuntu-latests
-    steps:
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: evolution-metrics-v2"
-          heroku_email: "jgm1009@alu.ubu.es"
+    - name: Deploy to Heroku
+      uses: akhileshns/heroku-deploy@v3.12.12
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: evolution-metrics-v2"
+        heroku_email: "jgm1009@alu.ubu.es"
