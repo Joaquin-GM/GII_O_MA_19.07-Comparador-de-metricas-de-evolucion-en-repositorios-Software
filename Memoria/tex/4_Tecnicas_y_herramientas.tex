@@ -6,7 +6,7 @@ A continuación se muestran las diferentes técnicas y herramientas empleadas en
 
 \section{Herramientas utilizadas}
 
-En esta sección se van a enumerar y describir de manera breve las herramientas utilizadas, además, se mostrarán algunas capturas de pantalla e imágenes.
+En está sección se describen brevemente las herramientas utilizadas en el desarrollo del proyecto. La elección de las herramientas condicionada por el desarrollo previo, ha sido actualizada con versiones más recientes. En esta sección también se describen las notas de las acciones llevadas a cabo en durante el proceso de actualización. 
 Se podrá encontrar más información acerca del código y las herramientas utilizadas en el 
 `Apéndice D - Documentación técnica de programación'.
 
@@ -71,7 +71,7 @@ Podemos obtener la versión más reciente en: \url{https://www.eclipse.org/downl
 			\item De la versión 11 se ha utilizado el método \textit{isBlank()} de la clase \textit{String}. Se diferencia de \textit{isEmpty()} en que no comprueba la longitud de la cadena y devuelve \textit{true} si es 0, sino que devuelve \textit{true} si la longitud es 0 o si no es 0 pero todos los caracteres de la cadena son espacios en blanco.
 			\item De la clase \textit{java.util.Optional} \footnote{\url{https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Optional.html}}, soportada desde la versión 1.8, se utiliza la función \textit{orElseThrow()}, que se soporta desde la versión 10, por tanto habría que buscar una alternativa para pasar a la versión 1.8. La versión 11 trae a esta clase la función \textit{isEmpty()}.
 		\end{itemize}
-	\item[Apache Maven.] Gestor de proyectos software que ayuda en la construcción del proyecto, la generación de documentación, generación de informes, gestión de dependencias, integración con un sistema de control de versiones, etc. 
+	\item[Apache Maven.] Gestor de proyectos software que ayuda en la construcción del proyecto, la generación de documentación, generación de informes, gestión de dependencias, integración continua dentro de forjas de repositorios como Github y GitLab, etc. 
 	
 		Se ha actualizado a la versión v3.8.0 desde la versión  v3.8.4 que utilizaba el proyecto original \cite{TFGPrevio}. Enlace a página de descarga:
 		
@@ -82,24 +82,37 @@ Podemos obtener la versión más reciente en: \url{https://www.eclipse.org/downl
 			\item Compilación. Es un proceso de generación de binarios a partir del código fuente escrito en Java.
 			\item Pruebas unitarias y de integración automáticas con JUnit.
 			\item Generación de informes de pruebas, cobertura y análisis de calidad con ayuda de Jacoco, JUnit y Codacy.
-			\item Despliegue en servidor de Heroku (TODO-> confirmar si finalmente utilizaremos Heroku o alguna otra alternativa).
+			\item Despliegue en servidor de Heroku.
 		\end{itemize}
 	
-	\item[Apache Tomcat.] Contenedor de aplicaciones Web con soporte de servlets Java. Sirve para desplegar la aplicación.
+	\item[Maven Jetty Plugin.] Contenedor de aplicaciones Web integrado con Maven en forma de plugin.
 	
-		Se ha utilizado la versión  v9.0.13. Enlace a página de descarga:
+		Se ha utilizado la versión  v9.4.36 y se ha incluido en el proyecto en el pom.xml:
+	
+\begin{verbatim}
+...
+<plugin>
+	<groupId>org.eclipse.jetty</groupId>
+	<artifactId>jetty-maven-plugin</artifactId>
+	<version>9.4.36.v20210114</version>
+	<configuration>
+		<scanIntervalSeconds>2</scanIntervalSeconds>
+	</configuration>
+</plugin>
+...
+\end{verbatim}
 		
-		\url{https://tomcat.apache.org/download-90.cgi}
+Enlace a página de descarga:
 		
-		Se ha utilizado para desplegar en el equipo (computador) local de desarrollo y realizar pruebas manuales de despliegue, y de interfaz (Ver Fig. \ref{fig:M4_TomcatAppManager}). Es posible su integración con Eclipse.
-		TODO-> actualizar captura de pantalla cuando esté integrado.
+		\url{https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-maven-plugin/9.4.36.v20210114}
 		
-		\begin{figure}[!h]
-			\centering
-			\includegraphics[scale=0.35]{M4_TomcatAppManager}
-			\caption{Gestor de aplicaciones Tomcat con dos versiones desplegadas de la aplicación de este proyecto}\label{fig:M4_TomcatAppManager}
-		\end{figure}
-		\FloatBarrier
+Se ha utilizado para desplegar en el equipo local de desarrollo y realizar pruebas durante el desarrollo en local. Para correr la aplicación en el entorno local basta con ejecutar: 
+		
+\begin{verbatim}
+mvn jetty:run
+\end{verbatim}
+
+y gracias a la capacidad que tiene el plugin de captar los cambios (cada dos segundos según podemos ver en la configuración previa) facilita mucho el desarrollo al recompilar automáticamente el proyecto.
 		
 \end{description}
 \subsection{Logging}
@@ -118,8 +131,6 @@ El \textit{logging} es el proceso que permite ver lo que ocurre durante la ejecu
 	 	Enlace a página de descarga:
 	
 	 	\url{https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/2.17.2}\\
-	
-		SLF4J (\textit{Simple Logging Facade for Java}) es una capa intermedia entre el logger (\textit{java.util.logging}, \textit{logback}, \textit{log4j}, etc) y la aplicación, esto permite poder cambiar de logger fácilmente en tiempo de despliegue sin tener que realizar grandes cambios en el código de la aplicación.
 		
 		Esta herramienta permite configurar este proceso por medio de un fichero log4j2 con extensión XML, JSON, YAML o Properties\footnote{Manual de configuración de Log4j 2: \url{https://logging.apache.org/log4j/2.x/manual/configuration.html}} \cite{apache_apache_nodate}. En este proyecto se configuró mediante un fichero con extensión \textit{.properties}. 
 		
@@ -270,8 +281,7 @@ add(emailField);
 		
 		Enlace a aplicación desplegada:
 		
-		% TODO -> cuando esté desplegada la aplicación a través de GitHub Actions poner url
-		% \url{}
+		\url{https://evolution-metrics-v2.herokuapp.com/}
 	
 \end{description}
 \subsection{Documentación}
@@ -300,5 +310,5 @@ add(emailField);
 	
 	\item Para el motor de métricas se ha utilizado como base el framework propuesto en \textit{Soporte de Métricas con Independencia del Lenguaje para la Inferencia de Refactorizaciones} \cite{marticorena_sanchez_soporte_2005}. Ver Fig. \ref{fig:MCTMotorMetricas} en la sección \ref{sect:3_3_3_FrameworkMedicion}.
 	
-	\item El ciclo de vida del software de este proyecto se ha basado en \textit{Scrum}\cite{scrum_master_scrum_2019}, es decir, ha seguido un modelo de proceso iterativo e incremental. En el siguiente capítulo se puede encontrar más información sobre éste.
+	\item El ciclo de vida del software de este proyecto se ha basado en \textit{Scrum}\cite{scrum_master_scrum_2019}, es decir, ha seguido un modelo de proceso iterativo e incremental. En el documento de anexos en su primera sección titulada Plan de proyecto se mostrarán los detalles de las iteraciones.
 \end{itemize}

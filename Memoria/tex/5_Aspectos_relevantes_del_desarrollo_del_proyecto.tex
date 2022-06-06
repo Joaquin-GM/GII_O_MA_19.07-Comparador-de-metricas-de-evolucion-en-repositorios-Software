@@ -139,13 +139,17 @@ Para esta versión, la configuración necesaria de Maven para que el proyecto co
 }
 \end{minipage}
 
-Y en Eclipse IDE habría que añadir manualmente el JRE desde la ventana Window/Preferences, como se muestra en la siguiente figura: %Fig. \ref{fig:M5_Eclipse_Java11}.
+Y en Eclipse IDE habría que añadir manualmente el JRE desde la ventana Window/Preferences, como se muestra en la siguiente figura: 
 
-%TODO imagen con la versión de Java que finalmente adoptemos
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=1\textwidth]{M5_Eclipse_Java11}
+	\caption{JRE empleado en la aplicación}\label{fig:M5_Eclipse_Java11}
+\end{figure}
+\FloatBarrier
 
-% \imagen{M5_Eclipse_Java11}{Añadir Java 11 a Eclipse}
 
-% TODO pendiente de adaptar con la version final de Java adoptada
+
 %De la utilización de Java 11 destacan dos aspectos ya existentes en el proyecto:          
 %	\item De la versión 11 se ha utilizado el método \textit{isBlank()} de la clase \textit{String} \footnote{\url{https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html}}. Se diferencia de \textit{isEmpty()} en que no comprueba la longitud de la cadena y devuelve \textit{true} si es 0. Sino que devuelve \textit{true} si la longitud es 0, o si no es 0 pero todos los caracteres de la cadena son espacios en blanco.
 %	\item De la clase \textit{java.util.Optional} \footnote{\url{https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Optional.html}}, soportada desde la versión 1.8, se utiliza la función \textit{orElseThrow()}, que se soporta desde la versión 10, por tanto habría que buscar una alternativa para pasar a la versión 1.8. La versión 11 trae a esta clase la función \textit{isEmpty()}.
