@@ -1,4 +1,4 @@
-[![Pipeline Status](https://gitlab.com/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software/badges/master/pipeline.svg)](https://gitlab.com/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software/commits/master)
+![build-and-deploy](https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software/actions/workflows/maven.yml/badge.svg)
 [![Heroku](http://heroku-badge.herokuapp.com/?app=evolution-metrics-v2&style=flat&svg=1)](https://evolution-metrics-v2.herokuapp.com/)
 
 <img src="https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software/blob/main/Memoria/img/_LOGOAPP.png" alt="logo" width="200" height="200" />
