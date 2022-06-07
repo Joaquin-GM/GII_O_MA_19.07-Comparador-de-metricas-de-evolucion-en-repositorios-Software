@@ -412,17 +412,213 @@ LOGGER.error("Error fetching a repository. Message: " + e.getMessage());
 }
 \end{minipage}
 
-% TODO siguientes secciones, consultar propuesta de las mismas
+
 \section{Automatización del proceso de desarrollo}
+
+La automatización del flujo de trabajo ha permitido el despliegue continuo de la aplicación, para ello se ha trabajado con las herramientas que ofrece GitHub y que vamos a ver a continuación.
+
 \subsection{CI/CD: GitHub Actions}
+
+Se ha utilizado el sistema de despliegue e integración continua (CICD) que ofrece GitHub, \textit{\textbf{GitHub Actions}}, que permiten configurar CICD para una gran cantidad de tipos de proyectos incluyendo proyectos Java que utilicen Maven como es el caso del presente proyecto. En la siguiente figura podemos ver algunos de los \textit{actions} que existen para Java:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{M5_Java_GitHub_Actions}
+	\caption{Algunos de los GitHub Actions existentes para Java}\label{fig:M5_Java_GitHub_Actions}
+\end{figure}
+\FloatBarrier
+
+
+Las \textit{GitHub actions} son procesos (también denominados \textit{jobs}) que se ejecutan cuando nuevo código es subido al repositorio remoto, por ejemplo a través de un \textit{commit} o un \textit{merge} de una rama de desarrollo de una funcionalidad concreta. Además, cabe destacar que se agrupan en los llamados \textit{workflows}.
+En el caso de este proyecto se ha configurado un \textit{workflow} para que se ejecuten una serie de \textit{jobs} o tareas cuando se suba nuevo código a la rama \textit{main} del mismo.
+
+Se han configurado 4 etapas:
+\begin{itemize}
+	\item \textbf{Compilación} (\textit{build}). Se ejecuta el \textit{build} del proyecto con Maven. Que  ejecute correctamente es necesario para continuar.
+	\item \textbf{Pruebas} (\textit{test}). Se ejecutan las pruebas unitarias definidas en el proyecto y se comprueba que estas pasen.
+	\item \textbf{Despliegue} (\textit{deployment}). Se despliega la aplicación en producción en \textbf{Heroku}.Para ello se realizan dos tareas, en primer lugar se hace login con el usuario de \textit{Heroku} del proyecto y en segundo lugar se sube el .war obtenido en el paso de compilación.\\
+	
+	 La url de la aplicación desplegada es:\\
+	\url{https://evolution-metrics-v2.herokuapp.com/}
+\end{itemize}
+
+El \textit{workflow} configurado para el proyecto se ha denominado \textit{build-and-deploy} y en la siguiente figura podemos ver los diferentes pasos que se ejecutan en el mismo:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{M5_GitHub_workflow}
+	\caption{\textit{Workflow} definido para el proyecto}\label{fig:M5_GitHub_workflow}
+\end{figure}
+\FloatBarrier
+
+La definición del \textit{workflow} se realiza en el archivo /.github/workflows/maven.yml y cuyo contenido es el siguiente:
+\begin{minipage}{\linewidth}
+{\tiny
+\begin{verbatim}
+...
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B package -Pproduction --file pom.xml
+ 
+    - name: Run tests
+      run: | 
+        mvn clean jacoco:prepare-agent install jacoco:report
+        
+    - name: Login to Heroku
+      uses: akhileshns/heroku-deploy@v3.12.12
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: "evolution-metrics-v2"
+        heroku_email: "jgm1009@alu.ubu.es"
+        justlogin: true
+        
+    - name: Deploy to Heroku
+      run: |
+       heroku plugins:install heroku-cli-deploy
+       heroku war:deploy target/evolution-metrics-gauge-v2-2.0.0.war --app evolution-metrics-v2
+...
+\end{verbatim}
+}
+\end{minipage}
+
+
 \subsubsection{Tokens y variables necesarias}
+Para poder ejecutar las \textit{actions} definidas ha sido necesario almacenar el \textit{API key} de \textit{Heroku}, el cual nos permite hacer login y posteriormente realizar el despliegue. En el código de la configuración anterior se ha podido ver que las variables se llaman de la siguiente manera: 
+
+\begin{minipage}{\linewidth}
+{\tiny
+\begin{verbatim}
+...
+     heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+...
+\end{verbatim}
+}
+\end{minipage}
+
+Podemos ver en la siguiente figura cómo se almacenan los denominados \textit{secrets} en GitHub:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{M5_Action_secrets}
+	\caption{\textit{Secrets} o variables definidas para el proyecto en GitHub}\label{fig:M5_Action_secrets}
+\end{figure}
+\FloatBarrier
+
 \subsubsection{Badges}
-\subsection{Pruebas unitarias: JUnit}
-\subsection{Ejecución local de la aplicación: Tomcat}
-\subsection{Revisión de la cobertura de tests: Codacy}
-% incluir JaCoCo con Maven para la generación de los informes
-\subsection{Gestión de la calidad: Codacy}
-\subsection{Despliegue automático: Heroku}
+Los denominados \textit{badges} son pequeños distintivos que se añaden en el archivo readme.md del proyecto para dar más visibilidad a cierta información relevante.
+En el proyecto se han incluido dos \textit{badges} para representar el estado del despliegue continuo (\textit{pipeline}) que refleja el estado de la última ejecución del \textit{workflow} previamente explicado. También se ha incluido una \textit{badge} para indicar si la aplicación está desplegada o no en Heroku.
+
+Podemos verlas en la siguiente figura:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{M5_Badges}
+	\caption{\textit{Badges} en el Readme.md del proyecto}\label{fig:M5_Badges}
+\end{figure}
+\FloatBarrier
+
+Y el código de las mismas es:\\
+
+\begin{minipage}{\linewidth}
+{\tiny
+\begin{verbatim}
+...
+![build-and-deploy](https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software/actions/workflows/maven.yml/badge.svg)
+[![Heroku](http://heroku-badge.herokuapp.com/?app=evolution-metrics-v2&style=flat&svg=1)](https://evolution-metrics-v2.herokuapp.com/)
+...
+\end{verbatim}
+}
+\end{minipage}
+
+\subsection{Revisión automática de la cobertura}
+
+La cobertura es el porcentaje de la aplicación que está probado por algún test. Esta cobertura se puede medir en relación al total de lineas de código, al número de instrucciones, clases o al número de bifurcaciones en condicionales y bucles o bien a número de métodos.
+
+Para realizar las revisiones automáticas de cobertura, lo primero que hay que hacer es definir las pruebas utilizando JUnit y ejecutarlas y posteriormente, utilizando JaCoCo generaremos un informe donde se nos muestran los valores de cobertura del código.
+
+Podemos ver un ejemplo de informe generado con JaCoCo en la siguiente figura:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{M5_JaCoCo_report }
+	\caption{Ejemplo de informe generado por JaCoCo}\label{fig:M5_JaCoCo_report}
+\end{figure}
+\FloatBarrier
+
+
+\subsubsection{Configuración de JaCoCo con Maven}
+
+Para poder utilizar JaCoco, tenemos que establecer varios valores de configuración en el archivo pom.xml. En primer lugar, debemos establecer la carpeta donde alojar los informes generados:\\
+\begin{minipage}{\linewidth}
+{\tiny
+\begin{verbatim}[breaklines]
+...
+<reporting>
+  <outputDirectory>${project.build.directory}/reports</outputDirectory>
+</reporting>
+...
+\end{verbatim}
+}
+\end{minipage}
+Tras esto tenemos que añadir el plugin de la siguiente de JaCoCo para Maven:\\
+\begin{minipage}{\linewidth}
+{\tiny
+\begin{verbatim}
+...
+<plugin>
+  <groupId>org.jacoco</groupId>
+  <artifactId>jacoco-maven-plugin</artifactId>
+  <version>0.8.3</version>
+  <configuration>
+	<outputDirectory>${project.reporting.outputDirectory}/jacoco-reports</outputDirectory>
+	<output>file</output>
+	<title>Coverage of project: ${project.name}</title>
+  </configuration>
+</plugin>
+...
+\end{verbatim}
+}
+\end{minipage}
+En la configuración se define:
+\begin{itemize}
+	\tightlist
+	\item El directorio de destino de los informes
+	\item Que se desea que se generen en forma de fichero
+	\item El título del fichero
+\end{itemize}
+ Una vez tenemos la configuración establecida, para generar los informes con Maven tenemos que ejecutar:
+ 
+\begin{minipage}{\linewidth}
+{\tiny
+\begin{verbatim}
+$ mvn clean jacoco:prepare-agent install jacoco:report
+$ mvn jacoco:report
+\end{verbatim}
+}
+\end{minipage}
+
+El primer comando genera el fichero \ruta{jacoco.exec} que es necesario para la ejecución del segundo comando.
 
 
 \section{Diseño extensible}
