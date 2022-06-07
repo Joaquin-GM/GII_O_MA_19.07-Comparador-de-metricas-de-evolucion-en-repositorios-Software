@@ -110,14 +110,6 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!-- Github API so old, last update at 2013! -->
-		<!-- https://mvnrepository.com/artifact/org.eclipse.mylyn.github/org.eclipse.egit.github.core -->
-		<dependency>
-			<groupId>org.eclipse.mylyn.github</groupId>
-			<artifactId>org.eclipse.egit.github.core</artifactId>
-			<version>2.1.5</version>
-		</dependency>
-
 		<!-- Github API alternative updated 2022 -->
 		<!-- https://mvnrepository.com/artifact/org.kohsuke/github-api -->
 		<dependency>

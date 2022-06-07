@@ -63,7 +63,6 @@ public class CloseConnectionDialog extends Dialog {
 				try {
 					rds.disconnect(repositorySourceType);
 				} catch (RepositoryDataSourceException e) {
-					LOGGER.error("" + e.getMessage());
 					ConfirmDialog.createError()
 					.withCaption("Error")
 					.withMessage("An error has occurred. Please, contact the application administrator.")

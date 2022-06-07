@@ -79,7 +79,7 @@ Un aplicación web tiene como ventajas:
 	\item El usuario puede acceder a ella directamente desde el navegador, sin necesidad de realizar instalación.
 	\item  Al no necesitar instalación, se puede utilizar desde cualquier dispositivo que tenga instalado algún navegador Web. Se ha comprobado la compatibilidad de la aplicación con los siguientes: \textit{Mozilla Firefox}, \textit{Microsoft Edge}, \textit{Internet Explorer}, \textit{Google Chrome} y \textit{Opera}.
 	\item Actualizaciones. Para actualizar una aplicación Web, el usuario final no tiene que instalar la actualización. Sino que habrá un periodo de mantenimiento de aplicación, normalmente muy corto y fuera de horario de uso, en el que ningún usuario podrá acceder a la aplicación. Después de este periodo, todos los usuarios dispondrán de la actualización.
-	\item En cuanto a la actualización de la aplìcación web, los usuarios finales obtendrán la nueva versión en cuanto vuelvan a a acceder a la misma. Para evitar problemas de cacheo en el navegador se suele trabajar con \textit{Service Workers} que permiten la actualización de la web incluso cuando el usuario la está usando.
+	\item En cuanto a la actualización de la aplicación web, los usuarios finales obtendrán la nueva versión en cuanto vuelvan a a acceder a la misma. Para evitar problemas de cacheo en el navegador se suele trabajar con \textit{Service Workers} que permiten la actualización de la web incluso cuando el usuario la está usando.
 \end{itemize}
 
 
@@ -96,7 +96,6 @@ En la Fig. \ref{fig:_LOGOAPP} se muestra el logo de la aplicación que se ha man
 
 
 \subsection{Java 11}
-% TODO-> actualizar a Java17 si finalmente actualizamos el proyecto
 Se ha mantenido la versión utilizada en el proyecto original\cite{TFGPrevio}, Java 11.
 Para esta versión, la configuración necesaria de Maven para que el proyecto compile es la siguiente \ruta{pom.xml}:
 
@@ -123,7 +122,7 @@ Para esta versión, la configuración necesaria de Maven para que el proyecto co
 				<source>${java.version}</source>
 				<target>${java.version}</target>
 			</configuration>
-			<version>3.8.0</version>
+			<version>3.8.1</version>
 		</plugin>
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
@@ -139,11 +138,12 @@ Para esta versión, la configuración necesaria de Maven para que el proyecto co
 }
 \end{minipage}
 
+\newpage
 Y en Eclipse IDE habría que añadir manualmente el JRE desde la ventana Window/Preferences, como se muestra en la siguiente figura: 
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=1\textwidth]{M5_Eclipse_Java11}
+	\includegraphics[width=0.7\textwidth]{M5_Eclipse_Java11}
 	\caption{JRE empleado en la aplicación}\label{fig:M5_Eclipse_Java11}
 \end{figure}
 \FloatBarrier
@@ -167,18 +167,18 @@ Un ejemplo de uso de \textit{streams} en la aplicación:\\
 {\tiny
 \begin{verbatim}
 ...
-return gitLabApi.getIssuesApi().getIssuesStream(projectId, new IssueFilter().withState(IssueState.CLOSED))
-  .filter(issue -> issue.getCreatedAt() != null && issue.getClosedAt() != null)
-  .map(issue -> (int) ((issue.getClosedAt().getTime() - issue.getCreatedAt().getTime()) / (1000 * 60 * 60 * 24 )))
-  .collect(Collectors.toList());
+List<CustomGitlabApiRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getReleases()
+					.stream().collect(Collectors.toList());
+...
+List<CustomGithubApiRelease> repositoryReleases = repository.getRepositoryInternalMetrics().getGHReleases()
+					.stream().collect(Collectors.toList());
 ...
 \end{verbatim}
 }
 \end{minipage}
 
-En el ejemplo se obtiene de GitLab API un \textit{stream} con las issues cerradas de un proyecto. Este \textit{stream} es filtrado y se obtienen aquellas que tengan fecha de creación y fecha de cierre (\textit{filter}), se calcula de cada \textit{issue} la diferencia en días entre la fecha de creación y la fecha de cierre (\textit{map}), y se recogen los resultados en una lista (\textit{collect}).
+En el ejemplo se obtienen tanto de la API de GitLab como de la de GitHub un \textit{stream} con las \textit{releases} de un proyecto y se recogen los resultados en una lista (\textit{collect}).
 
-%TODO poner otro ejemplo cuando tengamos un acceso a la API de GitHub funcionando
 
 \subsubsection{Interfaces funcionales y funciones lambda de Java}
 
@@ -196,23 +196,15 @@ El paquete \textit{java.util.function} \footnote{\url{https://docs.oracle.com/ja
 que no están declaradas en una clase y pueden ser utilizadas en cualquier parte, pasarse como parámetro a una función y ser almacenadas en variables.
 \\Las interfaces funcionales \footnote{\url{https://docs.oracle.com/javase/8/docs/api/java/lang/FunctionalInterface.html}} son interfaces con un único método, que es abstracto, llamado método funcional. Este método permite restringir los tipos de los parámetros y de los valores de retorno de una función lambda.
 
-Estas han sido utilizadas en numerosas ocasiones tanto para los \textit{streams} (como se observa en el código anterior), como en elementos de la interfaz gráfica y otros elementos sensibles a eventos:\\
+Estas han sido utilizadas en numerosas ocasiones tanto para los \textit{streams} (como se observa en el código anterior), como en elementos de la interfaz gráfica y otros elementos sensibles a eventos como por ejemplo:\\
+
 \begin{minipage}{\linewidth}
 {\tiny
 \begin{verbatim}
 ...
-closeConnectionButton.addClickListener(event ->  
-{
-  if(rds.getConnectionType() != EnumConnectionType.NOT_CONNECTED) {
-	try {
-	  rds.disconnect();
-	} catch (RepositoryDataSourceException e) {
-		...
-	}
-  }
-  close();
-  connectionFormDialog.open();
-});
+this.button.addClickListener(event -> addRepository(repositorySourceType));
+...
+this.closeButton.addClickListener(event -> fireEvent(new CloseEvent(this)));
 ...
 \end{verbatim}
 }
@@ -263,6 +255,76 @@ public abstract class NumericValueMetricTemplate implements Metric {
 
 En el ejemplo anterior muestra la manera en la que las métricas podrían valorarse. La métrica será dada como buena si supera el umbral inferior. Cada métrica podrá usar esta función o implementar una función propia si es necesaria una mayor particularización. Los requisitos definidos en la interfaz funcional son que esa función deberá tener tres argumentos del tipo \textit{IValue} y devolver un resultado del tipo \textit{EvaluationResult}.
 
+
+Además, para poder serializar los resultados obtenidos en las nuevas métricas relacionadas con los \textit{jobs} y las \textit{releases}, ha sido necesario emplear clases propias que sí son serializables ya que las que vienen con las integraciones no lo son. Podemos verlo en los siguientes ejemplos de código:
+
+\begin{minipage}{\linewidth}
+{\tiny
+\begin{verbatim}
+...
+public class CustomGithubApiJob implements Serializable {
+	private static final long serialVersionUID = -7602110263950506090L;
+	
+	private transient GHWorkflowJob job;
+	
+	/**
+	 * Store as variables in this class the ones of Job used to calculate metrics, use these instead of the Job ones to calculations.
+	 * This is needed because during the imports the Job is set to null.
+	 */
+	private String name;
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public CustomGithubApiJob(GHWorkflowJob job) {
+		super();
+		this.job = job;
+		this.name = job.getName();
+	}
+
+	public GHWorkflowJob getJob() {
+		return job;
+	}
+
+	public void setJob(GHWorkflowJob job) {
+		this.job = job;
+	}
+}
+
+...
+
+public class CustomGitlabApiRelease implements Serializable  {
+	private static final long serialVersionUID = -5602110263950506090L;
+
+	private transient Release release;
+
+	public CustomGitlabApiRelease(Release release) {
+		super();
+		this.release = release;
+	}
+
+	public Release getRelease() {
+		return release;
+	}
+
+	public void setRelease(Release release) {
+		this.release = release;
+	}
+}
+
+
+...
+\end{verbatim}
+}
+\end{minipage}
+
+Como podemos ver también hacemos uso de \textit{transient} para poder realizar la serialización.
+
 \subsection{Maven}
 
 Maven es una herramienta de gestión de proyectos software. Esta herramienta facilita, a partir de un único fichero con extensión \textit{XML} llamado \ruta{pom.xml} \footnote{Project Object Model}:
@@ -287,7 +349,7 @@ Aunque puede resultar difícil configurar correctamente Maven a través del arch
 
 Se ha utilizado Git para el desarrollo del proyecto para el control de versiones y se ha utilizado GitHub como repositorio remoto. 
 
-GitHub no sólo ha permitido el almacenamiento del código del proyecto si no que también ha permitido el seguimiento y colaboración alumno-tutor gracias a las herramientas que proporciona. Además, utilizando ZenHub (que se puede integrar en el propio GitHub) se ha llevado a cabo la gestión de las tareas (\textit{issues}) del proyecto. Como se puede observar en la Fig. \cite{fig:M5_GitHub-ZenHub_board}.
+GitHub no sólo ha permitido el almacenamiento del código del proyecto si no que también ha permitido el seguimiento y colaboración alumno-tutor gracias a las herramientas que proporciona. Además, utilizando ZenHub (que se puede integrar en el propio GitHub) se ha llevado a cabo la gestión de las tareas (\textit{issues}) del proyecto. Como se puede observar en la siguiente figura:
 
 \imagen{M5_GitHub-ZenHub_board}{Tablero de Scrum en ZenHub integrado en GitHub}
 
