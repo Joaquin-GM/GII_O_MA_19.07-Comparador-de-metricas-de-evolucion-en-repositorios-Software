@@ -1,10 +1,7 @@
-[![Pipeline Status](https://gitlab.com/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software/badges/master/pipeline.svg)](https://gitlab.com/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software/commits/master)
+![build-and-deploy](https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software/actions/workflows/maven.yml/badge.svg)
 [![Heroku](http://heroku-badge.herokuapp.com/?app=evolution-metrics-v2&style=flat&svg=1)](https://evolution-metrics-v2.herokuapp.com/)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/745c3cea58574491b488ebf7ee2e5aa2)](https://www.codacy.com/manual/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/745c3cea58574491b488ebf7ee2e5aa2)](https://www.codacy.com/manual/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software&amp;utm_campaign=Badge_Coverage)
-[![Coverage Report](https://gitlab.com/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software/badges/master/coverage.svg)](https://mlb0029.gitlab.io/comparador-de-metricas-de-evolucion-en-repositorios-software)
 
-![Poster](https://gitlab.com/uploads/-/system/project/avatar/8593412/LOGOAPP.png?width=64)
+<img src="https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software/blob/main/Memoria/img/_LOGOAPP.png" alt="logo" width="200" height="200" />
 
 # GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software 
 
