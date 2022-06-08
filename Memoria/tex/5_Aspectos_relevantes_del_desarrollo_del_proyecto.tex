@@ -581,6 +581,7 @@ Para poder utilizar JaCoco, tenemos que establecer varios valores de configuraci
 \end{verbatim}
 }
 \end{minipage}
+
 Tras esto tenemos que añadir el plugin de la siguiente de JaCoCo para Maven:\\
 \begin{minipage}{\linewidth}
 {\tiny
@@ -712,7 +713,187 @@ Cabe destacar como se ve en el código anterior que dependiendo de la forja se p
 Además, cabe indicar que GitHub no permite la conexión vía usuario y contraseña pues está \textit{deprecada}, ver:\\
 \url{https://docs.github.com/es/rest/overview/other-authentication-methods}
 
+\newpage
+\section{API de GitHub} 
 
-\section{API de GitLab} % hace falta meterla ya que la vamos a seguir usando entiendo
-\section{API de GitHub} % similar a la sección anterior, explicando la API de GitHub
+GitHub ofrece una API \footnote{\url{https://docs.gitlab.com/ee/api/}} REST \footnote{Representational state transfer} para poder acceder a la información e interactuar con los repositorios alojados en GitHub. Para interactuar con esta API se ha utilizado la librería:\\
+
+\textit{gitlab4j/gitlab4j-api} \footnote{\url{https://github.com/gitlab4j/gitlab4j-api}}\\
+Para poder utilizarla en el proyecto se ha incluido en el archivo pom.xml como plugin de Maven de la siguiente manera:
+
+\begin{minipage}{\linewidth}
+{\tiny
+\begin{verbatim}
+...
+	<dependencies>
+	 ...
+		<!-- Github API alternative updated 2022 -->
+		<!-- https://mvnrepository.com/artifact/org.kohsuke/github-api -->
+		<dependency>
+			<groupId>org.kohsuke</groupId>
+			<artifactId>github-api</artifactId>
+			<version>1.306</version>
+		</dependency>
+	 ...
+	/<dependencies>
+...
+\end{verbatim}
+}
+\end{minipage}\\
+
+\newpage
+Algunos ejemplos de usos de la librería en la aplicación:
+
+\begin{minipage}{\linewidth}
+{\tiny
+\begin{verbatim}
+...
+private GitHub githubclientApi;
+
+...
+
+public void connect(RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
+		if (connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
+			// githubclientApi = new GitHubClient();
+			try {
+				githubclientApi = GitHub.connect();
+				currentUser = null;
+				connectionType = EnumConnectionType.CONNECTED;
+				LOGGER.info("Established connection with GitHub public way");
+
+			} catch (IOException e) {
+				LOGGER.error("Error connecting to GitHub: " + e.toString());
+			}
+
+		} else {
+			throw new RepositoryDataSourceException(RepositoryDataSourceException.ALREADY_CONNECTED);
+		}
+
+}
+
+...
+
+public Collection<datamodel.Repository> getCurrentUserRepositories
+(RepositorySourceType repositorySourceType)	throws RepositoryDataSourceException {
+
+		try {
+			Collection<datamodel.Repository> resultrepositories = new ArrayList<datamodel.Repository>();
+			if (connectionType != EnumConnectionType.NOT_CONNECTED) {
+				List<GHRepository> lRepositories = githubclientApi.searchRepositories().
+				  user(currentUser.getName()).list().toList();
+
+				for (GHRepository repo : lRepositories) {
+					mapUrlIdRepo.put(repo.getId(), repo);
+					resultrepositories.add(
+					  new datamodel.Repository(
+					    repo.getHtmlUrl().toString(), repo.getName(), repo.getId(
+					  )
+					);
+				}
+				return resultrepositories;
+			} else {
+				throw new RepositoryDataSourceException(RepositoryDataSourceException.NOT_CONNECTED);
+			}
+		} catch (IOException e) {
+			throw new RepositoryDataSourceException(RepositoryDataSourceException.REPOSITORY_NOT_FOUND);
+		}
+}
+
+...
+\end{verbatim}
+}
+\end{minipage}\\
+
+\newpage
+\section{API de GitLab}
+
+De la misma manera, GitLab ofrece una API \footnote{\url{https://docs.gitlab.com/ee/api/}} REST \footnote{Representational state transfer} para poder acceder a la información e interactuar con los repositorios alojados en GitLab. Para interactuar con esta API se ha utilizado la librería:\\
+
+\textit{gitlab4j/gitlab4j-api} \footnote{\url{https://github.com/gitlab4j/gitlab4j-api}}\\
+
+Para poder utilizarla en el proyecto se ha incluido en el archivo pom.xml como plugin de Maven de la siguiente manera:\\
+
+\begin{minipage}{\linewidth}
+{\tiny
+\begin{verbatim}
+...
+	<dependencies>
+	 ...
+		<!-- GitLab API -->
+		<!-- https://mvnrepository.com/artifact/org.gitlab4j/gitlab4j-api -->
+		<dependency>
+			<groupId>org.gitlab4j</groupId>
+			<artifactId>gitlab4j-api</artifactId>
+			<version>5.0.1</version>
+			<scope>compile</scope>
+		</dependency>
+	 ...
+	/<dependencies>
+...
+\end{verbatim}
+}
+\end{minipage}
+
+\newpage
+
+Algunos ejemplos de usos de la librería en la aplicación:\\
+
+\begin{minipage}{\linewidth}
+{\tiny
+\begin{verbatim}
+...
+private GitLabApi gitLabApi;
+
+...
+
+public void connect(String username, String password, RepositorySourceType repositorySourceType)
+			throws RepositoryDataSourceException {
+		try {
+			if (username == null || password == null || username.isBlank() || password.isBlank())
+				throw new RepositoryDataSourceException(RepositoryDataSourceException.LOGIN_ERROR);
+			if (connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
+				gitLabApi = GitLabApi.oauth2Login(RepositoryDataSourceUsingGitlabAPI.HOST_URL, username,
+						password.toCharArray());
+				currentUser = getCurrentUser(gitLabApi.getUserApi().getCurrentUser());
+				connectionType = EnumConnectionType.LOGGED;
+				LOGGER.info("Logged to GitLab");
+			} else {
+				throw new RepositoryDataSourceException(RepositoryDataSourceException.ALREADY_CONNECTED);
+			}
+		} catch (GitLabApiException e) {
+			reset();
+			throw new RepositoryDataSourceException(RepositoryDataSourceException.LOGIN_ERROR);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+...
+
+public Collection<Repository> getAllUserRepositories(String userIdOrUsername,
+			RepositorySourceType repositorySourceType) throws RepositoryDataSourceException {
+		Collection<Repository> repositories;
+		try {
+			if (currentUser != null && currentUser.getUsername().equals(userIdOrUsername)) {
+				repositories = getCurrentUserRepositories(repositorySourceType);
+			} else if (!connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
+				repositories = gitLabApi.getProjectApi().getUserProjectsStream(userIdOrUsername, new ProjectFilter())
+						.map(p -> new Repository(p.getWebUrl(), p.getName(), p.getId())).collect(Collectors.toList());
+			} else {
+				throw new RepositoryDataSourceException(RepositoryDataSourceException.NOT_CONNECTED);
+			}
+			return repositories;
+		} catch (RepositoryDataSourceException e) {
+			throw e;
+		} catch (GitLabApiException e) {
+			throw new RepositoryDataSourceException(RepositoryDataSourceException.USER_NOT_FOUND);
+		}
+	}
+	
+...
+\end{verbatim}
+}
+\end{minipage}
+
 \section{Interfaz gráfica: Vaadin}
+

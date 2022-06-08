@@ -246,12 +246,8 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 		try {
 			Collection<datamodel.Repository> resultrepositories = new ArrayList<datamodel.Repository>();
 			if (connectionType != EnumConnectionType.NOT_CONNECTED) {
-				// repositoryService = new RepositoryService(githubclientApi);
 				List<GHRepository> lRepositories = githubclientApi.searchRepositories().user(currentUser.getName()).list().toList();
-						
-						// githubclientApi.repository()
-						// .list(currentUser.getUsername());
-
+	
 				for (GHRepository repo : lRepositories) {
 					mapUrlIdRepo.put(repo.getId(), repo);
 					resultrepositories.add(new datamodel.Repository(repo.getHtmlUrl().toString(), repo.getName(), repo.getId()));
@@ -273,7 +269,6 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 			if (currentUser != null && currentUser.getUsername().equals(userIdOrUsername)) {
 				repositories = getCurrentUserRepositories(repositorySourceType);
 			} else if (!connectionType.equals(EnumConnectionType.NOT_CONNECTED)) {
-				// repositoryService = new RepositoryService(githubclientApi);
 				List<GHRepository> lRepositories = githubclientApi.searchRepositories().user(userIdOrUsername).list().toList();
 				
 				Collection<datamodel.Repository> resultrepositories = new ArrayList<datamodel.Repository>();
@@ -328,15 +323,12 @@ public class RepositoryDataSourceUsingGithubAPI implements RepositoryDataSource 
 		try {
 			if (repositoryURL == null)
 				return null;
-			// repositoryService = new RepositoryService(githubclientApi);
 			
 			String sProyecto = repositoryURL.replaceAll(RepositoryDataSourceUsingGithubAPI.HOST_URL + "/", "");
 			String nombreProyecto = sProyecto.split("/")[sProyecto.split("/").length - 1];
 			String propietarioYGrupo = sProyecto.replaceAll("/" + nombreProyecto, "");
 		
-			// Repository repo = repositoryService.getRepository(propietarioYGrupo, nombreProyecto);
 			GHRepository ghRepo = githubclientApi.getRepository(sProyecto);
-			
 			
 			Repository repo = new datamodel.Repository(ghRepo.getHtmlUrl().toString(), ghRepo.getName(), ghRepo.getId());
 			
