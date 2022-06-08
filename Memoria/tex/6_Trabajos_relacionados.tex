@@ -71,9 +71,16 @@ Activity-API & 13 & & X & X\\
 
 En cuanto a la extensibilidad referente a las métricas, sólo en algunos se podría trabajar con más métricas pero ninguno trabaja con las mismas métricas como se hace en este proyecto gracias a la implementación del framework de medición que hemos visto anteriormente.
 
+Por todo lo anterior, podemos decir que en la industria no existe actualmente ninguna solución estandarizada y que sea extensible para medir y analizar las métricas de evolución de los repositorios software por lo que este proyecto da una solución que hasta ahora no existe en el mercado, por lo que puede aportar gran valor.\\
+
+Como se ha explicado anteriormente, la funcionalidad de este proyecto se puede ampliar tal y como se ha hecho en este TFG a otras forjas como BitBucket y añadir nuevas métricas (siempre que todas las forjas provean de la información necesaria para calcularas a través de sus API), pudiendo llegar a ser un estandard que cubra cualquiera de las necesidades que pueda tener un usuario que necesite analizar métricas de evolución de sus repositorios software.
+
+\newpage
 \section{Otros trabajos relacionados}
 \begin{itemize}
 	\item \textbf{Soporte de Métricas con Independencia del Lenguaje para la Inferencia de Refactorizaciones}. Base sobre la que se ha realizó la construcción del subsistema ``motor de métricas'' y sobre la que se han implementado las nuevas funcionalidades en este proyecto. Se puede consultar más información al respecto en la sección \ref{sect:3_3_3_FrameworkMedicion} en el apartado `Framework de medición'.
 	
 	\item \textbf{Software Project Assessment in the Course of Evolution -  Jacek Ratzinger}.De este trabajo de donde se obtuvieron las métricas de control con las que trabajaba \textit{Evolution Metrics Gauge} inicialmente (en este proyecto se han ampliado con métricas referentes a Integración y Despliegue Coninuo o CICD). Hay una explicación detallada en el apartado \ref{sect:3_3_2_MetricasControl} en el apartado `Métricas de control: medición de la evolución o proceso de software'.
+
+	\item \textbf{Key Metrics to Track and Drive Your Agile Devops Maturity}\cite{KeyDevOpsMetrics}. De este artículo se han tomado ideas y se ha visto la necesidad de añadir métricas relacionadas con DevOps, es decir métricas referentes a Integración y Despliegue Coninuo o CICD. De esta necesidad han surgido las 5 métricas añadidas al proyecto, ver \ref{sect:3_3_2_MetricasControl}.
 \end{itemize}
