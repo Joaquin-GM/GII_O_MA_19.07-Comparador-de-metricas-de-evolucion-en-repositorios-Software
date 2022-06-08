@@ -29,7 +29,7 @@ public class CloseConnectionDialog extends Dialog {
 		return repositorySourceType;
 	}
 
-	private ConnectionInfoComponent connectionInfoComponentGitLab;
+	private ConnectionInfoComponent connectionInfoComponent;
 	
 	private ConnectionDialog connectionFormDialog;
 	
@@ -42,7 +42,7 @@ public class CloseConnectionDialog extends Dialog {
 	public CloseConnectionDialog(RepositorySourceType repositorySourceType) {
 		this.repositorySourceType = repositorySourceType;
 		
-		connectionInfoComponentGitLab = new ConnectionInfoComponent(repositorySourceType);
+		connectionInfoComponent = new ConnectionInfoComponent(repositorySourceType);
 		connectionFormDialog = new ConnectionDialog(repositorySourceType);
 		
 		addOpenedChangeListener(event ->{
@@ -74,7 +74,7 @@ public class CloseConnectionDialog extends Dialog {
 			connectionFormDialog.open();
 		});
 		HorizontalLayout buttonsLayout = new HorizontalLayout(closeConnectionButton, closeDialogButton);
-		VerticalLayout vLayout = new VerticalLayout(connectionInfoComponentGitLab, buttonsLayout);
+		VerticalLayout vLayout = new VerticalLayout(connectionInfoComponent, buttonsLayout);
 		add(vLayout);
 	}
 

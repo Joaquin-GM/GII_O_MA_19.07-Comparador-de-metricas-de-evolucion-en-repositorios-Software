@@ -27,7 +27,7 @@ Otras asignaturas relacionadas:
 \begin{itemize}
 	\tightlist
 	\item \textit{Metodología de la Programación} y \textit{Estructuras de Datos} han contribuido en cuanto a la construcción de una aplicación en un lenguaje Orientado a Objetos.	
-		\item \textit{Ingeniería del Software}: ciclo de vida del software, el análisis de los requisitos y el modelado del sistema (diagramas de clases, diagramas de casos de uso, etc).
+		\item \textit{Ingeniería del Software}: ciclo de vida del software, el análisis de los requisitos y el modelado del sistema (diagramas de clases, diagramas de casos de uso, etc.).
 		\item \textit{Análisis y Diseño de Sistemas}: comprensión del sistema desarrollado en la aplicación Web ya existente \cite{TFGPrevio} de forma que se puedan realizar nuevas implementaciones y mejoras.
 	\item \textit{Estadística}: comprensión del cálculo de cuartiles para calcular los valores umbrales de las métricas.
 	\item \textit{Interacción Hombre/Máquina}: comprensión de los aspectos fundamentales para mejorar la usabilidad, simplicidad, adaptabilidad de la interfaz gráfica.
@@ -716,9 +716,9 @@ Además, cabe indicar que GitHub no permite la conexión vía usuario y contrase
 \newpage
 \section{API de GitHub} 
 
-GitHub ofrece una API \footnote{\url{https://docs.gitlab.com/ee/api/}} REST \footnote{Representational state transfer} para poder acceder a la información e interactuar con los repositorios alojados en GitHub. Para interactuar con esta API se ha utilizado la librería:\\
+GitHub ofrece una API \footnote{\url{https://docs.github.com/es/rest}} REST \footnote{Representational state transfer} para poder acceder a la información e interactuar con los repositorios alojados en GitHub. Para interactuar con esta API se ha utilizado la librería:\\
 
-\textit{gitlab4j/gitlab4j-api} \footnote{\url{https://github.com/gitlab4j/gitlab4j-api}}\\
+\textit{github-api.kohsuke} \footnote{\url{https://github-api.kohsuke.org/}}\\
 Para poder utilizarla en el proyecto se ha incluido en el archivo pom.xml como plugin de Maven de la siguiente manera:
 
 \begin{minipage}{\linewidth}
@@ -895,5 +895,156 @@ public Collection<Repository> getAllUserRepositories(String userIdOrUsername,
 }
 \end{minipage}
 
+\newpage
 \section{Interfaz gráfica: Vaadin}
+Continuando con la implementación inicial, se ha continuado trabajando con el framework Vaadin para evolucionar la interfaz gráfica. Vaadin se escribe en Java y no requiere escribir código HTML. Sí se tiene que utilizar CSS para añadir estilos a la aplicación, estos se encuentan en el archivo: 
+\url{https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software/blob/main/src/main/webapp/frontend/site.css}.
+
+Como ejemplo del uso de Vaadin en la aplicación podemos ver cómo para implementar el diálogo para cerrar las conexiones con las forjas de repositorios se emplea el siguiente código:
+
+{\tiny
+\begin{verbatim}
+		...
+		private ConnectionInfoComponent connectionInfoComponent;
+		private ConnectionDialog connectionFormDialog;
+		private RepositoryDataSource rds = RepositoryDataSourceService.getInstance();
+		private Button closeConnectionButton = new Button();
+		private Button closeDialogButton = new Button("Close", new Icon(VaadinIcon.CLOSE), event -> close());
+		
+		...
+		
+		public CloseConnectionDialog(RepositorySourceType repositorySourceType) {
+		this.repositorySourceType = repositorySourceType;
+		
+		connectionInfoComponentGitLab = new ConnectionInfoComponent(repositorySourceType);
+		connectionFormDialog = new ConnectionDialog(repositorySourceType);
+		
+		addOpenedChangeListener(event ->{
+			if(event.isOpened()) {
+				if (rds.getConnectionType(repositorySourceType).equals(EnumConnectionType.NOT_CONNECTED)) {
+					closeConnectionButton.setText("Connect");
+					closeConnectionButton.setIcon(VaadinIcon.CONNECT.create());
+				} else {
+					closeConnectionButton.setText("Close connection");
+					closeConnectionButton.setIcon(VaadinIcon.UNLINK.create());
+				}							
+			}
+		});
+		
+		closeConnectionButton.addClickListener(event ->  
+		{
+			if(rds.getConnectionType(repositorySourceType) != EnumConnectionType.NOT_CONNECTED) {
+				try {
+					rds.disconnect(repositorySourceType);
+				} catch (RepositoryDataSourceException e) {
+					ConfirmDialog.createError()
+					.withCaption("Error")
+					.withMessage("An error has occurred. Please, contact the application administrator.")
+					.withOkButton()
+					.open();
+				}
+			}
+			close();
+			connectionFormDialog.open();
+		});
+		HorizontalLayout buttonsLayout = new HorizontalLayout(closeConnectionButton, closeDialogButton);
+		VerticalLayout vLayout = new VerticalLayout(connectionInfoComponentGitLab, buttonsLayout);
+		add(vLayout);
+	}
+
+		...
+\end{verbatim}
+}
+
+y el resultado sería el de la Fig. \ref{fig:M5_Close_Connection_Dialog}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=1\textwidth]{M5_Close_Connection_Dialog}
+	\caption{Diálogo con botones generado por Vaadin}\label{fig:M5_Close_Connection_Dialog}
+\end{figure}
+\FloatBarrier
+
+En la Fig. \ref{fig:M5_Comparativa_Repositorios} se muestra el diseño de la interfaz gráfica de la aplicación:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=1\textwidth]{M5_Comparativa_Repositorios}
+	\caption{Comparación de varios proyectos utilizando Evolution metrics comparison}\label{fig:M5_Comparativa_Repositorios}
+\end{figure}
+\FloatBarrier
+
+\newpage
+\subsection{Ventajas e inconvenientes de Vaadin}
+Vaadin tiene las siguientes ventajas:
+\begin{itemize}
+	\item Permite crear interfaces web sin utilizar HTML, sólo utilizando Java, aunque también permite una combinación de ambos no se ha empleado en este proyecto. También permite añadir estilos a la aplicación con CSS.
+	\item Tiene disponible una amplia librería de componentes \footnote{\url{https://vaadin.com/components}} de interfaz gráfica de manera gratuita.
+	\item Permite personalizar los componentes e incluso publicar nuevos que desarrollemos nosotros mismos en el directorio Vaadin \footnote{\url{https://vaadin.com/directory/search}} para compartirlos con el resto de la comunidad.
+	\item Dispone de una documentación (\url{https://vaadin.com/docs/latest/}) de gran calidad y un buen soporte técnico.
+	\item Se integra con Maven y Eclipse.
+\end{itemize}
+
+Y como inconvenientes podemos destacar:
+\begin{itemize}
+	\item Al no separar la interfaz de la parte lógica (no implementa el modelo vista-controlador) al tener todo junto en el código Java, el código resulta más difícil de comprender y mantener.
+	\ Resulta complicado personalizar la interfaz si nos salimos de las opciones básicas que nos da Vaadin, los componentes y \textit{layouts} que nos ofrece Vaadin se deberían poder de configurar y personalizar de una manera más sencilla. Cabe destacar la manera en la que se aplican las clases a elementos del DOM generados por Vaadin, que reciben una identificación con una numeración aleatoria en cada renderizado, haciéndolos muy poco accesibles vía selectores CSS.
+	\item Para usar componentes avanzados, se debe adquirir una licencia.
+\end{itemize}
+
+\newpage
+\subsection{Configuración para uso en Internet Explorer}
+
+Aunque Internet Explorer dejará de tener soporte oficial por parte de Microsoft a partir del 15 de junio de 2022, se ha mantenido la configuración adicional implementada previamente para poder ejecutar la aplicación en Internet Explorer 11 en el archivo de configuración del proyecto pom.xml:\\
+\begin{minipage}{\linewidth}
+{\tiny
+\begin{verbatim}
+<profiles>
+  <profile>
+    <id>production</id>
+    <properties>
+      <vaadin.productionMode>true</vaadin.productionMode>
+    </properties>
+    <dependencies>
+      <dependency>
+        <groupId>com.vaadin</groupId>
+        <artifactId>flow-server-production-mode</artifactId>
+      </dependency>
+    </dependencies>
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>com.vaadin</groupId>
+          <artifactId>vaadin-maven-plugin</artifactId>
+          <version>${vaadin.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>copy-production-files</goal>
+                <goal>package-for-production</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </build>
+  </profile>
+</profiles>
+\end{verbatim}
+}
+\end{minipage}
+
+y es necesario compilar con la opción de producción de la siguiente manera:\\
+
+ \textit{mvn clean package -Pproduction}
+
+\newpage
+\subsection{Elementos de terceros}
+
+Además de los componentes que nos ofrece Vaadin, se ha utilizado un componente del \textit{Vaadin Directory} creado por terceros. Se trata de un diálogo de confirmación y se puede encontrar en el siguiente enlace: \url{https://vaadin.com/directory/component/confirm-dialog}. Este diálogo se ha personalizado definiendo una clase de envoltura: \textit{ConfirmDialogWrapper} y se han definido algunos diálogos a partir de la misma como se muestra en la Fig. \ref{fig:M5_Vaadin_DialogoConfirm}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.45\textwidth]{M5_Vaadin_DialogoConfirm}
+	\caption{Dialogo de confirmación personalizado para importar repositorios desde archivo}\label{fig:M5_Vaadin_DialogoConfirm}
+\end{figure}
 
