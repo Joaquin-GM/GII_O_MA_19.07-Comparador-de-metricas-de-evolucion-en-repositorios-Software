@@ -572,7 +572,7 @@ Podemos ver un ejemplo de informe generado con JaCoCo en la siguiente figura:
 Para poder utilizar JaCoco, tenemos que establecer varios valores de configuración en el archivo pom.xml. En primer lugar, debemos establecer la carpeta donde alojar los informes generados:\\
 \begin{minipage}{\linewidth}
 {\tiny
-\begin{verbatim}[breaklines]
+\begin{verbatim}
 ...
 <reporting>
   <outputDirectory>${project.build.directory}/reports</outputDirectory>
@@ -622,6 +622,97 @@ El primer comando genera el fichero \ruta{jacoco.exec} que es necesario para la 
 
 
 \section{Diseño extensible}
+Anteriormente en la sección \ref{sect:3_3_3_FrameworkMedicion} - `Framework de medición' se ha visto cómo en el proyecto se implementa un framework de medición que permite la reutilización en el cálculo de métricas esto ha permitido implementar las cinco nuevas métricas relacionadas con CICD y realizar la nueva integración con GitHub.
+
+El paquete \textit{repositorydatasource}, en el que previamente se realizaba sólo la conexión con GitLab, se ha extendido de forma que ahora también incluye la integración con GitHub. Esto se ha conseguido aplicando el patrón de diseño: método fábrica y diferenciando entre las dos forjas de repositorios tenemos las clases: \textit{RepositoryDataSourceUsingGithubAPI}, \textit{RepositoryDataSourceFactoryGithub}, \textit{RepositoryDataSourceUsingGitlabAPI} y \textit{RepositoryDataSourceFactoryGitlab} que implementan las interfaces \textit{RepositoryDataSource} y \textit{RepositoryDataSourceFactory}. Utilizando este mismo diseño e implementando las interfaces anteriores en nuevas clases se puede seguir extendiendo la funcionalidad del a aplicación a otras forjas de repositorios en un futuro.
+
+De la misma manera, en la interfaz gráfica se han realizado las modificaciones necesarias para realizar la conexión de manera diferenciada e independiente con GitHub y con GitLab y para poder añadir repositorios alojados en cada una de ellas. Podemos ver las nuevas características de la interfaz en las siguientes figuras:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{M5_GitHub_connection }
+	\caption{Conexión con GitHub.}\label{fig:M5_GitHub_connection}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{M5_GitLab_connection }
+	\caption{Conexión con GitLab.}\label{fig:M5_GitLab_connection}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{M5_Add_repository }
+	\caption{Desplegable con opciones para añadir repositorios.}\label{fig:M5_Add_repository}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=1\textwidth]{M5_Both_Connections }
+	\caption{Interfaz de la aplicación donde se pueden ver las dos conexiones independientes a las dos forjas.}\label{fig:M5_Both_Connections}
+\end{figure}
+\FloatBarrier
+
+Para implementar la nueva forma de añadir repositorios de GitHub se reutiliza la clase \textit{AddRepositoryFormTemplate} ya utilizada para GitLab y la clase \textit{AddRepositoryDialog} con la función:\\
+
+\begin{minipage}{\linewidth}
+{\tiny
+\begin{verbatim}
+...
+private void createConnectionForms() {
+  addRepositoryForms.add(new AddRepositoryFormByUsername());
+  addRepositoryForms.add(new AddRepositoryFormByGroup());
+  addRepositoryForms.add(new AddRepositoryFormByURL());
+}
+...
+\end{verbatim}
+}
+\end{minipage}
+
+\newpage
+Para implementar la nueva formas de conexión (y las posibles futuras que se podrían añadir) se ha incrementado la funcionalidad del método \textit{createConnectionForms} de la clase \textit{ConnectionDialog}:\\
+
+\begin{minipage}{\linewidth}
+{\tiny
+\begin{verbatim}
+...
+	private void createConnectionForms() {
+		if (repositorySourceType.equals(RepositorySourceType.GitLab)) {
+			ConnectionForm userPasswordConnForm = new ConnectionFormUsingUserPassword(repositorySourceType);
+			connectionForms.add(userPasswordConnForm);
+
+			ConnectionForm paTokenConnForm = new ConnectionFormUsingPAToken(repositorySourceType);
+			connectionForms.add(paTokenConnForm);
+
+			ConnectionForm publicConnForm = new ConnectionFormUsingPublicConn(repositorySourceType);
+			connectionForms.add(publicConnForm);
+
+			ConnectionForm noConnForm = new ConnectionFormWithoutConn(repositorySourceType);
+			connectionForms.add(noConnForm);
+			
+		} else if (repositorySourceType.equals(RepositorySourceType.GitHub)) {
+			// Conection with username and password deprecated for GitHub, public connection also not allowed
+			ConnectionForm paTokenConnForm = new ConnectionFormUsingPAToken(repositorySourceType);
+			connectionForms.add(paTokenConnForm);
+
+			ConnectionForm noConnForm = new ConnectionFormWithoutConn(repositorySourceType);
+			connectionForms.add(noConnForm);
+		}
+	
+	}
+...
+\end{verbatim}
+}
+\end{minipage}
+
+Cabe destacar como se ve en el código anterior que dependiendo de la forja se permiten diferentes tipos de conexión. GitHub sólo permite trabajar con su API utilizando un token privado mientras que GitLab si permite también el uso de una conexión pública (aunque con funcionalidad restringida, por ejemplo, no permite calcular las métricas relacionadas con CICD pues no se pueden recuperar datos de \textit{jobs} y de \textit{releases} con este tipo de conexión).\\
+Además, cabe indicar que GitHub no permite la conexión vía usuario y contraseña pues está \textit{deprecada}, ver:\\
+\url{https://docs.github.com/es/rest/overview/other-authentication-methods}
+
+
 \section{API de GitLab} % hace falta meterla ya que la vamos a seguir usando entiendo
 \section{API de GitHub} % similar a la sección anterior, explicando la API de GitHub
 \section{Interfaz gráfica: Vaadin}
