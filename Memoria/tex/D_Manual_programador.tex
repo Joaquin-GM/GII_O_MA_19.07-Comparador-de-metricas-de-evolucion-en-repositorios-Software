@@ -1,11 +1,85 @@
-\apendice{Documentación técnica de programación}
+\apendice{Documentación técnica de programación}\label{anex:D}
 
 \section{Introducción}
+En este documento de tratan diferentes aspectos técnicos de programación.
 
 \section{Estructura de directorios}
+En el proyecto el código fuente presenta la siguiente estructura:
+\begin{itemize}
+	\tightlist
+	\item \ruta{/.gitignore}. Contiene los ficheros y directorios que el repositorio git no tendrá en cuenta
+	\item \ruta{/.github/workflows/maven.yml}. Contiene los \textit{jobs} a ejecutar gracias a \textit{GitHub Actions} tras hacer un \textit{commit} o un \textit{merge} a la rama \textbf{main}. Permite y define la integración y el despliegue continuo.
+	\item \ruta{/README.md}. Fichero que sirve de introducción al proyecto y que contiene información importante.
+	\item \ruta{/pom.xml}. Fichero de configuración del proyecto Maven.
+	\item \ruta{/system.properties}. Fichero con propiedades del proyecto necesario para el despliegue en Heroku.
+	\item \ruta{/MemoriaProyecto}. Memoria del proyecto según la plantilla definida en \url{https://github.com/ubutfgm/plantillaLatex}.
+	\item \ruta{/src/test/resources}. Datos almacenados en ficheros CSV para proporcionar datos a test parametrizados.
+	\item \ruta{/src/test/java}. Casos de prueba JUnit para la realización de pruebas. Se organiza de la misma forma que \ruta{/src/main/java}
+	\item \ruta{/src/main/webapp/VAADIN/themes/MyTheme}. Tema principal utilizado por la aplicación el cual es generado por Vaadin.
+	\item \ruta{/src/main/webapp/frontend}. Fichero \textit{.css} y los diferentes iconos utilizado por la interfaz gráfica.
+	\item \ruta{/src/main/webapp/images}. Imágenes que se muestran en la interfaz gráfica.
+	\item \ruta{/src/main/resources}. Ficheros de configuración de la aplicación. En este caso el fichero log4j2.properties para configurar el sistema de logging.
+	\item \ruta{/src/main/java}. Contiene todo el código fuente.
+	\item \ruta{/src/main/java/app/}. Contiene fachadas que conectan la interfaz de usuario con el resto de componentes que componen la lógica de la aplicación.
+	\item \ruta{/src/main/java/app/listeners}. Contiene observadores y eventos utilizados por la aplicación.
+	\item \ruta{/src/main/java/datamodel}. Contiene las clases que representan el modelo de datos de la aplicación.
+	\item \ruta{/src/main/java/exceptions}. Contiene excepciones definidas en la aplicación.
+	\item \ruta{/src/main/java/gui}. Contiene la interfaz de usuario.
+	\item \ruta{/src/main/java/gui/views}. Contiene páginas y componentes de Vaadin que componen la interfaz gráfica de la aplicación.
+	\item \ruta{/src/main/java/metricsengine}. Contiene el motor de métricas.
+	\item \ruta{/src/main/java/metricsengine/numeric\_value\_metrics}. Métricas definidas y sus respectivas fábricas (Patrón de diseño método fábrica\footnote{https://refactoring.guru/design-patterns/factory-method}). Todas las métricas tienen resultados numéricos.
+	\item \ruta{/src/main/java/metricsengine/values}. Valores que devuelven las métricas.
+	\item \ruta{/src/main/java/repositorydatasource}. Framework de conexión a las diferentes forjas de repositorios como GitHub o GitLab.
+\end{itemize}
 
 \section{Manual del programador}
+En este apartado se tratan algunas bases para entender como continuar trabajando en las diferentes implementaciones de la aplicación y los posibles puntos donde trabajar.
+
+\subsection{Framework de conexión}
+El framework de conexión a una forja de repositorios (como GitHub) está definido en el paquete \textit{repositorydatasource}. Consta de dos interfaces, la más importante es la interfaz \textit{RepositoryDataSource}.
+
+En el Anexo C, se muestra un diagrama de clases en la Fig. \ref{fig:AnexC_RepositoryDataSource}. El paquete \textit{repositorydatasource} consta de dos interfaces que se han de implementar de forma particular para cada forja para así conectar el API de la forja de repositorios con el resto de la aplicación. \\
+Una solo es una fábrica que sirve instanciar un \textit{RepositoryDataSource} como por ejemplo \textit{RepositoryDataSourceUsingGithubAPI}.\\ Esta última es la que contiene las funciones para establecer una conexión y obtener los datos de los repositorios. Una vez tengamos implementadas estas interfaces para una nueva forja de repositorios se tiene que cambiar la llamada a la fábrica a la nueva, por ejemplo:
+
+\begin{minipage}{\linewidth}
+\tiny \begin{verbatim}
+...
+public class RepositoryDataSourceFactoryGithub implements RepositoryDataSourceFactory {
+
+	@Override
+	public RepositoryDataSource getRepositoryDataSource() {
+		return RepositoryDataSourceUsingGithubAPI.getGithubRepositoryDataSource();
+	}
+
+}
+...
+\end{verbatim}
+\end{minipage}	
+
+\subsection{Motor de métricas}
+El motor de métricas se implementó con una base inicial a una solución propuesta en \textit{Soporte de Métricas con Independencia del Lenguaje para la Inferencia de Refactorizaciones} \cite{marticorena_sanchez_soporte_2005}. El diseño se puede observar en las figuras Fig. \ref{fig:M3_CambiosFrameworkMedicion1} y Fig. \ref{fig:M3_CambiosFrameworkMedicion2}.
+\imagen{MCTMotorMetricas}{Diagrama del Framework para el cálculo de métricas con perfiles.}
+
+Trabajando con este diseño se han podido implementar las nuevas métricas relacionadas con la Integración y Despliegue continuos (CICD) y de la misma manera se podrían añadir más métricas a al proyecto.
 
 \section{Compilación, instalación y ejecución del proyecto}
+Para compilar el proyecto es necesario tener Java 11 y Maven 3.6.0 o superior instalados en el equipo. Para ambas herramientas, el proceso de instalación es el mismo: descomprimir un archivo en la carpeta que se desee, configurar las variables de entorno del sistema JAVA\_JOME y CATALINA\_HOME apuntando a los directorios de instalación que contienen la carpeta \ruta{bin}, y añadir al PATH del sistema la ruta hacia los directorios \ruta{bin}.\\
+
+Una vez instalados Java y Maven, para compilar se utilizaría el comando \ruta{mvn install} desde el directorio raíz del proyecto.\\
+
+Para ejecutar el proyecto en nuestra máquina utilizando Jetty (nos ayuda al detectar automáticamente cambios en el código y recompilando automáticamente) basta con ejecutar: \ruta{mvn jetty:run} tras haber instalado la aplicación con Maven.\\
+
+Para generar un .war compilando la aplicación es necesario hacerlo en modo producción, para ello ejecutaremos: \ruta{mvn clean package -Pproduction}.\\
+
+Por último, para desplegar la aplicación desde la consola (si no tenemos configurado el despliegue continuo), tendremos que ejecutar:
+\ruta{heroku login} o bien \ruta{winpty heroku.cmd login }\\
+Hacer login en Heroku con el navegador y tras esto ejecutar:\\
+\ruta{heroku war:deploy target/[nombre-de-la-aplicacion]-[versión].war --app [nombre-de-la-aplicación-en-Heroku]}\\
 
 \section{Pruebas del sistema}
+Se ha generado una batería de pruebas en \ruta{src/test/java}. Algunos de estos test son parametrizados y los valores se encuentran en ficheros \textit{.csv} en la carpeta \ruta{src/test/resources}.
+
+Para ejecutar las pruebas y obtener informes de cobertura de código podemos hacerlo desde el IDE Eclipse (\textit{Coverage As} -> \textit{JUnit Test} o bien desde consola corriendo:\\
+\ruta{mvn jacoco:report}\\
+o si lo necesitamos inicialmente:\\
+\ruta{mvn clean jacoco:prepare-agent install jacoco:report}

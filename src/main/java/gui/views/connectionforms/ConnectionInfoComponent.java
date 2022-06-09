@@ -1,9 +1,5 @@
 package gui.views.connectionforms;
 
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
@@ -15,18 +11,13 @@ import app.listeners.ConnectionChangedEvent;
 import datamodel.RepositorySourceType;
 import datamodel.User;
 import exceptions.RepositoryDataSourceException;
-import repositorydatasource.RepositoryDataSource;
 import repositorydatasource.RepositoryDataSource.EnumConnectionType;
-import repositorydatasource.RepositoryDataSourceUsingGitlabAPI;
 
 /**
  * @author Miguel Ángel León Bardavío - mlb0029
  *
  */
 public class ConnectionInfoComponent extends Div {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionInfoComponent.class);
-
 	/**
 	 * Description.
 	 * 

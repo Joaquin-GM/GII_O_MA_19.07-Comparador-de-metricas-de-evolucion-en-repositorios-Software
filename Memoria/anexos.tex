@@ -9,10 +9,13 @@
 \usepackage{microtype}
 \usepackage{placeins}
 
+\usepackage[numbers,sort]{natbib}
+
 \RequirePackage{booktabs}
 \RequirePackage[table]{xcolor}
 \RequirePackage{xtab}
 \RequirePackage{multirow}
+\RequirePackage{longtable}
 
 % Links
 \PassOptionsToPackage{hyphens}{url}\usepackage[colorlinks]{hyperref}
@@ -22,6 +25,7 @@
 
 % Ecuaciones
 \usepackage{amsmath}
+\usepackage{eurosym}
 
 % Rutas de fichero / paquete
 \newcommand{\ruta}[1]{{\sffamily #1}}
@@ -38,6 +42,7 @@
 
 % Imagenes
 \usepackage{graphicx}
+\usepackage{subcaption}
 \newcommand{\imagen}[2]{
 	\begin{figure}[!h]
 		\centering

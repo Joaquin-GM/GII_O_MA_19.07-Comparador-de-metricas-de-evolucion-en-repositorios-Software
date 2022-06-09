@@ -115,10 +115,6 @@ Sin embargo, estos modelos generales deben ser extendidos y adaptados para crear
 
 
 \section{Repositorios y forjas de proyectos software}
-
-%\todo Este párrafo está repetido en la introducción. Pero tiene que ser reducido, en este apartado se puede detallar más extensamente con alguna captura de pantalla  que ayude a describir las equivalentes en múltiples repositorios.
-%\todo revisar
-
 En el apartado anterior se habla sobre la complejidad de un proceso software y que este puede ser representado por modelos que ayudan a organizar las diferentes actividades. En este apartado se hablará sobre metodologías y herramientas que pueden ayudar en más de una actividad del ciclo de vida.
 
 Los repositorios de código son espacios virtuales donde los equipos de desarrollo generan los artefactos colaborativos procedentes de las actividades de un proceso de desarrollo. Estas herramientas permiten a un equipo de desarrollo trabajar en paralelo, lo que en ingeniería del software es complicado debido a que, por lo general, miembros del mismo equipo necesitan trabajar sobre el mismo fichero y esto genera conflictos. Normalmente estos espacios se encuentran en servidores por motivos de seguridad y para facilitar el acceso al repositorio a los miembros del equipo.
@@ -129,9 +125,7 @@ Además de estos repositorios, en la última década han surgido forjas de proye
 
 \imagen{M3_ProyectoGitLab}{Captura de este proyecto almacenado en GitLab}
 
-Estas forjas suelen ofrecer servidores para almacenar repositorios e integran múltiples sistemas para dar soporte a los flujos de trabajo y registrar las interacciones entre los miembros del equipo, también ofrecen posibilidades para usar estos sistemas en un servidor particular. Además, se puede extender su funcionalidad con sistemas de terceros para gestionar otras actividades no soportadas directamente por la propia forja, como Travis CI \footnote{\url{https://travis-ci.org/}} para gestionar la integración continua o Codacy \footnote{\url{https://www.codacy.com/}} para gestionar las revisiones automáticas de calidad como se puede observar en la Fig. \ref{fig:M3_Codacy}. 
-
-\imagen{M3_Codacy}{Revisión automática de calidad realizada con Codacy sobre este proyecto}
+Estas forjas suelen ofrecer servidores para almacenar repositorios e integran múltiples sistemas para dar soporte a los flujos de trabajo y registrar las interacciones entre los miembros del equipo, también ofrecen posibilidades para usar estos sistemas en un servidor particular. Además, se puede extender su funcionalidad con sistemas de terceros para gestionar otras actividades no soportadas directamente por la propia forja, como Travis CI \footnote{\url{https://travis-ci.org/}} para gestionar la integración continua o Codacy \footnote{\url{https://www.codacy.com/}} para gestionar las revisiones automáticas de calidad. 
 
 Actualmente estas forjas han tenido una gran aceptación entre la comunidad de desarrolladores y existen muchos desarrollos de software de tendencia que las utilizan. En la Fig. \ref{fig:M3-TrendForja} se aprecia como cambia la tendencia de utilización de dichas forjas en el tiempo. Actualmente la forja predominante es claramente GitHub pero se ve un incremento en el uso de GitLab.
 
@@ -150,9 +144,9 @@ El  desafío a la comunidad científica y empresarial  es constante mostrando un
 Se ha hablado anteriormente de las forjas de repositorios como GitHub o GitLab y se puede observar en la Fig. \ref{fig:M3-TrendForja} la tendencia en el uso de diferentes forjas. Se observa como GitHub predomina sobre las demás y como crece el uso de GitLab. En esta sección se comparan los aspectos más relevantes de estas dos tendencias según los servicios que ofrecen. La fuente de esta información es un artículo de GitLab llamado `\textit{GitHub vs. GitLab}' \cite{gitlab_github_nodate}.
 
 \subsubsection{CI/CD - Continuous Integration/Continuous Delivery}
-La integración y despliegue continuo son prácticas sirve para para construir, probar y, en caso de tratarse de una página o aplicación Web, desplegar la aplicación una vez se combinen los cambios en el repositorio central, como se puede observar en Fig. \ref{fig:M3_CI-CD}. Ambos ofrecen la posibilidad de realizar este proceso mediante software de terceros como \textit{Travis CI}. Sin embargo, GitLab ofrece ejecutores o \textit{runners} propios para llevar este proceso desde GitLab. De hecho, en este trabajo con repositorio en GitLab se ha realizado este proceso definiendo un flujo de trabajo de integración continua y despliegue continuo. Se detalla este flujo en en capítulo \ref{sect:5_4_1_CICD}.
+La integración y despliegue continuo son prácticas sirve para para construir, probar y, en caso de tratarse de una página o aplicación Web, desplegar la aplicación una vez se combinen los cambios en el repositorio central. Ambos ofrecen la posibilidad de realizar este proceso mediante software de terceros como \textit{Travis CI}. Sin embargo, GiHub (forja de repositorios donde se aloja el proyecto) ofrece una solución propia que se empleará en el proyecto, \textit{GitHub Actions} y se ha definido un flujo de trabajo de integración continua y despliegue continuo utilizándolo que se detallará en la sección de Aspectos relevantes del desarollo del proyecto.
 
-\imagen{M3_CI-CD}{CI/CD con GitLab \cite{gitlab_gitlab_nodate}}
+\imagen{M3_CICD_GitHub_Actions}{CI/CD con GitHubActions \cite{github_actions}}
 
 \subsubsection{Estadísticas e informes}
 Ambos ofrecen estadísticas e informes sobre los datos que registran de los repositorios y pueden ser accedidos visualmente desde la Web del repositorio o desde APIs de programación. Por ejemplo, las métricas que trabaja este proyecto se calculan a partir de datos proporcionados por estas APIs.
@@ -245,11 +239,6 @@ Las métricas de control que se utilizan en este proyecto provienen de una Maste
 A continuación se describen las métricas que se implementan en este proyecto usando la plantilla de definición de la norma ISO 9126.
 
 Además, en esta segunda iteración del proyecto se han añadido cinco nuevas métricas relacionadas con la integración y despliegue continuo (\textit{CI-CD}).
-
-%\todo Cuando se ponen las fórmulas se puede utilizar el entorno matemático de Latex, mejora mucho la presentación.
-%\todo Se puede utilizar el editor de Latex Web  \url{https://www.codecogs.com/latex/eqneditor.php?lang=es-es}
-%\todo Un ejemplo de especificación  Sumatorio de (TCi-TCj) desde i=1, j=0 hasta i=NTC] / NTC. NTC
-%\todo aplicando los entornos matemáticos $\frac{\sum_{i=1,j=0}^{NTC} TC_i - TC_j}{NTC}$
  
 \textbf{\underline{I1 - Número total de issues (incidencias)}}
 
@@ -440,7 +429,6 @@ Para la implementación de las métricas se ha seguido la solución basada en fr
 	\end{itemize}
 \end{itemize}
 
-%Describir el diseño del motor de métricas, nombrar puntos de extensión
 \imagen{MCTMotorMetricas}{Diagrama del framework para el cálculo de métricas con perfiles que almacena valores umbrales.}
 
 En el diagrama UML de la Fig. \ref{fig:MCTMotorMetricas} se muestran las entidades principales del framework de medición y la relación entre ellas, especificando la navegabilidad y la multiplicidad. Las anotaciones en forma de flecha oscura especifican los patrones de diseño \cite{gamma_patrones_2002} aplicados en el framework.
