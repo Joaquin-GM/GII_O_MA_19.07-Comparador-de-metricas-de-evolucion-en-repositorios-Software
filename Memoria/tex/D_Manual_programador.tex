@@ -32,6 +32,7 @@ En el proyecto el código fuente presenta la siguiente estructura:
 	\item \ruta{/src/main/java/repositorydatasource}. \textit{Framework} de conexión a las diferentes forjas de repositorios como \textit{GitHub} o \textit{GitLab}.
 \end{itemize}
 
+\newpage
 \section{Manual del programador}
 En este apartado se tratan algunas bases para entender como continuar trabajando en las diferentes implementaciones de la aplicación y los posibles puntos donde trabajar.
 
@@ -62,6 +63,7 @@ El motor de métricas se implementó con una base inicial a una solución propue
 
 Trabajando con este diseño se han podido implementar las nuevas métricas relacionadas con la Integración y Despliegue continuos (\textit{CICD}) y de la misma manera se podrían añadir más métricas a al proyecto.
 
+\newpage
 \section{Compilación, instalación y ejecución del proyecto}
 Para compilar el proyecto es necesario tener \textit{Java 11} y \textit{Maven} 3.6.0 o superior instalados en el equipo. Para ambas herramientas, el proceso de instalación es el mismo: descomprimir un archivo en la carpeta que se desee, configurar las variables de entorno del sistema \textit{JAVA\_HOME} y  \textit{CATALINA\_HOME} apuntando a los directorios de instalación que contienen la carpeta \ruta{bin}, y añadir al \textit{PATH} del sistema la ruta hacia los directorios \ruta{bin}.\\
 
@@ -76,6 +78,7 @@ Por último, para desplegar la aplicación desde la consola (si no tenemos confi
 Hacer \textit{login} en \textit{Heroku} con el navegador y tras esto ejecutar:\\
 \ruta{heroku war:deploy target/[\textit{nombre-de-la-aplicación}]-[versión].war --app [\textit{nombre-de-la-aplicación-en-Heroku}]}\\
 
+\newpage
 \section{Pruebas del sistema}
 Se ha generado una batería de pruebas en \ruta{src/test/java}. Algunos de estos test son parametrizados y los valores se encuentran en ficheros \textit{.csv} en la carpeta \ruta{src/test/resources}.
 

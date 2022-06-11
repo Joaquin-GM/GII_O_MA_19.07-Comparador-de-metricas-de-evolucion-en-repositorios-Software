@@ -9,6 +9,15 @@
 \usepackage{microtype}
 \usepackage{placeins}
 
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage{listings}
+\usepackage{amssymb}
+\usepackage{tabularx}
+\makeatletter
+\newcommand\cellwidth{\TX@col@width}
+\makeatother
+
 \usepackage[numbers,sort]{natbib}
 
 \RequirePackage{booktabs}
@@ -286,6 +295,66 @@
   \end{center}
 }
 
+%
+% Nuevos comandos para cuadros y tablas de los casos de uso.
+\newcommand\casoDeUso[3]{
+\def\referencia{#1}%
+\def\titulo{#2}%
+\def\imprimeTabla{#3}%
+\imprimeTabla
+}
+
+\newcommand{\tablaCasoDeUso}[9]{%
+
+\def\cuversion{#1}%
+\def\reqasoc{#2}%
+\def\descripcion{#3}%
+\def\precondicion{#4}%
+\def\acciones{#5}%
+\def\postcondicion{#6}%
+\def\excepciones{#7}%
+\def\importancia{#8}%
+\def\etiqueta{#9}%
+
+\begin{table}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{l| X}
+\toprule
+\textbf{\referencia} & \textbf{\titulo} \\
+\otoprule
+\textbf{Versión} & \cuversion \\
+\textbf{Autor} & Joaquín García Molina \\
+\textbf{Requisitos asociados} & \reqasoc \\
+\textbf{Descripción} & \descripcion \\
+\textbf{Precondición} & \precondicion \\
+\textbf{Acciones} & {
+\begin{tabularx}{\cellwidth}{l X}
+\textbf{Paso} & \textbf{Acción} \\
+\otoprule
+\acciones \\
+\end{tabularx}
+} \\
+\textbf{Postcondición} & \postcondicion \\
+\textbf{Excepciones} & {
+\begin{tabularx}{\cellwidth}{l X}
+\textbf{Paso} & \textbf{Acción} \\
+\otoprule
+\excepciones \\
+\end{tabularx}
+} \\
+\textbf{Importancia} & \importancia \\
+\bottomrule
+\end{tabularx}
+\caption{\referencia \titulo{}.}
+\label{\etiqueta}
+\end{table}
+
+}
+
+\newcommand{\tablaAcciones}[2]{%
+
+
+}
 
 
 

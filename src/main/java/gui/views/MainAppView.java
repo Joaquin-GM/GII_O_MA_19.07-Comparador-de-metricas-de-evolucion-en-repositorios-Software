@@ -119,7 +119,7 @@ public class MainAppView extends VerticalLayout implements PageConfigurator {
 		helpButton.setHeight("60px");
 		helpButton.setWidth("60px");
 		helpLink.setHref(
-				"https://gitlab.com/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software/wikis/home");
+				"https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software/wiki");
 		helpLink.setTarget("_blank");
 		helpLink.add(helpButton);
 
@@ -180,7 +180,7 @@ public class MainAppView extends VerticalLayout implements PageConfigurator {
 
 		Div versionLabel = new Div();
 		versionLabel.addClassName("version-container");
-		versionLabel.setText("Versión: 2.0.0");
+		versionLabel.setText("Versión: 2.1.0");
 		versionLabel.setId("Version");
 		footerLeftSection.add(versionLabel);
 

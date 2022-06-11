@@ -69,7 +69,9 @@ En esta sección se van a enumerar los requisitos que el sistema tendrá que sat
 	\begin{itemize}
 		\item \textbf{RF-1.1} Debido a las restriccones que tiene la \textit{API} de \textit{GitHub} y que se \textit{deprecó} el acceso del usuario por usuario y contraseña\footnote{Autenticación en \textit{GitHub API} - \url{https://docs.github.com/es/rest/overview/other-authentication-methods}}, el usuario podrá iniciar sesión desde la aplicación sólo mediante un token de acceso personal a su usuario en \textit{GitHub}para poder obtener los repositorios públicos y privados a los que tenga acceso.
 		\item \textbf{RF-1.2} La aplicación mostrará al usuario en todo momento la conexión que está utilizando
-		\item \textbf{RF-1.3} El usuario podrá cambiar de conexión teniendo en cuenta que solo puede haber un tipo de conexión con \textit{GitHub}activo en un instante dado. Esta conexión será independiente de la posible conexión con \textit{GitLab}.
+		\item \textbf{RF-1.3} El usuario podrá utilizar la aplicación sin establecer una conexión. Aunque no tenga acceso a los repositorios de \textit{GitHub}.
+		\item \textbf{RF-1.4} El usuario podrá cambiar de conexión teniendo en cuenta que solo puede haber un tipo de conexión con \textit{GitHub} activo en un instante dado. Esta conexión será independiente de la posible conexión con \textit{GitLab}.
+
 	\end{itemize}
 	\item \textbf{RF-2} Establecer conexión con \textit{GitLab}: El usuario debe poder establecer distintos tipos de conexión a \textit{GitLab}.
 	\begin{itemize}
@@ -101,15 +103,15 @@ En esta sección se van a enumerar los requisitos que el sistema tendrá que sat
 		\item \textbf{RF-3.11} Se puede ordenar los repositorios por nombre, fecha de medición y por cualquiera de las métricas.
 		\item \textbf{RF-3.12} Al ordenar por las nuevas métricas relacionadas con \textit{CICD} habrá que tener en cuenta que habrá medidas que no se habrán calculado por falta de datos de \textit{GitLab} si no se ha realizado conexión \textit{autenticada} pues \textit{GitLab API} no devuelve información  sobre \textit{jobs} y \textit{releases} con conexión pública.
 	\end{itemize}
-	\item RF-4 Evaluación de métricas. Las métricas, una vez calculadas, serán evaluadas mediante un código de color (verde - bueno, naranja - peligro, rojo - malo) a partir de un perfil de métricas, que será un conjunto de valores mínimo y máximo de cada una de las métricas, a partir de la definición de la evaluación en la sección \ref{sect:B_5_1_2}: `\textit{Evaluación de métricas}'. Esto ha de aplicar también a las nuevas métricas que se implementen no sólo a las existentes.
+	\item \textbf{RF-4} Evaluación de métricas. Las métricas, una vez calculadas, serán evaluadas mediante un código de color (verde - bueno, naranja - peligro, rojo - malo) a partir de un perfil de métricas, que será un conjunto de valores mínimo y máximo de cada una de las métricas, a partir de la definición de la evaluación en la sección \ref{sect:B_5_1_2}: `\textit{Evaluación de métricas}'. Esto ha de aplicar también a las nuevas métricas que se implementen no sólo a las existentes.
 	\begin{itemize}
 		\item \textbf{RF-4.1} Se podrá cargar un perfil de métricas que contenga valores umbrales mínimo y máximo y se utilizarán para evaluarlas.
-		\item \textbf{RF-4.1} El usuario podrá cargar un perfil por defecto creado a partir de un conjunto de datos \footnote{\url{https://github.com/clopezno/clopezno.github.io/blob/master/agile_practices_experiment/DataSet_EvolutionSoftwareMetrics_FYP.csv}} de un estudio empírico de las métricas de evolución del software en trabajos finales de grado\cite{lopez_nozal_measuring_2019}.
-		\item \textbf{RF-4.2} El usuario podrá cargar un perfil creado a partir de los repositorios que existan en la tabla.
-		\item \textbf{RF-4.3} El usuario podrá exportar el perfil de métricas que tenga cargado a un fichero con formato \ruta{emmp}.
-		\item \textbf{RF-4.4} El usuario podrá importar un perfil de métricas que haya guardado anteriormente para evaluar los repositorios que tenga en la tabla.
-		\item \textbf{RF-4.5} En un instante, solo puede haber un perfil de métricas cargado.
-		\item \textbf{RF-4.6} Al inicio se cargará el perfil de evaluación por defecto.
+		\item \textbf{RF-4.2} El usuario podrá cargar un perfil por defecto creado a partir de un conjunto de datos \footnote{\url{https://github.com/clopezno/clopezno.github.io/blob/master/agile_practices_experiment/DataSet_EvolutionSoftwareMetrics_FYP.csv}} de un estudio empírico de las métricas de evolución del software en trabajos finales de grado\cite{lopez_nozal_measuring_2019}.
+		\item \textbf{RF-4.3} El usuario podrá cargar un perfil creado a partir de los repositorios que existan en la tabla.
+		\item \textbf{RF-4.4} El usuario podrá exportar el perfil de métricas que tenga cargado a un fichero con formato \ruta{emmp}.
+		\item \textbf{RF-4.5} El usuario podrá importar un perfil de métricas que haya guardado anteriormente para evaluar los repositorios que tenga en la tabla.
+		\item \textbf{RF-4.6} En un instante, solo puede haber un perfil de métricas cargado.
+		\item \textbf{RF-4.7} Al inicio se cargará el perfil de evaluación por defecto.
 	\end{itemize}
 \end{itemize}
 
@@ -312,3 +314,355 @@ Las métricas se evaluarán como buenas si:
 	\item \textbf{RNF-7} Se debe diseñar una correcta gestión de errores definiendo excepciones de biblioteca y registrando eventos de error e información en ficheros de \textit{log}.
 	\item \textbf{RNF-8} Se ha de probar la aplicación con ejemplos reales.
 \end{itemize}
+
+\section{Especificación de requisitos}
+
+En esta sección se muestra el diagrama de casos de uso del proyecto las definiciones de los mismos:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=1\textwidth]{AnexC_Use_Cases}
+	\caption{Diagrama de casos de uso del proyecto}
+	\label{fig:AnexC_Use_Cases}
+\end{figure}
+\FloatBarrier
+
+A continuación se van a detallar los diferentes casos de uso por medio de tablas \cite{TFMANVIRECO} descriptivas:
+
+\casoDeUso{
+	CU-01
+}{
+	Establecer conexión con \textit{GitHub}
+}{
+	\tablaCasoDeUso{
+		1.0
+	}{
+		RF-1, RF-1.1, RF-1.2, RF-1.3, RF-1.4
+	}{
+		Permite al usuario establecer una conexión con \textit{GitHub} para posteriormente poder importar repositorios y calcular sus métricas.
+	}{
+		Situado en la página principal.
+	}{
+		1 & Pulsar el botón de conexión con \textit{GitHub}. \\
+		2 & Pulsar el botón \textit{Connect} en el diálogo de estado de la conexión. \\
+		3 & Rellenar el \textit{input} del \textit{Personal Access Token} y pulsar el botón \textit{Connect} en el diálogo de conexión.
+	}{
+		Se ha establecido una conexión con \textit{GitHub} que permite importar repositorios de esta forja.
+	}{
+		1 & No se pulsa el botón \textit{Connect} en el diálogo de estado de la conexión. \\
+		2 & Se selecciona el botón \textit{Don't connect} en el diálogo de conexión. \\
+		3 & No se introduce un \textit{Personal Access Token} válido.
+	}{Alta}{cu-01}
+}
+
+\casoDeUso{
+	CU-02
+}{
+	Establecer conexión con \textit{GitLab}
+}{
+	\tablaCasoDeUso{
+		1.0
+	}{
+		RF-2, RF-2.1, RF-2.2, RF-2.3, RF-2.4, RF-2.5, RF-2.6, RF-2.7
+	}{
+		Permite al usuario establecer una conexión con \textit{GitLab} para posteriormente poder importar repositorios y calcular sus métricas.
+	}{
+		Situado en la página principal.
+	}{
+		1 & Pulsar el botón de conexión con \textit{GitLab}. \\
+		2 & Pulsar el botón \textit{Connect} en el diálogo de estado de la conexión. \\
+		3.a & Rellenar los \textit{input} del \textit{Username} y \textit{Password} y pulsar el botón \textit{Connect} en el diálogo de conexión.  \\
+		3.b & Seleccionar la opción \textit{Personal Access Token}, rellenar el \textit{input} del \textit{Personal Access Token} y pulsar el botón \textit{Connect} en el diálogo de conexión.\\
+		3.c & Seleccionar la opción \textit{Public connection} y pulsar el botón \textit{Connect} en el diálogo de conexión.
+
+	}{
+		Se ha establecido una conexión con \textit{GitLab} que permite importar repositorios de esta forja.
+	}{
+		1 & No se pulsa el botón \textit{Connect} en el diálogo de estado de la conexión. \\
+		2 & Se selecciona el botón \textit{Don't connect} en el diálogo de conexión. \\
+		3.a & No se introducen un usuario y contraseña válidos. \\
+		3.b & No se introduce un \textit{Personal Access Token} válido.
+	}{Alta}{cu-02}
+}
+
+\casoDeUso{
+	CU-03
+}{
+	Añadir un nuevo proyecto
+}{
+	\tablaCasoDeUso{
+		1.0
+	}{
+		RF-3, RF-3.1, RF-3.1.1, RF-3.1.2, RF-3.1.3, RF-3.2, RF-3.3, RF-4, RF-4.2, RF-4.5, RF-4.6
+	}{
+		Añadir un nuevo proyecto para calcular sus métricas y evaluarlo.
+	}{
+		Se ha establecido una conexión.	
+	}{
+		1 & Pulsar el botón \textit{Project management}. \\
+		2.a & Pulsar el botón \textit{Add new GitLab repository} en las opciones del desplegable. \\
+		2.b & Pulsar el botón \textit{Add new GitHub repository} en las opciones del desplegable. \\
+		3.a & Rellenar el input \textit{User ID or username}, seleccionar uno de los resultados del desplegable \textit{Project}.  \\
+		3.b & Seleccionar la opción \textit{By Group}, rellenar el \textit{input} del \textit{Group ID or groupname}, seleccionar uno de los resultados del desplegable \textit{Project}. \\
+		3.c & Seleccionar la opción \textit{By URL}, rellenar el input \textit{Project URL}. \\
+		4 & Pulsar el botón \textit{Add}. \\
+		5 & Se obtiene el proyecto y se calculan las métricas. \\
+		6 & Se evalúan las métricas con el perfil de métricas seleccionado actualmente. \\
+		7 & Se añade el proyecto al listado.
+	}{
+		Se ha añadido el proyecto al listado con sus métricas calculadas y evaluadas.
+	}{
+		1 & No se introducen un  \textit{User ID or username} o textit{Group ID or groupname} o bien \textit{Project URL} válidos. \\
+		2 & La conexión establecida no tiene permisos suficientes para acceder al repositorio solicitado.  \\
+		3 & Se intenta añadir un proyecto que ya está añadido previamente.
+	}{Alta}{cu-03}
+}
+
+
+\casoDeUso{
+	CU-04
+}{
+	Eliminar un proyecto
+}{
+	\tablaCasoDeUso{
+		1.0
+	}{
+		RF-3.3
+	}{
+		Eliminar un proyecto del listado.
+	}{
+		Existe algún proyecto que eliminar.	
+	}{
+		1 & Pulsar el botón \textit{papelera} de la fila del listado correspondiente al proyecto que se desea eliminar. \\
+		2 & El proyecto es eliminado del listado.
+	}{
+		El proyecto eliminado ya no está en el listado.
+	}{
+		1 & Se produce un error al eliminar el repositorio y éste permanece en el listado. 
+	}{Baja}{cu-04}
+}
+
+\casoDeUso{
+	CU-05
+}{
+	Volver a obtener métricas de un repositorio
+}{
+	\tablaCasoDeUso{
+		1.0
+	}{
+		RF-3.5
+	}{
+		Permite volver a obtener las métricas de un repositorio ya añadido al listado.
+	}{
+		Se ha establecido una conexión a la forja origen del repositorio.
+	}{
+		1 & Pulsar el botón \textit{libro-calculadora} de la fila del listado correspondiente al proyecto que se desea actualizar. \\
+		2 & Las métricas del proyecto son calculadas y evaluadas con el perfil actual. \\
+	}{
+		Las métricas del proyecto han sido calculadas y evaluadas con el perfil actual.
+	}{
+		1 & No existe conexión con la forja correspondiente. \\
+		2 & La conexión actual no tiene permisos suficientes para obtener las métricas del repositorio.
+	}{Baja}{cu-05}
+}
+
+\casoDeUso{
+	CU-06
+}{
+	Exportar proyectos y métricas a formato `.emr'
+}{
+	\tablaCasoDeUso{
+		1.0
+	}{
+		RF-3.6
+	}{
+		Permite exportar los proyectos y sus métricas ya calculadas en un formato que permite importación.
+	}{
+		Existen proyectos en el listado.
+	}{
+		1 & Pulsar el botón \textit{Project management}. \\
+		2 & Pulsar el botón \textit{Export} del desplegable. \\
+		3 & Pulsar el botón \textit{Download} del diálogo de confirmación. \\
+		4 & Los repositorios y sus métricas son exportados en un archivo con formato `.emr'. \\
+	}{
+		Obtenemos un archivo que contiene la información de los repositorios y sus métricas en formato `.emr'.
+	}{
+		1 & No existen proyectos en el listado.
+	}{Media}{cu-06}
+}
+
+\casoDeUso{
+	CU-07
+}{
+	Exportar proyectos y métricas a formato `.csv'
+}{
+	\tablaCasoDeUso{
+		1.0
+	}{
+		RF-3.7
+	}{
+		Permite exportar los proyectos y sus métricas ya calculadas en un formato que permite su uso por ejemplo en hojas de cálculo.
+	}{
+		Existen proyectos en el listado.
+	}{
+		1 & Pulsar el botón \textit{Project management}. \\
+		2 & Pulsar el botón \textit{Export to CSV} del desplegable. \\
+		3 & Pulsar el botón \textit{Download} del diálogo de confirmación. \\
+		4 & Los repositorios y sus métricas son exportados en un archivo con formato `.csv'. \\
+	}{
+		Obtenemos un archivo que contiene la información de los repositorios y sus métricas en formato `.csv'.
+	}{
+		1 & No existen proyectos en el listado.
+	}{Media}{cu-07}
+}
+
+\casoDeUso{
+	CU-08
+}{
+	Importar proyectos desde archivo.
+}{
+	\tablaCasoDeUso{
+		1.0
+	}{
+		RF-3.8, RF-3.9
+	}{
+		Permite importar una lista de proyectos con sus métricas desde un archivo con formato `.emr'.
+	}{
+		Existen proyectos en el listado.
+	}{
+		1 & Pulsar el botón \textit{Project management}. \\
+		2 & Pulsar el botón \textit{Import} del desplegable. \\
+		3.a & Pulsar el botón \textit{Upload File...} del diálogo de importación y seleccionar un archivo en el explorador de archivos. \\
+		3.b & Soltar un fichero en la zona \textit{Drop file here}. \\
+		4 & Si se detecta que ya hay repositorios con el mismo nombre, elegir si queremos sobreescrirlos o añadir sólo los que no estén. \\
+		5 & Los repositorios del fichero y sus métricas son importados al listado y evaluados con el perfil actual. No se importa ningún proyecto que ya exista. \\
+	}{
+		Los repositorios del fichero y sus métricas son importados al listado y evaluados con el perfil actual, no se tiene ningún proyecto duplicado.
+	}{
+		1 & No se selecciona un archivo válido.
+	}{Media}{cu-08}
+}
+
+\casoDeUso{
+	CU-09
+}{
+	Filtrar proyectos.
+}{
+	\tablaCasoDeUso{
+		1.0
+	}{
+		RF-3.10
+	}{
+		Permite filtrar los proyectos del listado por su nombre.
+	}{
+		Existen proyectos en el listado.
+	}{
+		1 & Escribir en el input \textit{Search} el texto a buscar. \\
+		2 & En el listado sólo se mostrarán los proyectos que contengan dicho texto en su nombre.
+	}{
+		En el listado sólo se muestran los proyectos que contengan el texto buscado en su nombre.
+	}{
+		1 & No existen proyectos en el listado.	
+	}{Baja}{cu-09}
+}
+
+
+\casoDeUso{
+	CU-10
+}{
+	Ordenar proyectos.
+}{
+	\tablaCasoDeUso{
+		1.0
+	}{
+		RF-3.11, RF-3.12
+	}{
+		Permite ordenar los proyectos por nombre, fecha o cualquiera de las métricas.
+	}{
+		Existen proyectos en el listado.
+	}{
+		1 & Hacer \textit{click} sobre el icono de ordenación de la columna por la que se desea ordenar (ascendente). \\
+		2 & Volver a hacer \textit{click} si se desea cambiar a ordenación descendente. \\
+		2 & Volver a hacer \textit{click} si se cancelar la ordenación. \\
+		4 & Los proyectos de listado aparecen ordenados según la columna y criterio seleccionados.
+	}{
+		En el listado sólo se muestran los proyectos ordenados por la columna seleccionada y en el orden seleccionado.
+	}{
+		1 & No existen proyectos en el listado.	
+	}{Baja}{cu-10}
+}
+
+\casoDeUso{
+	CU-11
+}{
+	Evaluar con nuevo perfil de métricas
+}{
+	\tablaCasoDeUso{
+		1.0
+	}{
+		RF-4.3
+	}{
+		Permite generar un perfil de métricas con los proyectos existentes en el listado y evaluarlos con el mismo.
+	}{
+		Existen proyectos en el listado.
+	}{
+		1 & Pulsar el botón \textit{Evaluate projects}. \\
+		2 & Pulsar el botón \textit{Evaluate with new profile} del desplegable. \\
+		3 & Los proyectos del listado son evaluados con el nuevo perfil generado a partir de ellos.
+	}{
+		Los proyectos del listado han sido evaluados con el nuevo perfil generado a partir de ellos.
+	}{
+		1 & No existen proyectos en el listado.	
+	}{Alta}{cu-11}
+}
+
+\casoDeUso{
+	CU-12
+}{
+	Exportar perfil de métricas
+}{
+	\tablaCasoDeUso{
+		1.0
+	}{
+		RF-4.4
+	}{
+		Permite exportar el perfil de métricas actual en formato `.emr', éste es importable.
+	}{
+		Existen proyectos en el listado.
+	}{
+		1 & Pulsar el botón \textit{Evaluate projects}. \\
+		2 & Pulsar el botón \textit{Export actual profile} del desplegable. \\
+		3 & Pulsar el botón \textit{Download} del diálogo \textit{Export metric profile}. \\
+		4 & El perfil de métricas actual es exportado.
+	}{
+		Obtenemos un fichero en formato `.emr' que contiene la información del perfil actual de métricas.
+	}{
+		1 & No existen proyectos en el listado.	
+	}{Alta}{cu-12}
+}
+
+\casoDeUso{
+	CU-13
+}{
+	Importar perfil de métricas
+}{
+	\tablaCasoDeUso{
+		1.0
+	}{
+		RF-4.5
+	}{
+		Permite importar un perfil de métricas desde un archivo en formato `.emr'.
+	}{
+		Existen proyectos en el listado.
+	}{
+		1 & Pulsar el botón \textit{Evaluate projects}. \\
+		2 & Pulsar el botón \textit{Evaluate with imported profile} del desplegable. \\
+		3.a & Pulsar el botón \textit{Upload File...} del diálogo de importación y seleccionar un archivo en el explorador de archivos. \\
+		3.b & Soltar un fichero en la zona \textit{Drop file here}. \\
+		4 & El perfil de métricas es importado y los proyectos son evaluados con el.
+	}{
+		Se ha cargado un nuevo perfil de métricas y los proyectos del listado son evaluados con él.
+	}{
+		1 & No se ah seleccionado un archivo válido	
+	}{Alta}{cu-13}
+}

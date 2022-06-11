@@ -11,25 +11,32 @@ En el paquete \textit{datamodel} podemos encontrar las clases más importantes e
 	\item \ruta{Repository}. Sirve como definición de los datos que se obtienen de un repositorio. Estos datos son:
 	\begin{itemize}
 		\item URL, nombre e ID del proyecto
-		\item Métricas internas (\ruta{RepositoryInternalMetrics}). Representan los valores de los que se obtienen las métricas externas y que interesan para satisfacer los requisitos funcionales de la aplicación.
+		\item Métricas internas (\ruta{RepositoryInternalMetrics}). Representan los valores de los que se obtienen las métricas externas y que interesan para satisfacer los requisitos funcionales de la aplicación. Esta clase contiene toda la información de un repositorio necesaria para calcular las métricas, que es la fecha de medición, el número total de issues, el número total de commits, el número de issues cerradas, una colección de días que se tardan en cerrar las issues, otra colección con las fechas de los commits, el tiempo de vida del proyecto, una colección de los \textit{jobs} del proyecto y una colección de las \textit{releases} del proyecto.\\
+		Cabe indicar que se define el método \textit{equals} a partir de la fecha de medición.
 		\item Resultados de las métricas (\ruta{MetricsResults}). Al añadir un repositorio estos se calcularán y quedarán almacenados en una instancia de esta clase.
 		\item Evaluación del proyecto (\textit{projectEvaluation}). En esta clase se evalúan las diferentes métricas en función de sus umbrales y se almacena el porcentaje de métricas evaluadas como `buenas' cada vez que se calcule alguna de ellas.
 		\item Cabe indicar que se ha definido la igualdad de los repositorios en base a su URL, ID y nombre.
-
-	\item \ruta{RepositoryInternalMetrics}. Esta clase contiene toda la información de un repositorio necesaria para calcular las métricas, que es la fecha de medición, el número total de issues, el número total de commits, el número de issues cerradas, una colección de días que se tardan en cerrar las issues, otra colección con las fechas de los commits, el tiempo de vida del proyecto, una colección de los \textit{jobs} del proyecto y una colección de las \textit{releases} del proyecto. \\
-	Cabe indicar que se define el método \textit{equals} a partir de la fecha de medición.
 	\item \ruta{User}. Sirve para almacenar información que se obtiene de las forjas de repositorios acerca del usuario que ha iniciado sesión. Se almacenan la ID de usuario, la URL del avatar, el email, el nombre y el nombre de usuario.
 	\end{itemize}
 	\item Se han implementado clases personalizadas para envolver a las clases relacionadas con los \textit{jobs} del proyecto y una colección de las \textit{releases} devueltas por las librerías de integración con las forjas de repositorios. Esto ha sido necesario ya que las clases obtenidas por medio de las librerías de conexión no son serializables y en la aplicación necesitamos serializar los resultados de las métricas para poder exportarlos e importarlos.\\
 	Las clases generadas son: \textit{CustomGithubApiJob}, \textit{CustomGithubApiRelease}, \textit{CustomGitlbApiJob} y \textit{CustomGitlabApiRelease}.\\
 	Hay que indicar que en estas clases se han de almacenar como variables aquellas que se tengan que usar para los cálculos de las métricas, por ejemplo el nombre de los \textit{jobs} con \textit{this.job = job.getName()} para el cálculo de la métrica IC3.
 \end{itemize}
+
+El diagrama de clases de este paquete se puede ver en la figura \ref{fig:AnexC_Datamodel-ClassDiagram}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=1\textwidth]{AnexC_Datamodel-ClassDiagram}
+	\caption{Paquete \textit{datamodel}}\label{fig:AnexC_Datamodel-ClassDiagram}
+\end{figure}
+\FloatBarrier
 	
 \section{Diseño arquitectónico}
 A continuación se describe la estructura de paquetes del proyecto y las clases que contienen.
 
 \subsection{Paquete \textit{repositorydatasource}}
-El paquete define el \textit{framework} de conexión a una forja de repositorios e implementa la conexión a GitLab.
+El paquete define el \textit{framework} de conexión a una forja de repositorios e implementa la conexión tanto \textit{GitHub} como a \textit{GitLab}.
 
 \imagen{AnexC_RepositoryDataSource}{Paquete \textit{repositorydatasource}}
 
@@ -78,13 +85,12 @@ Contiene las clases que sirven de conexión entre la interfaz de usuario y la l�
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=0.7\textwidth]{AnexC_app}
+	\includegraphics[width=1\textwidth]{AnexC_app}
 	\caption{Paquete \textit{app}}\label{fig:AnexC_app}
 \end{figure}
 \FloatBarrier
 
 Las clases que encontramos en este paquete son:
-
 \begin{description}
 	\item[\textit{MetricsService}] Define una fachada de conexión entre el motor de métricas y el resto de componentes.
 	\item[\textit{RepositoriesCollectionService}] Se encarga de almacenar los repositorios en una colección
