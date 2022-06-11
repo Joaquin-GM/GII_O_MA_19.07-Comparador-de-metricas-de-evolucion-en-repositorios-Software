@@ -45,12 +45,12 @@ public class MetricPeakChange extends NumericValueMetricTemplate {
 	/**
 	 * Minimum acceptable value.
 	 */
-	public static final NumericValue DEFAULT_MIN_VALUE = new ValueDecimal(30.0);
+	public static final NumericValue DEFAULT_MIN_VALUE = new ValueDecimal(0.25);
 	
 	/**
 	 * Maximum acceptable value.
 	 */
-	public static final NumericValue DEFAULT_MAX_VALUE = new ValueDecimal(40.0);
+	public static final NumericValue DEFAULT_MAX_VALUE = new ValueDecimal(0.55);
 	
 	private static MetricPeakChange instance = null;
 			

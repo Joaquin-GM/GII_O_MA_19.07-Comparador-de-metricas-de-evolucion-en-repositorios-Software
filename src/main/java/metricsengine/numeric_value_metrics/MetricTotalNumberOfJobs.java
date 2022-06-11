@@ -54,7 +54,7 @@ public class MetricTotalNumberOfJobs extends NumericValueMetricTemplate {
 	 */
 	private MetricTotalNumberOfJobs() {
 		super(DEFAULT_METRIC_DESCRIPTION, DEFAULT_MIN_VALUE, DEFAULT_MAX_VALUE,
-				NumericValueMetricTemplate.EVAL_FUNC_BETWEEN_Q1_Q3);
+				NumericValueMetricTemplate.EVAL_FUNC_GREATER_THAN_Q1);
 	}
 
 	public static MetricTotalNumberOfJobs getInstance() {

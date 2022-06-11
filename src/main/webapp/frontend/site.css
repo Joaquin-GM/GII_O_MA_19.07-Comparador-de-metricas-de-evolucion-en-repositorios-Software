@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+body {
+	overflow-x: hidden;	
+}
+
 .appName {
 	font-size: 2.25em;
 	vertical-align: middle;
@@ -63,7 +67,6 @@
 
 .bold-label {
 	font-weight: bold;
-	padding-left: 12px;
 }
 
 vaadin-grid-cell-content {
@@ -187,7 +190,11 @@ body > vaadin-vertical-layout > div:nth-child(n+2) > vaadin-vertical-layout > va
 }
 
 .footer-right-section {
-    padding-bottom: 16px;
+    padding-bottom: 16px;   
+     display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-flow: row wrap;
 }
 
 .version-container {
@@ -201,4 +208,41 @@ body > vaadin-vertical-layout > div:nth-child(n+2) > vaadin-vertical-layout > va
 .project-title {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.leyend-key {
+	padding-left: 16px;
+}
+
+.criteria-container {
+	padding-left: 16px;
+}
+
+.criteria-metrics {
+	padding-left: 24px;
+}
+
+.app-header  {
+	width: 100%;
+	padding-bottom: 16px;
+}
+
+.app-header > vaadin-horizontal-layout {
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between
+}
+
+.app-header > vaadin-horizontal-layout:before {
+	display: none;
+}
+
+.connection-buttons {
+	width: auto;
+}
+
+.first-header-layout {
+    display: flex;
+    flex-flow: row wrap;
 }

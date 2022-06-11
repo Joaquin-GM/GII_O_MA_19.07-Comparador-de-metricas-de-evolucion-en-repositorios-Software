@@ -3,32 +3,39 @@
 A continuación se van a exponer las conclusiones obtenidas tras la realización del trabajo y las posibles líneas de trabajo futuras con las que se podría seguir mejorando la funcionalidad del proyecto.
 
 \section{Conclusiones}
+Las conclusiones obtenidas tras las realización del proyecto podríamos dividirlas en dos grupos, unas conclusiones con un carácter más teórico basadas en la consecución de los objetivos planteados al inicio del proyecto y otras relacionadas con las herramientas utilizadas con un carácter más técnico.
+
+En cuanto a las primeras, se ha concluido que:
 
 \begin{itemize}
-	\item Se ha completado el objetivo de integrar GitHub con la aplicación, haciendo posible trabajar con repositorios alojados tanto en GitLab como en GitHub.
-	\item Se han añadido cinco nuevas métricas relacionadas con la Integración y Despliegue continuos, un tipo de métricas con las que aún no se trabajaba.
+	\item Se ha completado el objetivo de integrar \textit{GitHub} con la aplicación, haciendo posible trabajar con repositorios alojados tanto en \textit{GitLab} como en \textit{GitHub}.
+	\item Se han añadido cinco nuevas métricas relacionadas con la integración y despliegue continuos, un tipo de métricas con las que aún no se trabajaba.
 	\item Se ha probado con repositorios reales que tanto la funcionalidad previa como la nueva se lleva a cabo correctamente y que la aplicación cumple con el objetivo de poder comparar repositorios calculando sus métricas de evolución.
-	\item Gracias al estudio y comprensión del as diferentes métricas, así como la implementación de nuevas y el mantenimiento de las ya existentes, podemos confirmar las métricas de evolución son tan importantes como las métricas de producto a pesar de que actualmente están relegadas a un segundo plano respecto a las segundas. Estudiar ambos tipos de métricas es clave para obtener un software de calidad, si el proceso de creación de software no se cuida y sólo se vela por el producto final, éste acabará teniendo peor calidad. 
-	\item La extensibilidad es un factor clave a la hora de mantener y mejorar el software. En este proyecto ha sido clave la estructura como framework que permite la adición de nuevas forjas de repositorios así como nuevas métricas para poder integrar GitHub y añadir las nuevas métricas.
+	\item Gracias al estudio y comprensión de las diferentes métricas, así como la implementación de nuevas y el mantenimiento de las ya existentes, podemos confirmar las métricas de evolución son tan importantes como las métricas de producto a pesar de que actualmente están relegadas a un segundo plano respecto a las de producto. Estudiar ambos tipos de métricas es clave para obtener un software de calidad, si el proceso de creación de software no se cuida y sólo se vela por el producto final, éste acabará teniendo peor calidad. 
+	\item La extensibilidad es un factor clave a la hora de mantener y mejorar el software. En este proyecto ha sido clave la estructura como \textit{framework} que permite la adición de nuevas forjas de repositorios así como nuevas métricas para poder integrar \textit{GitHub} y añadir las nuevas métricas.
 	\item Los repositorios y las forjas de repositorios facilitan el proceso de desarrollo del software y nos dan herramientas para monitorizarlo, evaluarlo y si estimamos oportuno, mejorarlo si detectamos problemas gracias a las métricas y sus umbrales.
-	\item La integración y despliegue continuo, por medio de la realización de tests junto a la revisión automática de calidad de código nos ayuda a detectar errores, lo que permite corregirlos antes incluso de subir nuestro código al repositorio remoto donde lo estemos alojando. GitHub por medio de GitHub actions nos proporciona una magnífica herramienta que nos permite establecer flujos de acciones o \textit{jobs} a ejecutar al subir código al repositorio remoto. Esto nos permite mantener un flujo automatizado que nos ayuda a tener una versión de nuestra aplicación actualizada desplegada en todo momento. 
-	\item Maven es un gran gestor de proyectos software escritos en Java y ayuda a trabajar con los mismos en todas sus fases, facilitando la configuración necesaria para integrar todas las herramientas y plugins necesarios.
-	\item Vaadin es un framework que nos permite crear aplicaciones web modernas utilizando Java lo cual es una ventaja si no estamos familiarizados con otros lenguajes como JavaScript o necesitamos trabajar con Java. Sin embargo, tiene un gran coste de aprendizaje ya que al tener toda la funcionalidad de la interfaz y la lógica unidas, puede dificultar la comprensión y mantenibilidad del código. Además, cabe indicar que es poco personalizable en comparación con otras alternativas que están liderando actualmente el desarrollo web como pueden ser Angular, React o Vue, que además tienen una curva de aprendizaje más suave y una comunidad de usuarios mucho mayor.
-	
+\end{itemize}
+
+Y por último, relativas a las herramientas utilizadas, se ha concluido que:
+
+\begin{itemize}
+	\item La integración y despliegue continuo, por medio de la realización de tests junto a la revisión automática de calidad de código nos ayuda a detectar errores, lo que permite corregirlos antes incluso de subir nuestro código al repositorio remoto donde lo estemos alojando. \textit{GitHub} por medio de \textit{GitHub actions} nos proporciona una magnífica herramienta que nos permite establecer flujos de acciones o \textit{jobs} a ejecutar al subir código al repositorio remoto. Esto nos permite mantener un flujo automatizado que nos ayuda a tener una versión de nuestra aplicación actualizada desplegada en todo momento. 
+	\item Maven es un gran gestor de proyectos software escritos en \textit{Java} y ayuda a trabajar con los mismos en todas sus fases, facilitando la configuración necesaria para integrar todas las herramientas y \textit{plugins} necesarios.
+	\item \textit{Vaadin} es un \textbf{framework} que nos permite crear aplicaciones web modernas utilizando Java lo cual es una ventaja si no estamos familiarizados con otros lenguajes como \textit{JavaScript} o necesitamos trabajar con \textit{Java}. Sin embargo, tiene un gran coste de aprendizaje ya que al tener toda la funcionalidad de la interfaz y la lógica unidas, puede dificultar la comprensión y mantenibilidad del código. Además, cabe indicar que es poco personalizable en comparación con otras alternativas que están liderando actualmente el desarrollo web como pueden ser \textit{Angular}, \textit{React} o \textit{Vue}, que además tienen una curva de aprendizaje más suave y una comunidad de usuarios mucho mayor.
 \end{itemize}
 
 \newpage
-\section{Lineas de trabajo futuras}
-
+\section{Líneas de trabajo futuras}
+Algunos de los aspectos en los que se podría seguir trabajando para evolucionar y mejorar el proyecto son:\\
 \begin{itemize}
 	\item Extender la funcionalidad a otras métricas de evolución
-	\item Extender a otras forjas de repositorios como Bitbucket, realizando una integración y adaptaciones de la interfaz gráfica similares a las realizadas para GitHub en este proyecto.
-	\item Soporte de entorno multisesión y gestión de usuarios con un sistema de autenticación ya sea propio contra una base de datos o bien utilizando alguna solución externa como Firebase Authentication.
+	\item Extender a otras forjas de repositorios como \textit{Bitbucket}, realizando una integración y adaptaciones de la interfaz gráfica similares a las realizadas para \textit{GitHub} en este proyecto.
+	\item Soporte de entorno multisesión y gestión de usuarios con un sistema de autenticación ya sea propio contra una base de datos o bien utilizando alguna solución externa como \textit{Firebase Authentication}.
 	\item Realizar un histórico de mediciones y almacenarlo en una base de datos.
 	\item Almacenamiento de perfiles de métricas en base de datos.
 	\item Mejorar la interfaz web para sea adaptativa a los diferentes tamaños de pantalla (\textit{responsive}).
 	\item Internacionalizar la aplicación soportando diferentes idiomas.
 	\item Mejoras de usabilidad como permitir borrar, evaluar o actualizar varios repositorios al mismo tiempo.
-	\item En repositorios grandes las consultas a las APIs de las forjas de repositorios pueden ser muy largas debido a que tienen acceso limitado. Este problema se aprecia principalmente en repositorios grandes alojados en GitLab. Se podría evitar que la aplicación se quede esperando mientras finalizan dichas peticiones si se externalizan en un micro-servicio las consultas a las APIs de las forjas.
+	\item En repositorios grandes las consultas a las \textit{APIs} de las forjas de repositorios pueden ser muy largas debido a que tienen acceso limitado. Este problema se aprecia principalmente en repositorios grandes alojados en \textit{GitLab}. Se podría evitar que la aplicación se quede esperando mientras finalizan dichas peticiones si se externalizan en un micro-servicio las consultas a las \textit{APIs} de las forjas.
 	
 \end{itemize}

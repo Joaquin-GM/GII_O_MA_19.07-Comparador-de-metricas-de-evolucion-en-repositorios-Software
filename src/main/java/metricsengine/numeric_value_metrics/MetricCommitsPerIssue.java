@@ -41,12 +41,12 @@ public class MetricCommitsPerIssue extends NumericValueMetricTemplate {
 	/**
 	 * Minimum acceptable value.
 	 */
-	public static final NumericValue DEFAULT_MIN_VALUE = new ValueDecimal(0.5);
+	public static final NumericValue DEFAULT_MIN_VALUE = new ValueDecimal(1);
 	
 	/**
 	 * Maximum acceptable value.
 	 */
-	public static final NumericValue DEFAULT_MAX_VALUE = new ValueDecimal(1.0);
+	public static final NumericValue DEFAULT_MAX_VALUE = new ValueDecimal(3);
 	
 	private static MetricCommitsPerIssue instance = null;
 	
@@ -72,7 +72,7 @@ public class MetricCommitsPerIssue extends NumericValueMetricTemplate {
 		Integer tni = repository.getRepositoryInternalMetrics().getTotalNumberOfIssues();
 		Integer tnc = repository.getRepositoryInternalMetrics().getTotalNumberOfCommits();
 		return tni != null && 
-				tni >= 0 &&
+				tni > 0 &&
 				tnc != null &&
 				tnc > 0;
 	}

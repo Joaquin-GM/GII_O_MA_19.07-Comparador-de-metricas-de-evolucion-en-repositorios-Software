@@ -95,8 +95,7 @@ public class MainAppView extends VerticalLayout implements PageConfigurator {
 	}
 
 	private void setUpHeader() {
-		header.setHeight("200px");
-		header.setWidthFull();
+		header.setClassName("app-header");
 
 		brandingImage.setHeight("106px");
 		logoImage.setHeight("106px");
@@ -124,15 +123,20 @@ public class MainAppView extends VerticalLayout implements PageConfigurator {
 		helpLink.setTarget("_blank");
 		helpLink.add(helpButton);
 
+		HorizontalLayout firstHeaderLayout = new HorizontalLayout(brandingImage, appNameLabel, logoImage);
+		firstHeaderLayout.setClassName("first-header-layout");
+		
 		VerticalLayout connectionButtonLayout = new VerticalLayout(
 				new HorizontalLayout(connectionButtonGitLab, connectionButtonGitHub, helpLink));
+		connectionButtonLayout.addClassName("connection-buttons");
+		connectionButtonLayout.setWidth("auto");
 		// VerticalLayout connectionButtonLayout = new VerticalLayout(new
 		// HorizontalLayout(connectionButtonGitLab, helpLink));
 
 		connectionButtonLayout.setAlignItems(Alignment.END);
-		connectionButtonLayout.setWidth("40%");
-		HorizontalLayout headerHLayout = new HorizontalLayout(brandingImage, appNameLabel, logoImage,
-				connectionButtonLayout);
+		// connectionButtonLayout.setWidth("40%");
+		HorizontalLayout headerHLayout = new HorizontalLayout(firstHeaderLayout,connectionButtonLayout);
+		headerHLayout.addClassName("header-layout");
 		header.getElement().appendChild(headerHLayout.getElement());
 	}
 
@@ -182,14 +186,14 @@ public class MainAppView extends VerticalLayout implements PageConfigurator {
 
 		HorizontalLayout keyLayout = new HorizontalLayout();
 		Div keyContainer = new Div();
-		Div keyButtonContainer = new Div();
 		keyLayout.add(keyContainer);
-		keyLayout.add(keyButtonContainer);
-		keyContainer.setWidth("80%");
-		keyButtonContainer.setWidth("20%");
+		keyLayout.setWidth("30%");
+		keyLayout.setMinWidth("215px");
+		keyContainer.setWidth("100%");
 
 		Div keyTitle = new Div();
 		keyTitle.setText("Leyenda: ");
+		keyTitle.setClassName("bold-label");
 		keyContainer.add(keyTitle);
 		
 		keyContainer.add(generateKeyLabels("I:", " Issues"));
@@ -199,9 +203,62 @@ public class MainAppView extends VerticalLayout implements PageConfigurator {
 		keyContainer.add(generateKeyLabels("DC:", " Despliegue continuo"));
 		
 		keyContainer.setId("Key");
-		keyButtonContainer.setId("keyButtonContainer");
 
 		footerRightSection.add(keyLayout);
+		
+		HorizontalLayout criteriaLayout = new HorizontalLayout();
+		Div criteriaContainer = new Div();
+		criteriaLayout.add(criteriaContainer);
+		criteriaLayout.setWidth("70%");
+		criteriaLayout.setMinWidth("485px");
+		keyContainer.setWidth("100%");
+
+		Div criteriaTitle = new Div();
+		Span criteriaTitleSpan = new Span();
+		criteriaTitleSpan.setText("Criterios de evaluación");
+		criteriaTitleSpan.setClassName("bold-label");
+		criteriaTitle.add(criteriaTitleSpan);
+		Span criteriaExplanation = new Span();
+		criteriaExplanation.setText(" (verde valores deseados, rojo no deseados):");
+		criteriaTitle.add(criteriaExplanation);
+		criteriaContainer.add(criteriaTitle);
+		
+		Div firstCriteriaContainer = new Div();
+		firstCriteriaContainer.setText("Se buscan valores superiores a umbral inferior");
+		firstCriteriaContainer.setClassName("criteria-container");
+		Span firstCriteriaContainerSpan = new Span();
+		firstCriteriaContainerSpan.setText(" (>Q1):");
+		firstCriteriaContainerSpan.setClassName("bold-label");
+		firstCriteriaContainer.add(firstCriteriaContainerSpan);
+		firstCriteriaContainer.setWidth("100%");
+		Div firstCriteriaMetrics = new Div();
+		firstCriteriaMetrics.setText(" I1, I3, IC1, IC2, IC3, DC1, DC2");
+		firstCriteriaMetrics.setWidth("100%");
+		firstCriteriaMetrics.setClassName("criteria-metrics bold-label");
+		criteriaContainer.add(firstCriteriaContainer);
+		criteriaContainer.add(firstCriteriaMetrics);
+		
+		Div secondCriteriaContainer = new Div();
+		secondCriteriaContainer.setText("Se buscan valores entre umbrales");
+		secondCriteriaContainer.setClassName("criteria-container");
+		Span secondCriteriaContainerSpan = new Span();
+		secondCriteriaContainerSpan.setText(" (>Q1,<Q3):");
+		secondCriteriaContainerSpan.setClassName("bold-label");
+		secondCriteriaContainer.add(secondCriteriaContainerSpan);
+		secondCriteriaContainer.setWidth("100%");
+		Div secondCriteriaMetrics = new Div();
+		secondCriteriaMetrics.setText(" I2, TI1, TC1, TC2, TC3, C1");
+		secondCriteriaMetrics.setWidth("100%");
+		secondCriteriaMetrics.setClassName("criteria-metrics bold-label");
+		criteriaContainer.add(secondCriteriaContainer);
+		criteriaContainer.add(secondCriteriaMetrics);
+		
+		// criteriaContainer.add(generateKeyLabels("Se buscan valores superiores a umbral inferior (Q1):", " I1, I3, IC1, IC2, IC3, DC1, DC2"));
+		// criteriaContainer.add(generateKeyLabels("Se buscan valores entre umbrales (>Q1,<Q3):", " I2, TI1, TC1, TC2, TC3, C1"));
+		
+		criteriaContainer.setId("Criteria");
+
+		footerRightSection.add(criteriaLayout);
 
 		footerHLayout.setWidthFull();
 		footer.getElement().appendChild(footerHLayout.getElement());
@@ -219,7 +276,7 @@ public class MainAppView extends VerticalLayout implements PageConfigurator {
 		Span titleSpan = new Span();
 		Span tTextSpan = new Span();
 		titleSpan.setText(title);
-		titleSpan.setClassName("bold-label");
+		titleSpan.setClassName("bold-label leyend-key");
 		tTextSpan.setText(text);
 		labelContainer.add(titleSpan);
 		labelContainer.add(tTextSpan);

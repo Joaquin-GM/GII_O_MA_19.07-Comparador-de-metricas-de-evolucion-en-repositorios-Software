@@ -20,7 +20,7 @@ La elección de este proyecto se debe a su temática de análisis de repositorio
 Esto es un error ya que analizando los repositorios con los que trabajamos en el desarrollo de proyectos podemos obtener métricas que nos dan información muy valiosa. Con esta información podemos detectar problemas que antes pasaban desapercibidos y mejorar en mucho la productividad de los equipos modificando ciertos aspectos del proceso de desarrollo.
 En este proyecto se han utilizado métricas que permiten llevar un control sobre el ciclo de vida de uno o varios proyecto, haciendo posible comparar su evolución a lo largo del tiempo. Además, permiten comparar si se están cumpliendo los objetivos definidos y como se mencionaba anteriormente mejorar el proceso de desarrollo aumentando su calidad.
 
-En cuanto a la relación del proyecto con las diferentes asignaturas del Grado, está principalmente relacionado con la asignatura \textit{Desarrollo Avanzado de Sistemas Software}, donde se trata como desarrollar software de calidad mediante el proceso de \textit{Administración de la calidad}, en el cual una de las actividades es el control de calidad. Este control se puede llevar a cabo mediante un proceso de medición utilizando diferentes métricas.
+En cuanto a la relación del proyecto con las diferentes asignaturas del Grado, está principalmente relacionado con la asignatura \textit{Desarrollo Avanzado de Sistemas Software}, donde se trata cómo desarrollar software de calidad mediante el proceso de \textit{Administración de la calidad}, en el cual una de las actividades es el control de calidad. Este control se puede llevar a cabo mediante un proceso de medición utilizando diferentes métricas.
 
 
 Otras asignaturas relacionadas: 
@@ -28,12 +28,12 @@ Otras asignaturas relacionadas:
 	\tightlist
 	\item \textit{Metodología de la Programación} y \textit{Estructuras de Datos} han contribuido en cuanto a la construcción de una aplicación en un lenguaje Orientado a Objetos.	
 		\item \textit{Ingeniería del Software}: ciclo de vida del software, el análisis de los requisitos y el modelado del sistema (diagramas de clases, diagramas de casos de uso, etc.).
-		\item \textit{Análisis y Diseño de Sistemas}: comprensión del sistema desarrollado en la aplicación Web ya existente \cite{TFGPrevio} de forma que se puedan realizar nuevas implementaciones y mejoras.
+		\item \textit{Análisis y Diseño de Sistemas}: comprensión del sistema desarrollado en la aplicación web ya existente \cite{TFGPrevio} de forma que se puedan realizar nuevas implementaciones y mejoras.
 	\item \textit{Estadística}: comprensión del cálculo de cuartiles para calcular los valores umbrales de las métricas.
 	\item \textit{Interacción Hombre/Máquina}: comprensión de los aspectos fundamentales para mejorar la usabilidad, simplicidad, adaptabilidad de la interfaz gráfica.
-	\item \textit{Diseño y Mantenimiento del Software}, el uso de patrones de diseño para mejorar la calidad de código y mantener los principios SOLID  \footnote{Single responsability, Open/Closed, Liskov substitution, Interface segregation, Dependency inversion} y de \textit{Desarrollo Avanzado de Sistemas Software} la naturaleza del trabajo, las revisiones automáticas de calidad de código por medio de métricas y la importancia de la refactorización al detectar defectos de diseño.
+	\item \textit{Diseño y Mantenimiento del Software}, el uso de patrones de diseño para mejorar la calidad de código y mantener los principios \textit{SOLID}  \footnote{Single responsability, Open/Closed, Liskov substitution, Interface segregation, Dependency inversion} y de \textit{Desarrollo Avanzado de Sistemas Software} la naturaleza del trabajo, las revisiones automáticas de calidad de código por medio de métricas y la importancia de la refactorización al detectar defectos de diseño.
 	\item \textit{Validación y Pruebas} comprensión de las pruebas ya desarrolladas y construcción de nuevas.
-	\item \textit{Sistemas Distribuidos} ha ayudado en el uso de Maven y en la construcción de una aplicación Web.
+	\item \textit{Sistemas Distribuidos} ha ayudado en el uso de \textit{Maven} y en la construcción de una aplicación web.
 	\item \textit{Gestión de Proyectos}: ciclo de vida de desarrollo empleado durante el proyecto: \textit{Scrum}\cite{scrum_master_scrum_2019}.
 \end{itemize}
 
@@ -42,25 +42,24 @@ Otras asignaturas relacionadas:
 \section{Modelo de ciclo de vida}
 La metodología utilizada durante el desarrollo del proyecto ha sido \textit{\textbf{Scrum}}, realizándose un proceso incremental, dividido en \textit{sprints} de dos semanas. A la finalización de cada \textit{sprint} se ha realizado una reunión denominada \textit{sprint review} que que se compone de dos partes:
 \begin{description}
-	\item [Revisión del sprint:] o \textit{sprint review}, donde se comentan los avances realizados así como los diferentes problemas que han surgido durante las dos semanas de duración del \textit{sprint}.
+	\item [Revisión del \textit{sprint}:] o \textit{sprint review}, donde se comentan los avances realizados así como los diferentes problemas que han surgido durante las dos semanas de duración del \textit{sprint}.
 Se modifica la pila de desarrollo (\textit{sprint backlog}) pasando a completadas aquellas historias de usuario finalizadas y al siguiente \textit{sprint} las no finalizadas, comentando posibles mejoras y soluciones a los problemas que se hayan tenido \cite{scrum_master_scrum_2019}.
 
-	\item [Planificación del siguiente sprint:] o \textit{sprint planning}, donde e definen las tareasa abordar  durante el siguiente sprint. Estas tareas se recogen del \textit{product backlog} o pila de producto y se añaden a la pila del sprint o \textit{sprint backlog}.
+	\item [Planificación del siguiente \textit{sprint}:] o \textit{sprint planning}, donde e definen las tareas a abordar  durante el siguiente \textit{sprint}. Estas tareas se recogen del \textit{product backlog} o pila de producto y se añaden a la pila del \textit{sprint} o \textit{sprint backlog}.
 \end{description}
 
-	Concretamente, se ha utilizado \textbf{ZenHub} en conjunto a las \textit{issues} de GitHub para la gestión del proceso \textit{Scrum} en el proyecto.
+	Concretamente, se ha utilizado \textbf{ZenHub} en conjunto a las \textit{issues} de \textit{GitHub} para la gestión del proceso \textit{Scrum} en el proyecto.
 
 A lo largo del desarrollo del proyecto, los \textit{sprints} se han centrado en diferentes tareas como pueden ser:
 \begin{itemize}
 	\item  Tareas de \textbf{investigación}, tanto de las materias relacionadas con el proyecto como de las herramientas que se utilizarán durante el proceso y de \textbf{configuración} del entorno de desarrollo.
-	\item En la segunda etapa se aprecian tareas de \textbf{diseño e implementación} de la parte lógica de la aplicación. Se diseña el framework de conexión a forjas de repositorios, se implementa el framework descrito en \textit{Soporte de Métricas con Independencia del Lenguaje para la Inferencia de Refactorizaciones}  \cite{marticorena_sanchez_soporte_2005} para el cálculo de métricas y se diseñan los modelos de datos que serán utilizados por la aplicación.
-	\item Tareas de \textbf{desarrollo} de las nuevas funcionalidades del proyecto, como la integración con GitHub, utilizando como base el framework descrito en \textit{Soporte de Métricas con Independencia del Lenguaje para la Inferencia de Refactorizaciones}  \cite{marticorena_sanchez_soporte_2005} y la integración ya existente con GitLab. Nuevos tests y mejoras de diferentes interfaces.
-	\item Tareas de \textbf{integración y despliegue continuo} (CI/CD), configurando GitHub Actions y el resto de herramientas para el flujo de trabajo de los sprints.
-	\item Revisión de las \textbf{pruebas unitarias} existentes y creación de nuevas con JUnit. automatizando su ejecución gracias a Maven y los \textit{pipelines} \footnote{Definen las actividades de los procesos de CI/CD y las fases y el entorno en las que se ejecutarán} de GitHub Actions.
-	%\item Configurar \textbf{revisiones automáticas de calidad} y de cobertura de las pruebas gracias a Maven, Codacy, JaCoCo y GitHub.
-	\item Configurar \textbf{revisiones automáticas de cobertura} de las pruebas gracias a Maven, JaCoCo y GitHub.
-	\item Configuración y puesta a punto de un entorno en Heroku donde realizar el \textbf{despliegue} la aplicación durante las tareas de de CI/CD.
-	\item Revisión y configuración de \textbf{badges} \footnote{Distintivos que aportan información rápida sobre el estado del proyecto en ciertos aspectos como la cobertura, la calidad de código o el proceso de CI/CD y enlazan con la fuente de información} para representar el estado del proyecto en cuanto a calidad de código, cobertura, despliegue y los trabajos de CI/CD.
+	\item En la segunda etapa se aprecian tareas de \textbf{diseño e implementación} de la parte lógica de la aplicación. Se diseña el framework de conexión a forjas de repositorios, se implementa el \textit{framework} descrito en \textit{Soporte de Métricas con Independencia del Lenguaje para la Inferencia de Refactorizaciones}  \cite{marticorena_sanchez_soporte_2005} para el cálculo de métricas y se diseñan los modelos de datos que serán utilizados por la aplicación.
+	\item Tareas de \textbf{desarrollo} de las nuevas funcionalidades del proyecto, como la integración con \textit{GitHub}, utilizando como base el \textit{framework} descrito en \textit{Soporte de Métricas con Independencia del Lenguaje para la Inferencia de Refactorizaciones}  \cite{marticorena_sanchez_soporte_2005} y la integración ya existente con \textit{GitLab}. Nuevos tests y mejoras de diferentes interfaces.
+	\item Tareas de \textbf{integración y despliegue continuo} \textit{CICD}, configurando \textit{GitHub Actions} y el resto de herramientas para el flujo de trabajo de los sprints.
+	\item Revisión de las \textbf{pruebas unitarias} existentes y creación de nuevas con \textit{JUnit}. automatizando su ejecución gracias a \textit{Maven} y los \textit{pipelines} \footnote{Definen las actividades de los procesos de \textit{CICD} y las fases y el entorno en las que se ejecutarán} de \textit{GitHub Actions}.
+	\item Configurar \textbf{revisiones automáticas de cobertura} de las pruebas gracias a \textit{Maven}, \textit{JaCoCo} y \textit{GitHub}.
+	\item Configuración y puesta a punto de un entorno en \textit{Heroku} donde realizar el \textbf{despliegue} la aplicación durante las tareas de de \textit{CICD}.
+	\item Revisión y configuración de \textbf{badges} \footnote{Distintivos que aportan información rápida sobre el estado del proyecto en ciertos aspectos como la cobertura, la calidad de código o el proceso de \textit{CICD} y enlazan con la fuente de información} para representar el estado del proyecto en cuanto a calidad de código, cobertura, despliegue y los trabajos de \textit{CICD}.
 	\item Implementación de mejoras y nuevos aspectos relacionados con la nueva funcionalidad en la \textbf{interfaz gráfica}.
 	\item Tareas de \textbf{documentación} en la que se trabaja sobre la memoria y los anexos.
 \end{itemize}
@@ -71,15 +70,15 @@ Consultando el \textit{Anexo A - Plan de Proyecto Software} se puede obtener má
 
 En esta sección se explican los diferentes aspectos relacionados con la gestión y configuración del proyecto.
 
-\subsection{Aplicación Web}
+\subsection{Aplicación web}
 
 Se trabaja sobre la aplicación web implementada en la primera iteración del proyecto\cite{TFGPrevio}.
 Un aplicación web tiene como ventajas: 
 \begin{itemize}
 	\tightlist
 	\item El usuario puede acceder a ella directamente desde el navegador, sin necesidad de realizar instalación.
-	\item  Al no necesitar instalación, se puede utilizar desde cualquier dispositivo que tenga instalado algún navegador Web. Se ha comprobado la compatibilidad de la aplicación con los siguientes: \textit{Mozilla Firefox}, \textit{Microsoft Edge}, \textit{Internet Explorer}, \textit{Google Chrome} y \textit{Opera}.
-	\item Actualizaciones. Para actualizar una aplicación Web, el usuario final no tiene que instalar la actualización. Sino que habrá un periodo de mantenimiento de aplicación, normalmente muy corto y fuera de horario de uso, en el que ningún usuario podrá acceder a la aplicación. Después de este periodo, todos los usuarios dispondrán de la actualización.
+	\item  Al no necesitar instalación, se puede utilizar desde cualquier dispositivo que tenga instalado algún navegador web. Se ha comprobado la compatibilidad de la aplicación con los siguientes: \textit{Mozilla Firefox}, \textit{Microsoft Edge}, \textit{Internet Explorer}, \textit{Google Chrome} y \textit{Opera}.
+	\item Actualizaciones. Para actualizar una aplicación web, el usuario final no tiene que instalar la actualización. Sino que habrá un período de mantenimiento de aplicación, normalmente muy corto y fuera de horario de uso, en el que ningún usuario podrá acceder a la aplicación. Después de este periodo, todos los usuarios dispondrán de la actualización.
 	\item En cuanto a la actualización de la aplicación web, los usuarios finales obtendrán la nueva versión en cuanto vuelvan a a acceder a la misma. Para evitar problemas de cacheo en el navegador se suele trabajar con \textit{Service Workers} que permiten la actualización de la web incluso cuando el usuario la está usando.
 \end{itemize}
 
@@ -89,19 +88,16 @@ Un aplicación web tiene como ventajas:
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.5\textwidth]{_LOGOAPP}
-	\caption{Logo de Evolution Metrics Gauge}\label{fig:_LOGOAPP}
+	\caption{Logo de \textit{Evolution Metrics Gauge}}\label{fig:_LOGOAPP}
 \end{figure}
 \FloatBarrier
 
 En la Fig. \ref{fig:_LOGOAPP} se muestra el logo de la aplicación que se ha mantenido al tratarse este proyecto de una nueva iteración. Éste se compone de un tacómetro que simboliza la medición y un gráfico \textit{burndown} que simboliza la evolución de un proyecto. Lo que se pretende es mostrar la funcionalidad principal de la aplicación: calcular métricas de evolución.
 
 
-\subsection{Java 11}
-Se ha mantenido la versión utilizada en el proyecto original\cite{TFGPrevio}, Java 11.
-Para esta versión, la configuración necesaria de Maven para que el proyecto compile es la siguiente \ruta{pom.xml}:
-
-%Tomcat \footnote{Para desplegar aplicaciones con Java 11 se requiere de la versión 9.0.x de Tomcat} y 
-% del proyecto para que Maven compile en la versión 11 de Java:
+\subsection{\textit{Java} 11}
+Se ha mantenido la versión utilizada en el proyecto original\cite{TFGPrevio}, \textit{Java} 11.
+Para esta versión, la configuración necesaria de \textit{Maven} para que el proyecto compile es la siguiente \ruta{pom.xml}:
 
 \begin{minipage}{\linewidth}
 {\tiny
@@ -140,7 +136,7 @@ Para esta versión, la configuración necesaria de Maven para que el proyecto co
 \end{minipage}
 
 \newpage
-Y en Eclipse IDE habría que añadir manualmente el JRE desde la ventana Window/Preferences, como se muestra en la siguiente figura: 
+Y en Eclipse IDE habría que añadir manualmente el \textit{JRE} desde la ventana \textit{Window/Preferences}, como se muestra en la figura \ref{fig:M5_Eclipse_Java11} 
 
 \begin{figure}[!h]
 	\centering
@@ -150,18 +146,10 @@ Y en Eclipse IDE habría que añadir manualmente el JRE desde la ventana Window/
 \FloatBarrier
 
 
+\subsubsection{Trabajo con \textit{streams} de \textit{Java}}
 
-%De la utilización de Java 11 destacan dos aspectos ya existentes en el proyecto:          
-%	\item De la versión 11 se ha utilizado el método \textit{isBlank()} de la clase \textit{String} \footnote{\url{https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html}}. Se diferencia de \textit{isEmpty()} en que no comprueba la longitud de la cadena y devuelve \textit{true} si es 0. Sino que devuelve \textit{true} si la longitud es 0, o si no es 0 pero todos los caracteres de la cadena son espacios en blanco.
-%	\item De la clase \textit{java.util.Optional} \footnote{\url{https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Optional.html}}, soportada desde la versión 1.8, se utiliza la función \textit{orElseThrow()}, que se soporta desde la versión 10, por tanto habría que buscar una alternativa para pasar a la versión 1.8. La versión 11 trae a esta clase la función \textit{isEmpty()}.
-%\end{itemize}
-%
-%Para saber más sobre las novedades de Java 11 es recomendable leer `\textit{JDK 11 Release Notes}' \cite{oracle_jdk_nodate}. También hay un artículo que explica las principales diferencias entre Java 8 y Java 11 llamado `\textit{De Java 8 a Java 11, ¿aún no te has migrado?}' \cite{del_hoyo_java_2019}.
-
-\subsubsection{Trabajo con streams de Java}
-
-Los \textit{Streams}, presentes en Java desde la versión Java 1.8 son muy útiles ya que facilitan enormemente el procesamiento de grandes colecciones de datos. Estos permiten, usando un predicado, \textbf{filtrar} datos de una colección, \textbf{ordenar} los datos mediante un comparador, \textbf{mapear} o \textbf{reducir} los datos mediante alguna función y \textbf{almacenarlos} en algún tipo de colección mediante un colector. \\ 
-Destacan dos funcionalidades, el \textit{mapeo} que asocia cada dato del stream con un nuevo elemento (como el cálculo del cuadrado de cada elemento) y la \textit{reducción} que permite obtener un único resultado a partir del conjunto de datos (como la suma de un conjunto de datos).
+Los \textit{Streams}, presentes en \textit{Java} desde la versión \textit{Java} 1.8 son muy útiles ya que facilitan enormemente el procesamiento de grandes colecciones de datos. Estos permiten, usando un predicado, \textbf{filtrar} datos de una colección, \textbf{ordenar} los datos mediante un comparador, \textbf{mapear} o \textbf{reducir} los datos mediante alguna función y \textbf{almacenarlos} en algún tipo de colección mediante un colector. \\ 
+Destacan dos funcionalidades, el \textit{mapeo} que asocia cada dato del \textit{stream} con un nuevo elemento (como el cálculo del cuadrado de cada elemento) y la \textit{reducción} que permite obtener un único resultado a partir del conjunto de datos (como la suma de un conjunto de datos).
 
 Un ejemplo de uso de \textit{streams} en la aplicación:\\
 \begin{minipage}{\linewidth}
@@ -178,14 +166,14 @@ List<CustomGithubApiRelease> repositoryReleases = repository.getRepositoryIntern
 }
 \end{minipage}
 
-En el ejemplo se obtienen tanto de la API de GitLab como de la de GitHub un \textit{stream} con las \textit{releases} de un proyecto y se recogen los resultados en una lista (\textit{collect}).
+En el ejemplo se obtienen tanto de la \textit{API} de \textit{GitLab} como de la de \textit{GitHub} un \textit{stream} con las \textit{releases} de un proyecto y se recogen los resultados en una lista (\textit{collect}).
 
 
-\subsubsection{Interfaces funcionales y funciones lambda de Java}
+\subsubsection{Interfaces funcionales y funciones lambda de \textit{Java}}
 
-EN el proyecto también se hace uso de interfaces funcionales y funciones lambda. En la sección anterior ya vemos el uso de dos funciones lambda en el código mostrado (argumentos de las funciones \textit{filter} y \textit{map}).
+En el proyecto también se hace uso de interfaces funcionales y funciones \textit{lambda}. En la sección anterior ya vemos el uso de dos funciones lambda en el código mostrado (argumentos de las funciones \textit{filter} y \textit{map}).
 
-El paquete \textit{java.util.function} \footnote{\url{https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html}} es soportado por Java desde la versión 1.8. Este paquete permite almacenar funciones en variables. 
+El paquete \textit{java.util.function} \footnote{\url{https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html}} es soportado por \textit{Java} desde la versión 1.8. Este paquete permite almacenar funciones en variables. 
 \\Las funciones lambda son funciones anónimas con sintaxis \\
 \begin{minipage}{\linewidth}
 {\tiny
@@ -197,7 +185,7 @@ El paquete \textit{java.util.function} \footnote{\url{https://docs.oracle.com/ja
 que no están declaradas en una clase y pueden ser utilizadas en cualquier parte, pasarse como parámetro a una función y ser almacenadas en variables.
 \\Las interfaces funcionales \footnote{\url{https://docs.oracle.com/javase/8/docs/api/java/lang/FunctionalInterface.html}} son interfaces con un único método, que es abstracto, llamado método funcional. Este método permite restringir los tipos de los parámetros y de los valores de retorno de una función lambda.
 
-Estas han sido utilizadas en numerosas ocasiones tanto para los \textit{streams} (como se observa en el código anterior), como en elementos de la interfaz gráfica y otros elementos sensibles a eventos como por ejemplo:\\
+Éstas han sido utilizadas en numerosas ocasiones tanto para los \textit{streams} (como se observa en el código anterior), como en elementos de la interfaz gráfica y otros elementos sensibles a eventos como por ejemplo:\\
 
 \begin{minipage}{\linewidth}
 {\tiny
@@ -326,75 +314,85 @@ public class CustomGitlabApiRelease implements Serializable  {
 
 Como podemos ver también hacemos uso de \textit{transient} para poder realizar la serialización.
 
-\subsection{Maven}
+\subsection{\textit{Maven}}
 
-Maven es una herramienta de gestión de proyectos software. Esta herramienta facilita, a partir de un único fichero con extensión \textit{XML} llamado \ruta{pom.xml} \footnote{Project Object Model}:
+\textit{Maven} es una herramienta de gestión de proyectos software. Esta herramienta facilita, a partir de un único fichero con extensión \textit{XML} llamado \ruta{pom.xml} \footnote{\textit{Project Object Model}}:
 \begin{itemize}
 	\tightlist
 	\item La construcción y compilación del proyecto.
 	\item La generación de documentación.
 	\item La generación de informes.
 	\item La gestión de las dependencias del proyecto.
-	\item La integración con un sistema de control de versiones como Git, y el trabajo con repositorios remotos como GitLab o GitHub e incluso en repositorios \textit{self-hosted} \footnote{Repositorios almacenados en servidores gestionados por la propia empresa o equipo que desarrolla el software}.
+	\item La integración con un sistema de control de versiones como \textit{Git}, y el trabajo con repositorios remotos como \textit{GitLab} o \textit{GitHub} e incluso en repositorios \textit{self-hosted} \footnote{Repositorios almacenados en servidores gestionados por la propia empresa o equipo que desarrolla el software}.
 	\item La generación y distribución de \textit{releases}.
 \end{itemize}
-Maven puede crear la estructura de directorios del proyecto, administrar las dependencias y descargar las librerías necesarias. Además, es compatible con la mayoría de IDEs \footnote{Integrated Development Environment - Entorno de desarrollo integrado}. Por ejemplo, en este proyecto se ha trabajado sobre Eclipse IDE, el cual tiene muy buena integración con Maven, como se puede observar en la Fig. \ref{fig:M5_Eclipse_Maven}.
+\textit{Maven} puede crear la estructura de directorios del proyecto, administrar las dependencias y descargar las librerías necesarias. Además, es compatible con la mayoría de \textit{IDEs} \footnote{\textit{Integrated Development Environment} - Entorno de desarrollo integrado}. Por ejemplo, en este proyecto se ha trabajado sobre \textit{Eclipse IDE}, el cual tiene muy buena integración con \textit{Maven}, como se puede observar en la Fig. \ref{fig:M5_Eclipse_Maven}.
 
-\imagen{M5_Eclipse_Maven}{Integración de Maven con Eclipse}
+\imagen{M5_Eclipse_Maven}{Integración de \textit{Maven} con \textit{Eclipse}}
 
 También permite el uso de arquetipos, que son patrones o plantillas que se aplican en la infraestructura del proyecto.
 
-Aunque puede resultar difícil configurar correctamente Maven a través del archivo de configuración, debido sobre todo al buen número de herramientas a configurar en él, una vez configurado, nos ahorra mucho tiempo y nos permite centrarnos en el desarrollo de funcionalidad.
+Aunque puede resultar difícil configurar correctamente \textit{Maven} a través del archivo de configuración, debido sobre todo al buen número de herramientas a configurar en él, una vez configurado, nos ahorra mucho tiempo y nos permite centrarnos en el desarrollo de funcionalidad.
 
 \subsection{Sistema de control de versiones}
 
-Se ha utilizado Git para el desarrollo del proyecto para el control de versiones y se ha utilizado GitHub como repositorio remoto. 
+Se ha utilizado \textit{Git} para el desarrollo del proyecto para el control de versiones y se ha utilizado \textit{GitHub} como repositorio remoto. 
 
-GitHub no sólo ha permitido el almacenamiento del código del proyecto si no que también ha permitido el seguimiento y colaboración alumno-tutor gracias a las herramientas que proporciona. Además, utilizando ZenHub (que se puede integrar en el propio GitHub) se ha llevado a cabo la gestión de las tareas (\textit{issues}) del proyecto. Como se puede observar en la siguiente figura:
+\textit{GitHub} no sólo ha permitido el almacenamiento del código del proyecto si no que también ha permitido el seguimiento y colaboración alumno-tutor gracias a las herramientas que proporciona. Además, utilizando \textit{ZenHub} (que se puede integrar en el propio \textit{GitHub}) se ha llevado a cabo la gestión de las tareas (\textit{issues}) del proyecto. Como se puede observar en la figura \ref{fig:M5_GitHub-ZenHub_board}:
 
-\imagen{M5_GitHub-ZenHub_board}{Tablero de Scrum en ZenHub integrado en GitHub}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=1\textwidth]{M5_GitHub-ZenHub_board}
+	\caption{Tablero de \textit{Scrum} en \textit{ZenHub} integrado en \textit{GitHub}}\label{fig:M5_GitHub-ZenHub_board}
+\end{figure}
+\FloatBarrier
 
-Es posible configurar Eclipse y Maven para trabajar con Git. Sin embargo, debido a la costumbre de uso directamente en consola del alumno, se ha optado por el uso de GitBash tal y como se muestra en la Fig. \ref{fig:M5_GitBash}.
+Es posible configurar Eclipse y \textit{Maven} para trabajar con \textit{Git}. Sin embargo, debido a la costumbre de uso directamente en consola del alumno, se ha optado por el uso de \textit{GitBash} tal y como se muestra en la Fig. \ref{fig:M5_GitBash}.
 
-\imagen{M5_GitBash}{Consola para Git de Windows GitBash}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{M5_GitBash}
+	\caption{Consola para \textit{Git} de \textit{Windows GitBash}}\label{fig:M5_GitBash}
+\end{figure}
+\FloatBarrier
 
 \subsection{Logger}
 
 
 Un \textit{logger} permite crear mensajes para el seguimiento o registro de la ejecución de una aplicación. Puede resultar de utilidad, por ejemplo, para realizar la depuración de la aplicación si se muestran los distintos puntos o estados por lo que va pasando la ejecución con los valores tomados por variables de interés\cite{logger_info}.
 
-Este tipo de mensajes se pueden obtener también con la instrucción System.out.println() para mostrar mensajes en la salida estándar, pero esta clase Logger ofrece la ventaja de poder emitir la salida también en archivos con diferentes formatos (XML, TXT, HTML, etc).
+Este tipo de mensajes se pueden obtener también con la instrucción System.out.println() para mostrar mensajes en la salida estándar, pero esta clase \textit{Logger} ofrece la ventaja de poder emitir la salida también en archivos con diferentes formatos (\textit{XML}, \textit{TXT}, \textit{HTML}, etc).
 
-El uso de un \textit{logger} se puede utilizar en cualquier entorno, en desarrollo, se utiliza para mostrar los mensajes por consola y ayudar a los desarrolladores a detectar y solucionar problemas de forma rápida. En cambio, en entornos de producción se almacenan los logs capturados en una base de datos para que puedan ser analizados de forma centralizada y se puedan analizar los logs provenientes de los diferentes usuarios finales de la aplicación.
+El uso de un \textit{logger} se puede utilizar en cualquier entorno, en desarrollo, se utiliza para mostrar los mensajes por consola y ayudar a los desarrolladores a detectar y solucionar problemas de forma rápida. En cambio, en entornos de producción se almacenan los \textit{logs} capturados en una base de datos para que puedan ser analizados de forma centralizada y se puedan analizar los \textit{logs} provenientes de los diferentes usuarios finales de la aplicación.
 
 
-Cada mensaje generado con la clase Logger debe tener asignado un nivel de importancia. Por ejemplo, se podrían plantear los siguientes niveles ordenador de mayor importancia a menos\cite{Level_class_info}:
+Cada mensaje generado con la clase \textit{Logger} debe tener asignado un nivel de importancia. Por ejemplo, se podrían plantear los siguientes niveles ordenador de mayor importancia a menos\cite{Level_class_info}:
 \begin{description}
-\item \textbf{SEVERE}: Nivel de mensaje indicando un error crítico.
-\item \textbf{WARNING}: Indica un error potencial.
-\item \textbf{INFO}: Para mensajes informativos.
-\item \textbf{CONFIG}: Usado con mensajes relacionados con la configuración.
-\item \textbf{FINE}: Proporciona información de traza de la ejecución.
-\item \textbf{FINER}: Proporciona información de traza de la ejecución más detallada.
-\item \textbf{FINEST}: Proporciona información de traza de la ejecución muy detallada.
+\item \textbf{\textit{SEVERE}}: Nivel de mensaje indicando un error crítico.
+\item \textbf{\textit{WARNING}}: Indica un error potencial.
+\item \textbf{\textit{INFO}}: Para mensajes informativos.
+\item \textbf{\textit{CONFIG}}: Usado con mensajes relacionados con la configuración.
+\item \textbf{\textit{FINE}}: Proporciona información de traza de la ejecución.
+\item \textbf{\textit{FINER}}: Proporciona información de traza de la ejecución más detallada.
+\item \textbf{\textit{FINEST}}: Proporciona información de traza de la ejecución muy detallada.
 
-La clase Level de Java nos permite usar estos niveles y usándola podemos establecer a partir de qué nivel se deben almacenar o mostrar los mensajes de log.
+La clase \textit{Level} de \textit{Java} nos permite usar estos niveles y usándola podemos establecer a partir de qué nivel se deben almacenar o mostrar los mensajes de log.
 
 \end{description}
 
 Se han mantenido las herramientas utilizadas en la primera iteración del proyecto \cite{TFGPrevio} actualizando a versiones actuales para evitar vulnerabilidades:
 \begin{itemize}
-	\item \textbf{SLF4J} (\textit{Simple Logging Facade for Java}): proporciona una API de registro Java a través de un simple patrón de fachada. El servidor de registro subyacente se determina en tiempo de implementación y puede ser java.util.logging , log4j, logback o tinylog. La separación de la API de cliente desde el servidor de registro reduce el acoplamiento entre una aplicación y cualquier marco de registro especial. Esto puede hacer más fácil integrar con código existente o de terceros o entregar código en otros proyectos que ya han hecho una opción de registro de back-end\cite{SLF4J_wiki}.
+	\item \textbf{SLF4J} (\textit{Simple Logging Facade for Java}): proporciona una \textit{API} de registro \textit{Java} a través de un simple patrón de fachada. El servidor de registro subyacente se determina en tiempo de implementación y puede ser \textit{java.util.logging}, \textit{log4j}, \textit{logback} o \textit{tinylog}. La separación de la \textit{API} de cliente desde el servidor de registro reduce el acoplamiento entre una aplicación y cualquier marco de registro especial. Esto puede hacer más fácil integrar con código existente o de terceros o entregar código en otros proyectos que ya han hecho una opción de registro de \textit{back-end}\cite{SLF4J_wiki}.
 
-	\item\textbf{Log4j}: es una biblioteca de código abierto desarrollada en Java por la Apache Software Foundation que permite a los desarrolladores de software escribir mensajes de registro, cuyo propósito es dejar constancia de una determinada transacción en tiempo de ejecución. Log4j permite filtrar los mensajes en función de su importancia. La configuración de salida y granularidad de los mensajes es realizada en tiempo de ejecución mediante el uso de archivos de configuración externos \cite{Log4j_wiki}. 
+	\item\textbf{Log4j}: es una biblioteca de código abierto desarrollada en \textit{Java} por la \textit{Apache Software Foundation} que permite a los desarrolladores de software escribir mensajes de registro, cuyo propósito es dejar constancia de una determinada transacción en tiempo de ejecución. \textit{Log4j} permite filtrar los mensajes en función de su importancia. La configuración de salida y granularidad de los mensajes es realizada en tiempo de ejecución mediante el uso de archivos de configuración externos \cite{Log4j_wiki}. 
 	\\A través del fichero \textit{log4j2} con extensión \textit{XML}, \textit{JSON}, \textit{YAML} o \textit{Properties} se pueden configurar diferentes aspectos como los niveles y el formato de los mensajes\footnote{Manual de configuración de Log4j 2: \url{https://logging.apache.org/log4j/2.x/manual/configuration.html}} \cite{apache_apache_nodate}. 
 	\\En este proyecto se configuró mediante un fichero con extensión \textit{.properties}, localizado en la carpeta \textit{resources} \ruta{src/main/resources} para que los mensajes sean redirigidos a un fichero con ruta \textit{log/log4.log}. También se muestran por consola si estamos en el entorno de desarrollo.	
 \end{itemize}
 
-Como las dos herramientas tienen integración con Maven sólo es necesario añadir en el fichero \ruta{pom.xml} las dependencias correspondientes en el fichero \ruta{pom.xml} del proyecto
+Como las dos herramientas tienen integración con \textit{Maven} sólo es necesario añadir en el fichero \ruta{pom.xml} las dependencias correspondientes en el fichero \ruta{pom.xml} del proyecto
 
 
-Para poder añadir mensajes con el \textit{logger}, utilizamos la API SLF4J (\ruta{slf4j-api}). Eso permite que si cambiáramos de Log4J a otro \textit{logger} no tuviéramos que modificar el código si no sólo la conexión con la API SLF4J.
+Para poder añadir mensajes con el \textit{logger}, utilizamos la \textit{API SLF4J} (\ruta{slf4j-api}). Eso permite que si cambiáramos de \textit{Log4J} a otro \textit{logger} no tuviéramos que modificar el código si no sólo la conexión con la \textit{API SLF4J}.
 
 Para ello, en primer lugar, se debe obtener en cada clase que quiera ser utilizado:\\
 \begin{minipage}{\linewidth}
@@ -416,16 +414,16 @@ LOGGER.error("Error fetching a repository. Message: " + e.getMessage());
 
 \section{Automatización del proceso de desarrollo}
 
-La automatización del flujo de trabajo ha permitido el despliegue continuo de la aplicación, para ello se ha trabajado con las herramientas que ofrece GitHub y que vamos a ver a continuación.
+La automatización del flujo de trabajo ha permitido el despliegue continuo de la aplicación, para ello se ha trabajado con las herramientas que ofrece \textit{GitHub} y que vamos a ver a continuación.
 
-\subsection{CI/CD: GitHub Actions}
+\subsection{\textit{CICD}: \textit{GitHub Actions}}
 
-Se ha utilizado el sistema de despliegue e integración continua (CICD) que ofrece GitHub, \textit{\textbf{GitHub Actions}}, que permiten configurar CICD para una gran cantidad de tipos de proyectos incluyendo proyectos Java que utilicen Maven como es el caso del presente proyecto. En la siguiente figura podemos ver algunos de los \textit{actions} que existen para Java:
+Se ha utilizado el sistema de despliegue e integración continua (\textit{CICD}) que ofrece \textit{GitHub}, \textit{\textbf{GitHub Actions}}, que permiten configurar \textit{CICD} para una gran cantidad de tipos de proyectos incluyendo proyectos \textit{Java} que utilicen \textit{Maven} como es el caso del presente proyecto. En la figura \ref{fig:M5_Java_GitHub_Actions} podemos ver algunos de los \textit{actions} que existen para \textit{Java}:
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.7\textwidth]{M5_Java_GitHub_Actions}
-	\caption{Algunos de los GitHub Actions existentes para Java}\label{fig:M5_Java_GitHub_Actions}
+	\caption{Algunos de los \textit{GitHub Actions} existentes para \textit{Java}}\label{fig:M5_Java_GitHub_Actions}
 \end{figure}
 \FloatBarrier
 
@@ -435,15 +433,15 @@ En el caso de este proyecto se ha configurado un \textit{workflow} para que se e
 
 Se han configurado 4 etapas:
 \begin{itemize}
-	\item \textbf{Compilación} (\textit{build}). Se ejecuta el \textit{build} del proyecto con Maven. Que  ejecute correctamente es necesario para continuar.
-	\item \textbf{Pruebas} (\textit{test}). Se ejecutan las pruebas unitarias definidas en el proyecto y se comprueba que estas pasen.
-	\item \textbf{Despliegue} (\textit{deployment}). Se despliega la aplicación en producción en \textbf{Heroku}.Para ello se realizan dos tareas, en primer lugar se hace login con el usuario de \textit{Heroku} del proyecto y en segundo lugar se sube el .war obtenido en el paso de compilación.\\
+	\item \textbf{Compilación} (\textit{build}). Se ejecuta el \textit{build} del proyecto con \textit{Maven}. Que  ejecute correctamente es necesario para continuar.
+	\item \textbf{Pruebas} (\textit{test}). Se ejecutan las pruebas unitarias definidas en el proyecto y se comprueba que éstas pasen.
+	\item \textbf{Despliegue} (\textit{deployment}). Se despliega la aplicación en producción en \textbf{Heroku}.Para ello se realizan dos tareas, en primer lugar se hace \textit{login} con el usuario de \textit{Heroku} del proyecto y en segundo lugar se sube el archivo \textit{.war} obtenido en el paso de compilación.\\
 	
 	 La url de la aplicación desplegada es:\\
 	\url{https://evolution-metrics-v2.herokuapp.com/}
 \end{itemize}
 
-El \textit{workflow} configurado para el proyecto se ha denominado \textit{build-and-deploy} y en la siguiente figura podemos ver los diferentes pasos que se ejecutan en el mismo:
+El \textit{workflow} configurado para el proyecto se ha denominado \textit{build-and-deploy} y la figura \ref{fig:M5_GitHub_workflow} podemos ver los diferentes pasos que se ejecutan en el mismo:
 
 \begin{figure}[!h]
 	\centering
@@ -452,7 +450,8 @@ El \textit{workflow} configurado para el proyecto se ha denominado \textit{build
 \end{figure}
 \FloatBarrier
 
-La definición del \textit{workflow} se realiza en el archivo /.github/workflows/maven.yml y cuyo contenido es el siguiente:
+La definición del \textit{workflow} se configura en el archivo \textit{/.github/workflows/maven.yml} y cuyo contenido es el siguiente:\\
+
 \begin{minipage}{\linewidth}
 {\tiny
 \begin{verbatim}
@@ -504,8 +503,8 @@ jobs:
 \end{minipage}
 
 
-\subsubsection{Tokens y variables necesarias}
-Para poder ejecutar las \textit{actions} definidas ha sido necesario almacenar el \textit{API key} de \textit{Heroku}, el cual nos permite hacer login y posteriormente realizar el despliegue. En el código de la configuración anterior se ha podido ver que las variables se llaman de la siguiente manera: 
+\subsubsection{\textit{Tokens} y variables necesarias}
+Para poder ejecutar las \textit{actions} definidas ha sido necesario almacenar el \textit{API key} de \textit{Heroku}, el cual nos permite hacer \textit{login} y posteriormente realizar el despliegue. En el código de la configuración anterior se ha podido ver que las variables se llaman de la siguiente manera: 
 
 \begin{minipage}{\linewidth}
 {\tiny
@@ -517,25 +516,25 @@ Para poder ejecutar las \textit{actions} definidas ha sido necesario almacenar e
 }
 \end{minipage}
 
-Podemos ver en la siguiente figura cómo se almacenan los denominados \textit{secrets} en GitHub:
+Podemos ver la figura \ref{fig:M5_Action_secrets} cómo se almacenan los denominados \textit{secrets} en GitHub:
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.7\textwidth]{M5_Action_secrets}
-	\caption{\textit{Secrets} o variables definidas para el proyecto en GitHub}\label{fig:M5_Action_secrets}
+	\caption{\textit{Secrets} o variables definidas para el proyecto en \textit{GitHub}}\label{fig:M5_Action_secrets}
 \end{figure}
 \FloatBarrier
 
 \subsubsection{Badges}
-Los denominados \textit{badges} son pequeños distintivos que se añaden en el archivo readme.md del proyecto para dar más visibilidad a cierta información relevante.
-En el proyecto se han incluido dos \textit{badges} para representar el estado del despliegue continuo (\textit{pipeline}) que refleja el estado de la última ejecución del \textit{workflow} previamente explicado. También se ha incluido una \textit{badge} para indicar si la aplicación está desplegada o no en Heroku.
+Los denominados \textit{badges} son pequeños distintivos que se añaden en el archivo \textit{readme.md} del proyecto para dar más visibilidad a cierta información relevante.
+En el proyecto se han incluido dos \textit{badges} para representar el estado del despliegue continuo (\textit{pipeline}) que refleja el estado de la última ejecución del \textit{workflow} previamente explicado. También se ha incluido una \textit{badge} para indicar si la aplicación está desplegada o no en \textit{Heroku}.
 
-Podemos verlas en la siguiente figura:
+Podemos verlas en la figura \ref{fig:M5_Badges}:
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.7\textwidth]{M5_Badges}
-	\caption{\textit{Badges} en el Readme.md del proyecto}\label{fig:M5_Badges}
+	\caption{\textit{Badges} en el archivo \textit{Readme.md} del proyecto}\label{fig:M5_Badges}
 \end{figure}
 \FloatBarrier
 
@@ -554,23 +553,23 @@ Y el código de las mismas es:\\
 
 \subsection{Revisión automática de la cobertura}
 
-La cobertura es el porcentaje de la aplicación que está probado por algún test. Esta cobertura se puede medir en relación al total de lineas de código, al número de instrucciones, clases o al número de bifurcaciones en condicionales y bucles o bien a número de métodos.
+La cobertura es el porcentaje de la aplicación que está probado por algún test. Esta cobertura se puede medir en relación al total de líneas de código, al número de instrucciones, clases o al número de bifurcaciones en condicionales y bucles o bien a número de métodos.
 
-Para realizar las revisiones automáticas de cobertura, lo primero que hay que hacer es definir las pruebas utilizando JUnit y ejecutarlas y posteriormente, utilizando JaCoCo generaremos un informe donde se nos muestran los valores de cobertura del código.
+Para realizar las revisiones automáticas de cobertura, lo primero que hay que hacer es definir las pruebas utilizando \textit{JUnit} y ejecutarlas y posteriormente, utilizando \textit{JaCoCo} generaremos un informe donde se nos muestran los valores de cobertura del código.
 
-Podemos ver un ejemplo de informe generado con JaCoCo en la siguiente figura:
+Podemos ver un ejemplo de informe generado con \textit{JaCoCo} en la figura \ref{fig:M5_JaCoCo_report}
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=0.7\textwidth]{M5_JaCoCo_report }
-	\caption{Ejemplo de informe generado por JaCoCo}\label{fig:M5_JaCoCo_report}
+	\includegraphics[width=0.7\textwidth]{M5_JaCoCo_report}
+	\caption{Ejemplo de informe generado por \textit{JaCoCo}}\label{fig:M5_JaCoCo_report}
 \end{figure}
 \FloatBarrier
 
 
-\subsubsection{Configuración de JaCoCo con Maven}
+\subsubsection{Configuración de \textit{JaCoCo} con \textit{Maven}}
 
-Para poder utilizar JaCoco, tenemos que establecer varios valores de configuración en el archivo pom.xml. En primer lugar, debemos establecer la carpeta donde alojar los informes generados:\\
+Para poder utilizar \textit{JaCoco}, tenemos que establecer varios valores de configuración en el archivo \textit{pom.xml}. En primer lugar, debemos establecer la carpeta donde alojar los informes generados:\\
 \begin{minipage}{\linewidth}
 {\tiny
 \begin{verbatim}
@@ -583,7 +582,7 @@ Para poder utilizar JaCoco, tenemos que establecer varios valores de configuraci
 }
 \end{minipage}
 
-Tras esto tenemos que añadir el plugin de la siguiente de JaCoCo para Maven:\\
+Tras esto tenemos que añadir el \textit{plugin} de la siguiente de \textit{JaCoCo} para \textit{Maven}:\\
 \begin{minipage}{\linewidth}
 {\tiny
 \begin{verbatim}
@@ -609,7 +608,7 @@ En la configuración se define:
 	\item Que se desea que se generen en forma de fichero
 	\item El título del fichero
 \end{itemize}
- Una vez tenemos la configuración establecida, para generar los informes con Maven tenemos que ejecutar:
+ Una vez tenemos la configuración establecida, para generar los informes con \textit{Maven} tenemos que ejecutar:
  
 \begin{minipage}{\linewidth}
 {\tiny
@@ -624,23 +623,23 @@ El primer comando genera el fichero \ruta{jacoco.exec} que es necesario para la 
 
 
 \section{Diseño extensible}
-Anteriormente en la sección \ref{sect:3_3_3_FrameworkMedicion} - `Framework de medición' se ha visto cómo en el proyecto se implementa un framework de medición que permite la reutilización en el cálculo de métricas esto ha permitido implementar las cinco nuevas métricas relacionadas con CICD y realizar la nueva integración con GitHub.
+Anteriormente en la sección \ref{sect:3_3_3_FrameworkMedicion} - `Framework de medición' se ha visto cómo en el proyecto se implementa un framework de medición que permite la reutilización en el cálculo de métricas. Esto ha permitido implementar las cinco nuevas métricas relacionadas con \textit{CICD} y realizar la nueva integración con \textit{GitHub}.
 
-El paquete \textit{repositorydatasource}, en el que previamente se realizaba sólo la conexión con GitLab, se ha extendido de forma que ahora también incluye la integración con GitHub. Esto se ha conseguido aplicando el patrón de diseño: método fábrica y diferenciando entre las dos forjas de repositorios tenemos las clases: \textit{RepositoryDataSourceUsingGithubAPI}, \textit{RepositoryDataSourceFactoryGithub}, \textit{RepositoryDataSourceUsingGitlabAPI} y \textit{RepositoryDataSourceFactoryGitlab} que implementan las interfaces \textit{RepositoryDataSource} y \textit{RepositoryDataSourceFactory}. Utilizando este mismo diseño e implementando las interfaces anteriores en nuevas clases se puede seguir extendiendo la funcionalidad del a aplicación a otras forjas de repositorios en un futuro.
+El paquete \textit{repositorydatasource}, en el que previamente se realizaba sólo la conexión con \textit{GitLab}, se ha extendido de forma que ahora también incluye la integración con \textit{GitHub}. Esto se ha conseguido aplicando el patrón de diseño: método fábrica y diferenciando entre las dos forjas de repositorios tenemos las clases: \textit{RepositoryDataSourceUsingGithubAPI}, \textit{RepositoryDataSourceFactoryGithub}, \textit{RepositoryDataSourceUsingGitlabAPI} y \textit{RepositoryDataSourceFactoryGitlab} que implementan las interfaces \textit{RepositoryDataSource} y \textit{RepositoryDataSourceFactory}. Utilizando este mismo diseño e implementando las interfaces anteriores en nuevas clases se puede seguir extendiendo la funcionalidad del a aplicación a otras forjas de repositorios en un futuro.
 
-De la misma manera, en la interfaz gráfica se han realizado las modificaciones necesarias para realizar la conexión de manera diferenciada e independiente con GitHub y con GitLab y para poder añadir repositorios alojados en cada una de ellas. Podemos ver las nuevas características de la interfaz en las siguientes figuras:
+De la misma manera, en la interfaz gráfica se han realizado las modificaciones necesarias para realizar la conexión de manera diferenciada e independiente con \textit{GitHub} y con \textit{GitLab} y para poder añadir repositorios alojados en cada una de ellas. Podemos ver las nuevas características de la interfaz en las figuras \ref{fig:M5_GitHub_connection} y \ref{fig:M5_GitLab_connection}:
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.7\textwidth]{M5_GitHub_connection }
-	\caption{Conexión con GitHub.}\label{fig:M5_GitHub_connection}
+	\caption{Conexión con \textit{GitHub}.}\label{fig:M5_GitHub_connection}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.7\textwidth]{M5_GitLab_connection }
-	\caption{Conexión con GitLab.}\label{fig:M5_GitLab_connection}
+	\caption{Conexión con \textit{GitLab}.}\label{fig:M5_GitLab_connection}
 \end{figure}
 \FloatBarrier
 
@@ -658,7 +657,7 @@ De la misma manera, en la interfaz gráfica se han realizado las modificaciones 
 \end{figure}
 \FloatBarrier
 
-Para implementar la nueva forma de añadir repositorios de GitHub se reutiliza la clase \textit{AddRepositoryFormTemplate} ya utilizada para GitLab y la clase \textit{AddRepositoryDialog} con la función:\\
+Para implementar la nueva forma de añadir repositorios de \textit{GitHub} se reutiliza la clase \textit{AddRepositoryFormTemplate} ya utilizada para \textit{GitLab} y la clase \textit{AddRepositoryDialog} con la función:\\
 
 \begin{minipage}{\linewidth}
 {\tiny
@@ -710,17 +709,17 @@ Para implementar la nueva formas de conexión (y las posibles futuras que se pod
 }
 \end{minipage}
 
-Cabe destacar como se ve en el código anterior que dependiendo de la forja se permiten diferentes tipos de conexión. GitHub sólo permite trabajar con su API utilizando un token privado mientras que GitLab si permite también el uso de una conexión pública (aunque con funcionalidad restringida, por ejemplo, no permite calcular las métricas relacionadas con CICD pues no se pueden recuperar datos de \textit{jobs} y de \textit{releases} con este tipo de conexión).\\
-Además, cabe indicar que GitHub no permite la conexión vía usuario y contraseña pues está \textit{deprecada}, ver:\\
+Cabe destacar como se ve en el código anterior que dependiendo de la forja se permiten diferentes tipos de conexión. \textit{GitHub} sólo permite trabajar con su \textit{API} utilizando un \textit{token} privado mientras que \textit{GitLab} si permite también el uso de una conexión pública (aunque con funcionalidad restringida, por ejemplo, no permite calcular las métricas relacionadas con \textit{CICD} pues no se pueden recuperar datos de \textit{jobs} y de \textit{releases} con este tipo de conexión).\\
+Además, cabe indicar que \textit{GitHub} no permite la conexión vía usuario y contraseña pues está \textit{deprecada}, ver:\\
 \url{https://docs.github.com/es/rest/overview/other-authentication-methods}
 
 \newpage
 \section{API de GitHub} 
 
-GitHub ofrece una API \footnote{\url{https://docs.github.com/es/rest}} REST \footnote{Representational state transfer} para poder acceder a la información e interactuar con los repositorios alojados en GitHub. Para interactuar con esta API se ha utilizado la librería:\\
+\textit{GitHub} ofrece una \textit{API} \footnote{\url{https://docs.github.com/es/rest}} \textit{REST} \footnote{\textit{Representational state transfer}} para poder acceder a la información e interactuar con los repositorios alojados en \textit{GitHub}. Para interactuar con esta \textit{API} se ha utilizado la librería:\\
 
 \textit{github-api.kohsuke} \footnote{\url{https://github-api.kohsuke.org/}}\\
-Para poder utilizarla en el proyecto se ha incluido en el archivo pom.xml como plugin de Maven de la siguiente manera:
+Para poder utilizarla en el proyecto se ha incluido en el archivo \textit{pom.xml} como \textit{plugin} de \textit{Maven} de la siguiente manera:
 
 \begin{minipage}{\linewidth}
 {\tiny
@@ -808,11 +807,11 @@ public Collection<datamodel.Repository> getCurrentUserRepositories
 \newpage
 \section{API de GitLab}
 
-De la misma manera, GitLab ofrece una API \footnote{\url{https://docs.gitlab.com/ee/api/}} REST \footnote{Representational state transfer} para poder acceder a la información e interactuar con los repositorios alojados en GitLab. Para interactuar con esta API se ha utilizado la librería:\\
+De la misma manera, \textit{GitLab} ofrece una \textit{API} \footnote{\url{https://docs.gitlab.com/ee/api/}} \textit{REST} \footnote{\textit{Representational state transfer}} para poder acceder a la información e interactuar con los repositorios alojados en \textit{GitLab}. Para interactuar con esta \textit{API} se ha utilizado la librería:\\
 
 \textit{gitlab4j/gitlab4j-api} \footnote{\url{https://github.com/gitlab4j/gitlab4j-api}}\\
 
-Para poder utilizarla en el proyecto se ha incluido en el archivo pom.xml como plugin de Maven de la siguiente manera:\\
+Para poder utilizarla en el proyecto se ha incluido en el archivo \textit{pom.xml} como \textit{plugin} de \textit{Maven} de la siguiente manera:\\
 
 \begin{minipage}{\linewidth}
 {\tiny
@@ -897,11 +896,11 @@ public Collection<Repository> getAllUserRepositories(String userIdOrUsername,
 \end{minipage}
 
 \newpage
-\section{Interfaz gráfica: Vaadin}
-Continuando con la implementación inicial, se ha continuado trabajando con el framework Vaadin para evolucionar la interfaz gráfica. Vaadin se escribe en Java y no requiere escribir código HTML. Sí se tiene que utilizar CSS para añadir estilos a la aplicación, estos se encuentan en el archivo: 
+\section{Interfaz gráfica: \textit{Vaadin}}
+Continuando con la implementación inicial, se ha continuado trabajando con el \textit{framework Vaadin} para evolucionar la interfaz gráfica. \textit{Vaadin} se escribe en \textit{Java} y no requiere escribir código \textit{HTML}. Sí se tiene que utilizar \textit{CSS} para añadir estilos a la aplicación, estos se encuentran en el archivo: 
 \url{https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software/blob/main/src/main/webapp/frontend/site.css}.
 
-Como ejemplo del uso de Vaadin en la aplicación podemos ver cómo para implementar el diálogo para cerrar las conexiones con las forjas de repositorios se emplea el siguiente código:
+Como ejemplo del uso de \textit{Vaadin} en la aplicación podemos ver cómo para implementar el diálogo para cerrar las conexiones con las forjas de repositorios se emplea el siguiente código:
 
 {\tiny
 \begin{verbatim}
@@ -961,7 +960,7 @@ y el resultado sería el de la Fig. \ref{fig:M5_Close_Connection_Dialog}
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=1\textwidth]{M5_Close_Connection_Dialog}
-	\caption{Diálogo con botones generado por Vaadin}\label{fig:M5_Close_Connection_Dialog}
+	\caption{Diálogo con botones generado por \textit{Vaadin}}\label{fig:M5_Close_Connection_Dialog}
 \end{figure}
 \FloatBarrier
 
@@ -970,32 +969,32 @@ En la Fig. \ref{fig:M5_Comparativa_Repositorios} se muestra el diseño de la int
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=1\textwidth]{M5_Comparativa_Repositorios}
-	\caption{Comparación de varios proyectos utilizando Evolution metrics comparison}\label{fig:M5_Comparativa_Repositorios}
+	\caption{Comparación de varios proyectos utilizando \textit{Evolution metrics comparison}}\label{fig:M5_Comparativa_Repositorios}
 \end{figure}
 \FloatBarrier
 
 \newpage
-\subsection{Ventajas e inconvenientes de Vaadin}
-Vaadin tiene las siguientes ventajas:
+\subsection{Ventajas e inconvenientes de \textit{Vaadin}}
+\textit{Vaadin} tiene las siguientes ventajas:
 \begin{itemize}
-	\item Permite crear interfaces web sin utilizar HTML, sólo utilizando Java, aunque también permite una combinación de ambos no se ha empleado en este proyecto. También permite añadir estilos a la aplicación con CSS.
+	\item Permite crear interfaces web sin utilizar \textit{HTML}, sólo utilizando \textit{Java}, aunque también permite una combinación de ambos no se ha empleado en este proyecto. También permite añadir estilos a la aplicación con \textit{CSS}.
 	\item Tiene disponible una amplia librería de componentes \footnote{\url{https://vaadin.com/components}} de interfaz gráfica de manera gratuita.
-	\item Permite personalizar los componentes e incluso publicar nuevos que desarrollemos nosotros mismos en el directorio Vaadin \footnote{\url{https://vaadin.com/directory/search}} para compartirlos con el resto de la comunidad.
+	\item Permite personalizar los componentes e incluso publicar nuevos que desarrollemos nosotros mismos en el directorio \textit{Vaadin} \footnote{\url{https://vaadin.com/directory/search}} para compartirlos con el resto de la comunidad.
 	\item Dispone de una documentación (\url{https://vaadin.com/docs/latest/}) de gran calidad y un buen soporte técnico.
-	\item Se integra con Maven y Eclipse.
+	\item Se integra con \textit{Maven} y \textit{Eclipse}.
 \end{itemize}
 
 Y como inconvenientes podemos destacar:
 \begin{itemize}
-	\item Al no separar la interfaz de la parte lógica (no implementa el modelo vista-controlador) al tener todo junto en el código Java, el código resulta más difícil de comprender y mantener.
-	\ Resulta complicado personalizar la interfaz si nos salimos de las opciones básicas que nos da Vaadin, los componentes y \textit{layouts} que nos ofrece Vaadin se deberían poder de configurar y personalizar de una manera más sencilla. Cabe destacar la manera en la que se aplican las clases a elementos del DOM generados por Vaadin, que reciben una identificación con una numeración aleatoria en cada renderizado, haciéndolos muy poco accesibles vía selectores CSS.
+	\item Al no separar la interfaz de la parte lógica (no implementa el modelo vista-controlador) al tener todo junto en el código \textit{Java}, el código resulta más difícil de comprender y mantener.
+	\ Resulta complicado personalizar la interfaz si nos salimos de las opciones básicas que nos da \textit{Vaadin}, los componentes y \textit{layouts} que nos ofrece \textit{Vaadin} se deberían poder de configurar y personalizar de una manera más sencilla. Cabe destacar la manera en la que se aplican las clases a elementos del \textit{DOM} generados por \textit{Vaadin}, que reciben una identificación con una numeración aleatoria en cada renderizado, haciéndolos muy poco accesibles vía selectores \textit{CSS}.
 	\item Para usar componentes avanzados, se debe adquirir una licencia.
 \end{itemize}
 
 \newpage
-\subsection{Configuración para uso en Internet Explorer}
+\subsection{Configuración para uso en \textit{Internet Explorer}}
 
-Aunque Internet Explorer dejará de tener soporte oficial por parte de Microsoft a partir del 15 de junio de 2022, se ha mantenido la configuración adicional implementada previamente para poder ejecutar la aplicación en Internet Explorer 11 en el archivo de configuración del proyecto pom.xml:\\
+Aunque \textit{Internet Explorer} dejará de tener soporte oficial por parte de \textit{Microsoft} a partir del 15 de junio de 2022, se ha mantenido la configuración adicional implementada previamente para poder ejecutar la aplicación en \textit{Internet Explorer} 11 en el archivo de configuración del proyecto \textit{pom.xml}:\\
 \begin{minipage}{\linewidth}
 {\tiny
 \begin{verbatim}
@@ -1041,11 +1040,11 @@ y es necesario compilar con la opción de producción de la siguiente manera:\\
 \newpage
 \subsection{Elementos de terceros}
 
-Además de los componentes que nos ofrece Vaadin, se ha utilizado un componente del \textit{Vaadin Directory} creado por terceros. Se trata de un diálogo de confirmación y se puede encontrar en el siguiente enlace: \url{https://vaadin.com/directory/component/confirm-dialog}. Este diálogo se ha personalizado definiendo una clase de envoltura: \textit{ConfirmDialogWrapper} y se han definido algunos diálogos a partir de la misma como se muestra en la Fig. \ref{fig:M5_Vaadin_DialogoConfirm}
+Además de los componentes que nos ofrece \textit{Vaadin}, se ha utilizado un componente del \textit{Vaadin Directory} creado por terceros. Se trata de un diálogo de confirmación y se puede encontrar en el siguiente enlace: \url{https://vaadin.com/directory/component/confirm-dialog}. Este diálogo se ha personalizado definiendo una clase de envoltura: \textit{ConfirmDialogWrapper} y se han definido algunos diálogos a partir de la misma como se muestra en la Fig. \ref{fig:M5_DialogoConfirm}
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.45\textwidth]{M5_Vaadin_DialogoConfirm}
-	\caption{Dialogo de confirmación personalizado para importar repositorios desde archivo}\label{fig:M5_Vaadin_DialogoConfirm}
+	\caption{Diálogo de confirmación personalizado para importar repositorios desde archivo}\label{fig:M5_DialogoConfirm}
 \end{figure}
 
