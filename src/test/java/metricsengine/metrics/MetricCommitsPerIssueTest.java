@@ -104,7 +104,7 @@ public class MetricCommitsPerIssueTest {
 				Arguments.of(Integer.MIN_VALUE, 1, false, "TNI = Integer.MIN_VALUE"),
 				Arguments.of(1, Integer.MIN_VALUE, false, "TNC = Integer.MIN_VALUE"),
 				Arguments.of(0, 0, false, "TNI, TNC = 0"),
-				Arguments.of(0, 1, true, "TNI = 0"),
+				Arguments.of(0, 1, false, "TNI = 0"),
 				Arguments.of(10, 0, false, "TNC = 0"),
 				Arguments.of(1, 1, true, "TNI = TNC. TNI, TNC > 0"),
 				Arguments.of(10, 5, true, "TNI > TNC. TNI, TNC > 0"),
