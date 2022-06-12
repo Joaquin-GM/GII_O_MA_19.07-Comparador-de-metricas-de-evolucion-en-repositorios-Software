@@ -13,7 +13,7 @@ En el paquete \textit{datamodel} podemos encontrar las clases más importantes e
 		\item URL, nombre e ID del proyecto
 		\item Métricas internas (\ruta{RepositoryInternalMetrics}). Representan los valores de los que se obtienen las métricas externas y que interesan para satisfacer los requisitos funcionales de la aplicación. Esta clase contiene toda la información de un repositorio necesaria para calcular las métricas, que es la fecha de medición, el número total de issues, el número total de commits, el número de issues cerradas, una colección de días que se tardan en cerrar las issues, otra colección con las fechas de los commits, el tiempo de vida del proyecto, una colección de los \textit{jobs} del proyecto y una colección de las \textit{releases} del proyecto.\\
 		Cabe indicar que se define el método \textit{equals} a partir de la fecha de medición.
-		\item Resultados de las métricas (\ruta{MetricsResults}). Al añadir un repositorio estos se calcularán y quedarán almacenados en una instancia de esta clase.
+		\item Resultados de las métricas (\ruta{MetricsResults}). Al añadir un repositorio éstos se calcularán y quedarán almacenados en una instancia de esta clase.
 		\item Evaluación del proyecto (\textit{projectEvaluation}). En esta clase se evalúan las diferentes métricas en función de sus umbrales y se almacena el porcentaje de métricas evaluadas como `buenas' cada vez que se calcule alguna de ellas.
 		\item Cabe indicar que se ha definido la igualdad de los repositorios en base a su URL, ID y nombre.
 	\item \ruta{User}. Sirve para almacenar información que se obtiene de las forjas de repositorios acerca del usuario que ha iniciado sesión. Se almacenan la ID de usuario, la URL del avatar, el email, el nombre y el nombre de usuario.
@@ -40,14 +40,14 @@ El paquete define el \textit{framework} de conexión a una forja de repositorios
 
 \imagen{AnexC_RepositoryDataSource}{Paquete \textit{repositorydatasource}}
 
-Para crear un \textit{Repositorydatasource} con acceso a otra forja solo se tiene que implementar las dos interfaces, sin necesidad de hacer más cambios en el código, como se puede ver en la imagen la implementación para GitHub y GitLab es equivalente.
+Para crear un \textit{Repositorydatasource} con acceso a otra forja sólo se tiene que implementar las dos interfaces, sin necesidad de hacer más cambios en el código, como se puede ver en la imagen la implementación para GitHub y GitLab es equivalente.
 
 \subsection{Paquete metricsengine}
 En este paquete se define el \textit{framework} de medición y sigue el diseño descrito en \textit{Soporte de Métricas con Independencia del Lenguaje para la Inferencia de Refactorizaciones} \cite{marticorena_sanchez_soporte_2005}, con unos pequeños cambios:
 
 \begin{itemize}
 	\tightlist
-	\item Se ha aplicado a las métricas concretas el patrón \textit{\textbf{Singleton}} \footnote{\url{https://refactoring.guru/design-patterns/singleton}}, que obliga a que solo haya una única instancia de cada métrica. Además, se ha aplicado el patrón \textit{\textbf{Método fábrica}} \footnote{\url{https://refactoring.guru/design-patterns/factory-method}} tal y como se muestra en la Fig. \ref{fig:M3_CambiosFrameworkMedicion1}, de forma que \textit{MetricConfiguration} no esté asociada con la métrica en sí, sino con una forma de obtenerla.\\
+	\item Se ha aplicado a las métricas concretas el patrón \textit{\textbf{Singleton}} \footnote{\url{https://refactoring.guru/design-patterns/singleton}}, que obliga a que sólo haya una única instancia de cada métrica. Además, se ha aplicado el patrón \textit{\textbf{Método fábrica}} \footnote{\url{https://refactoring.guru/design-patterns/factory-method}} tal y como se muestra en la Fig. \ref{fig:M3_CambiosFrameworkMedicion1}, de forma que \textit{MetricConfiguration} no esté asociada con la métrica en sí, sino con una forma de obtenerla.\\
 	El objetivo de trabajar de esta manera es facilitar la persistencia de un perfil de métricas. Las métricas se podrían ver como clases estáticas, no varían en tiempo de ejecución y solo debería haber una instancia de cada una de ellas. Por ello, al importar o exportar un perfil de métricas con su conjunto de configuraciones de métricas, estas configuraciones no deberían asociarse a la métrica, sino a la forma de acceder a la única instancia de esa métrica. 
 	\item Se trabaja con los métodos \textit{evaluate} y \textit{getEvaluationFunction} en la interfaz \textit{IMetric}, ver Fig. \ref{fig:M3_CambiosFrameworkMedicion2}, para obtener los valores de las mismas, siendo estos métodos un añadido que se realizó al \textit{framework} de medición original.\\
 	Esto permite interpretar y evaluar los valores medidos sobre los valores límite de la métrica o configuración de métrica deduciéndose si su valor es bueno o no según el perfil de evaluación.\\

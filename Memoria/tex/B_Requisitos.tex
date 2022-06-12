@@ -70,7 +70,7 @@ En esta sección se van a enumerar los requisitos que el sistema tendrá que sat
 		\item \textbf{RF-1.1} Debido a las restriccones que tiene la \textit{API} de \textit{GitHub} y que se \textit{deprecó} el acceso del usuario por usuario y contraseña\footnote{Autenticación en \textit{GitHub API} - \url{https://docs.github.com/es/rest/overview/other-authentication-methods}}, el usuario podrá iniciar sesión desde la aplicación sólo mediante un token de acceso personal a su usuario en \textit{GitHub}para poder obtener los repositorios públicos y privados a los que tenga acceso.
 		\item \textbf{RF-1.2} La aplicación mostrará al usuario en todo momento la conexión que está utilizando
 		\item \textbf{RF-1.3} El usuario podrá utilizar la aplicación sin establecer una conexión. Aunque no tenga acceso a los repositorios de \textit{GitHub}.
-		\item \textbf{RF-1.4} El usuario podrá cambiar de conexión teniendo en cuenta que solo puede haber un tipo de conexión con \textit{GitHub} activo en un instante dado. Esta conexión será independiente de la posible conexión con \textit{GitLab}.
+		\item \textbf{RF-1.4} El usuario podrá cambiar de conexión teniendo en cuenta que sólo puede haber un tipo de conexión con \textit{GitHub} activo en un instante dado. Esta conexión será independiente de la posible conexión con \textit{GitLab}.
 
 	\end{itemize}
 	\item \textbf{RF-2} Establecer conexión con \textit{GitLab}: El usuario debe poder establecer distintos tipos de conexión a \textit{GitLab}.
@@ -81,11 +81,11 @@ En esta sección se van a enumerar los requisitos que el sistema tendrá que sat
 		\item \textbf{RF-2.4} El usuario podrá utilizar la aplicación sin establecer una conexión. Aunque no tenga acceso a los repositorios de \textit{GitLab}.
 		\item \textbf{RF-2.5} El usuario deberá elegir un tipo de conexión al entrar por primera vez a la aplicación.
 		\item \textbf{RF-2.6} La aplicación mostrará al usuario en todo momento la conexión que está utilizando
-		\item \textbf{RF-2.7} El usuario podrá cambiar de conexión teniendo en cuenta que solo puede haber un tipo de conexión con \textit{GitLab} activo en un instante dado. Esta conexión será independiente de la posible conexión con \textit{GitHub}.
+		\item \textbf{RF-2.7} El usuario podrá cambiar de conexión teniendo en cuenta que sólo puede haber un tipo de conexión con \textit{GitLab} activo en un instante dado. Esta conexión será independiente de la posible conexión con \textit{GitHub}.
 	\end{itemize}
 	\item \textbf{RF-3} Gestión de proyectos. El usuario podrá calcular las métricas de proyectos tanto de \textit{GitHub}como de \textit{GitLab} definidas en la sección \ref{sect:B_5_1_1}: `\textit{Definición de las métricas}' y se mostrarán los resultados en forma de tabla en la que las filas se correspondan con los proyectos y las columnas con las métricas.
 	\begin{itemize}
-		\item \textbf{RF-3.1} El usuario podrá añadir un proyecto siempre que tenga una conexión a \textit{GitLab} o con \textit{GitHub}(dependiendo del dónde esté alojado dicho proyecto):
+		\item \textbf{RF-3.1} El usuario podrá añadir un proyecto siempre que tenga una conexión a \textit{GitLab} o con \textit{GitHub} (dependiendo del dónde esté alojado dicho proyecto):
 		\begin{itemize}
 			\item \textbf{RF-3.1.1} El usuario podrá añadir un proyecto a partir del nombre de usuario o ID del propietario y el nombre del proyecto, siempre que tenga acceso desde la conexión establecida.
 			\item \textbf{RF-3.1.2} El usuario podrá añadir un proyecto a partir del nombre o del ID del grupo al que pertenece el proyecto y su nombre, siempre que tenga acceso desde la conexión establecida.
@@ -103,14 +103,14 @@ En esta sección se van a enumerar los requisitos que el sistema tendrá que sat
 		\item \textbf{RF-3.11} Se puede ordenar los repositorios por nombre, fecha de medición y por cualquiera de las métricas.
 		\item \textbf{RF-3.12} Al ordenar por las nuevas métricas relacionadas con \textit{CICD} habrá que tener en cuenta que habrá medidas que no se habrán calculado por falta de datos de \textit{GitLab} si no se ha realizado conexión \textit{autenticada} pues \textit{GitLab API} no devuelve información  sobre \textit{jobs} y \textit{releases} con conexión pública.
 	\end{itemize}
-	\item \textbf{RF-4} Evaluación de métricas. Las métricas, una vez calculadas, serán evaluadas mediante un código de color (verde - bueno, naranja - peligro, rojo - malo) a partir de un perfil de métricas, que será un conjunto de valores mínimo y máximo de cada una de las métricas, a partir de la definición de la evaluación en la sección \ref{sect:B_5_1_2}: `\textit{Evaluación de métricas}'. Esto ha de aplicar también a las nuevas métricas que se implementen no sólo a las existentes.
+	\item \textbf{RF-4} Evaluación de métricas. Las métricas, una vez calculadas, serán evaluadas mediante un código de color (verde - bueno, naranja - peligro, rojo - malo) a partir de un perfil de métricas, que será un conjunto de valores mínimo y máximo de cada una de las métricas, a partir de la definición de la evaluación en la sección \ref{sect:B_5_1_2}: `\textit{Evaluación de métricas}'. Esto ha de aplicarse también a las nuevas métricas que se implementen no sólo a las existentes.
 	\begin{itemize}
 		\item \textbf{RF-4.1} Se podrá cargar un perfil de métricas que contenga valores umbrales mínimo y máximo y se utilizarán para evaluarlas.
 		\item \textbf{RF-4.2} El usuario podrá cargar un perfil por defecto creado a partir de un conjunto de datos \footnote{\url{https://github.com/clopezno/clopezno.github.io/blob/master/agile_practices_experiment/DataSet_EvolutionSoftwareMetrics_FYP.csv}} de un estudio empírico de las métricas de evolución del software en trabajos finales de grado\cite{lopez_nozal_measuring_2019}.
 		\item \textbf{RF-4.3} El usuario podrá cargar un perfil creado a partir de los repositorios que existan en la tabla.
 		\item \textbf{RF-4.4} El usuario podrá exportar el perfil de métricas que tenga cargado a un fichero con formato \ruta{emmp}.
 		\item \textbf{RF-4.5} El usuario podrá importar un perfil de métricas que haya guardado anteriormente para evaluar los repositorios que tenga en la tabla.
-		\item \textbf{RF-4.6} En un instante, solo puede haber un perfil de métricas cargado.
+		\item \textbf{RF-4.6} En un instante, sólo puede haber un perfil de métricas cargado.
 		\item \textbf{RF-4.7} Al inicio se cargará el perfil de evaluación por defecto.
 	\end{itemize}
 \end{itemize}
@@ -189,7 +189,7 @@ En el requisito RF-3 implica que se deben calcular las siguientes métricas de u
 
 \begin{itemize}
 	\item \textbf{Categoría}: Constantes de tiempo
-	\item \textbf{Descripción}: Días transcurridos entre el primer y el ultimo \textit{commit} 
+	\item \textbf{Descripción}: Días transcurridos entre el primer y el último \textit{commit} 
 	\item \textbf{Propósito}: ¿Cuántos días han pasado entre el primer y el último \textit{commit}?
 	\item \textbf{Fórmula}: $DEPUC = TC2- TC1$. $TC2- TC1$ en días;  \textit{DEPUC = Días entre primer y último \textit{commit}, TC2 = Tiempo de último \textit{commit}, TC1 = Tiempo de primer \textit{commit}}
 	\item \textbf{Fuente de medición}: Proyecto en una plataforma de desarrollo colaborativo.
@@ -412,7 +412,7 @@ A continuación se van a detallar los diferentes casos de uso por medio de tabla
 	}{
 		Se ha añadido el proyecto al listado con sus métricas calculadas y evaluadas.
 	}{
-		1 & No se introducen un  \textit{User ID or username} o textit{Group ID or groupname} o bien \textit{Project URL} válidos. \\
+		1 & No se introducen un  \textit{User ID or username} o \textit{Group ID or groupname} o bien \textit{Project URL} válidos. \\
 		2 & La conexión establecida no tiene permisos suficientes para acceder al repositorio solicitado.  \\
 		3 & Se intenta añadir un proyecto que ya está añadido previamente.
 	}{Alta}{cu-03}
@@ -663,6 +663,6 @@ A continuación se van a detallar los diferentes casos de uso por medio de tabla
 	}{
 		Se ha cargado un nuevo perfil de métricas y los proyectos del listado son evaluados con él.
 	}{
-		1 & No se ah seleccionado un archivo válido	
+		1 & No se ha seleccionado un archivo válido	
 	}{Alta}{cu-13}
 }

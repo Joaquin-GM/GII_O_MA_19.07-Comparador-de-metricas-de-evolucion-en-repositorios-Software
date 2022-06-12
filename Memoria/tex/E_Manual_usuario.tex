@@ -19,7 +19,7 @@ Los requisitos para poder utilizar la aplicación son:
 \end{itemize}
 
 \section{Instalación}
-Al tratarse de una aplicación web, esta no requiere instalación, basta con que el usuario acceda a la url de la aplicación desplegada. Además, si 
+Al tratarse de una aplicación web, ésta no requiere instalación, basta con que el usuario acceda a la url de la aplicación desplegada.
 
 \section{Manual del usuario}
 Para la utilización de la aplicación es necesario conectarse a las forjas disponibles (\textit{GitHub} y \textit{GitLab}), tras esto la aplicación recibe como entrada los datos de diferentes repositorios, calcula las métricas para los mismos y permite comparar los repositorios utilizando el cálculo estadístico de cuartiles.
@@ -69,7 +69,7 @@ Sistema que gestiona las diferentes tareas o incidentes que se definen en un pro
 
 \subsubsection{Las métricas que se gestionan en la aplicación}
 
-Además de los conceptos anteriores, para comprender la aplicación y poder sacarle partidos, se tienen que conocer las métricas que ésta calcula y saber interpretarlas. La métricas proceden de la Master Tesis titulada \textit{sPACE: Software Project Assessment in the Course of Evolution} \cite{ratzinger_space:_2007} a las que se han añadido nuevas métricas relacionas con la Integración y Despliegue continuos:
+Además de los conceptos anteriores, para comprender la aplicación y poder sacarle partido, se tienen que conocer las métricas que ésta calcula y saber interpretarlas. La métricas proceden de la Master Tesis titulada \textit{sPACE: Software Project Assessment in the Course of Evolution} \cite{ratzinger_space:_2007} a las que se han añadido nuevas métricas relacionas con la integración y despliegue continuos:
 
 
 Las métricas con las que se trabaja en la aplicación son las siguientes:
@@ -294,7 +294,7 @@ Para realizar la conexión con \textit{GitLab} tenemos cuatro opciones, mediante
 	\item[Iniciar sesión en \textit{GitLab} mediante usuario y contraseña.] Se establece una conexión a \textit{GitLab} iniciando sesión mediante un nombre de usuario y una contraseña. De esta forma se puede acceder a todos los repositorios públicos y privados accesibles por el usuario. Ver figura \ref{fig:dialogo-conexion_contraseña}.
 	\item[Iniciar sesión mediante \textit{Personal Access Token}.] Se establece una conexión iniciando sesión mediante un \textit{Personal Access Token}. De esta forma se puede acceder a todos los repositorios públicos y privados accesibles por usuario, como ocurría en el caso anterior. 
 	Si se accede a \textit{GitLab} desde una \underline{cuenta externa} a \textit{GitLab} como \textit{Google} o \textit{GitHub}, esta opción es la única manera de iniciar sesión con su cuenta de \textit{GitLab}. Ver figura \ref{fig:dialogo-conexion_token}.\\
-	\item[Usar una conexión pública hacia \textit{GitLab}.] Se establece una conexión pública a \textit{GitLab} sin iniciar sesión, por lo que solo se podrá acceder a repositorios públicos, no a los privados. Ver figura \ref{fig:dialogo-conexion_publica}.\\
+	\item[Usar una conexión pública hacia \textit{GitLab}.] Se establece una conexión pública a \textit{GitLab} sin iniciar sesión, por lo que sólo se podrá acceder a repositorios públicos, no a los privados. Ver figura \ref{fig:dialogo-conexion_publica}.\\
 	Además es importante indicar que no se calcularán las métricas relacionadas con \textit{CICD} ya que la \textit{API} de \textit{GitLab} no devuelve los valores necesarios para calcularlas con este tipo de conexión (se necesita alguna de las dos anteriores).
 	\item[No utilizar ninguna conexión.] No se realizará ninguna conexión, de esta forma se impide al usuario añadir nuevos repositorios desde las dos forjas ni volver a calcular métricas de los proyectos existentes. Sin embargo, se permite gestionar los proyectos ya existentes, permitiendo su exportación e importación desde un fichero con extensión \ruta{.emr}. También se permite usar el sistema de perfil de métricas sin ninguna restricción: se puede crear un nuevo perfil, importar, exportar y utilizar el perfil por defecto de la aplicación. Ver figura \ref{fig:dialogo-conexion_sin-conexion}.
 \end{description}
@@ -372,7 +372,7 @@ En el \textbf{menú de ``\textit{Project management}''} existen las siguientes o
 	
 	\item \textbf{\textit{Export}.} Permite exportar todos los proyectos existentes a un fichero, lo que permitirá su posterior importación. Se almacena en un fichero con foromato ``.emr''.
 	
-	\item \textbf{\textit{Export to CSV}.} Permite generar un fichero \textit{CSV} que contenga toda la información de la tabla de proyectos. Este fichero no servirá para importar los proyectos posteriormente si no que sirve para realizar análisis de los resultados obtenidos por ejemplo en una hoja de cálculo.
+	\item \textbf{\textit{Export to CSV}.} Permite generar un fichero \textit{CSV} que contenga toda la información de la tabla de proyectos. Este fichero no servirá para importar los proyectos posteriormente pero sirve para realizar análisis de los resultados obtenidos por ejemplo en una hoja de cálculo.
 \end{itemize}
 
 En el \textbf{menú de ``\textit{Evaluate projects}''} existen estas opciones, como se muestra en la figura \ref{fig:AnexE-MN-Fig5-2}:
@@ -468,7 +468,7 @@ Para eliminar un proyecto basta con identificarlo en la tabla y pulsar sobre el 
 
 \subsubsection{Recalcular métricas de un proyecto}
 
-Para recalcular las métricas de un proyecto debe haber una conexión a la forja correspondiente y esta debe tener permisos sobre el proyecto deseado (si es un proyecto privado, debe haber iniciado sesión una persona con permisos de lectura sobre el proyecto). Cumpliendo esos requisitos, solo hay que identificar el proyecto y pulsar sobre el botón correspondiente de recalcular, situado en la parte derecha de la tabla.
+Para recalcular las métricas de un proyecto debe haber una conexión a la forja correspondiente y ésta debe tener permisos sobre el proyecto deseado (si es un proyecto privado debe haber iniciado sesión una persona con permisos de lectura sobre el proyecto). Cumpliendo esos requisitos, sólo hay que identificar el proyecto y pulsar sobre el botón correspondiente de recalcular, situado en la parte derecha de la tabla.
 
 \subsubsection{Importar proyectos}
 Los proyectos se pueden importar independientemente del tipo de conexión que exista. Se mostrará un diálogo que permite seleccionar o arrastrar al cuadro un fichero con formato \textit{.emr}, ver figura \ref{fig:AnexE-MN-Fig7}. Se puede seleccionar otro fichero en caso de haber escogido un fichero no deseado. Una vez se cargue el fichero, pulsar sobre ``Import''. Se mostrará un mensaje de error en caso de que el fichero este corrompido (ha sido modificado por una herramienta externa a la aplicación), lo que indica que el fichero no podrá volver a utilizarse.
@@ -493,7 +493,7 @@ Los proyectos se pueden importar independientemente del tipo de conexión que ex
 Al pulsar sobre ``Import'' puede ocurrir:
 \begin{itemize}
 	\item Que no haya ningún proyecto en la tabla, entonces se importarán todos los proyecto del fichero.
-	\item Que haya algún proyecto en la tabla, entonces se preguntará si se desea añadir los proyecto al listado actual (``Append''); o sobrescribir el listado actual con los proyecto del fichero (``Overwrite''), en ese casó se borrará el listado actual y se añadirán los proyecto del fichero).\\
+	\item Que haya algún proyecto en la tabla, entonces se preguntará si se desea añadir los proyecto al listado actual (``Append''); o sobrescribir el listado actual con los proyecto del fichero (``Overwrite''), en ese caso se borrará el listado actual y se añadirán los proyecto del fichero).\\
 	En ningún caso se permite añadir proyectos que ya están en la tabla. En caso de que el fichero contenga proyectos existentes, prevalecerán los de la tabla en caso de seleccionar ``Append''.
 \end{itemize}
 

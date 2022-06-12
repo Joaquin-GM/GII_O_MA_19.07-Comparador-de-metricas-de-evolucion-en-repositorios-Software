@@ -410,9 +410,9 @@ Además, en esta segunda iteración del proyecto se han añadido cinco nuevas m�
 
 
 
-\subsection{Framework de medición}\label{sect:3_3_3_FrameworkMedicion}
+\subsection{\textit{Framework} de medición}\label{sect:3_3_3_FrameworkMedicion}
 
-Para la implementación de las métricas se ha seguido la solución basada en frameworks propuesta en \textit{Soporte de Métricas con Independencia del Lenguaje para la Inferencia de Refactorizaciones} \cite{marticorena_sanchez_soporte_2005}. El objetivo del \textit{framework} es la reutilización en la implementación del cálculo de métricas. El diseño, mostrado en la Fig. \ref{fig:MCTMotorMetricas}, permite:
+Para la implementación de las métricas se ha seguido la solución basada en \textit{frameworks} propuesta en \textit{Soporte de Métricas con Independencia del Lenguaje para la Inferencia de Refactorizaciones} \cite{marticorena_sanchez_soporte_2005}. El objetivo del \textit{framework} es la reutilización en la implementación del cálculo de métricas. El diseño, mostrado en la Fig. \ref{fig:MCTMotorMetricas}, permite:
 
 \begin{itemize}
 	\tightlist
@@ -426,9 +426,9 @@ Para la implementación de las métricas se ha seguido la solución basada en fr
 	\end{itemize}
 \end{itemize}
 
-\imagen{MCTMotorMetricas}{Diagrama del framework para el cálculo de métricas con perfiles que almacena valores umbrales.}
+\imagen{MCTMotorMetricas}{Diagrama del \textit{framework} para el cálculo de métricas con perfiles que almacena valores umbrales.}
 
-En el diagrama UML de la Fig. \ref{fig:MCTMotorMetricas} se muestran las entidades principales del framework de medición y la relación entre ellas, especificando la navegabilidad y la multiplicidad. Las anotaciones en forma de flecha oscura especifican los patrones de diseño \cite{gamma_patrones_2002} aplicados en el framework.
+En el diagrama UML de la Fig. \ref{fig:MCTMotorMetricas} se muestran las entidades principales del \textit{framework} de medición y la relación entre ellas, especificando la navegabilidad y la multiplicidad. Las anotaciones en forma de flecha oscura especifican los patrones de diseño \cite{gamma_patrones_2002} aplicados en el \textit{framework}.
 
 Para crear una nueva métrica, esta deberá implementar la clase abstracta \textit{Metric}, en especial los métodos \textit{check()} y \textit{run()}. El método \textit{calculate()} de la clase \textit{Metric} utiliza el patrón de diseño \textbf{método plantilla}\footnote{\url{https://refactoring.guru/design-patterns/template-method}} sobre estos métodos, que deberán ser implementados por las clases concretas que hereden de \textit{Metric}. Un ejemplo de este método sería:
 
@@ -460,7 +460,7 @@ Este método delega en las subclases el comportamiento de los métodos \textit{c
 
 Un perfil de métricas agrupa un conjunto de configuraciones de métricas para un contexto dado, por ejemplo, para un conjunto de proyectos realizados por alumnos de la universidad en su realización del TFG. Se podría instanciar un \textit{MetricResult} para almacenar los resultados de toda esta colección de configuraciones de métricas y bastaría sólo con recorrer el perfil usando el método \textit{calculate()} de cada configuración.
 
-Este TFG ha adaptado este framework en el paquete ``motor de métricas'', y se han realizado unas pocas modificaciones. Las modificaciones más destacadas son:
+Este TFG ha adaptado este \textit{framework} en el paquete ``motor de métricas'', y se han realizado unas pocas modificaciones. Las modificaciones más destacadas son:
 
 \begin{itemize}
 	\tightlist
@@ -473,6 +473,6 @@ Este TFG ha adaptado este framework en el paquete ``motor de métricas'', y se h
 	Esto permite definir los tipos de los parámetros y de retorno de una función que se puede almacenar en una variable. De este modo se puede almacenar en una variable la forma en la que se puede evaluar la métrica.
 \end{itemize}
 
-\imagen{M3_CambiosFrameworkMedicion1}{Patrones ``singleton'' y ``método fábrica'' sobre el framework de medición}
+\imagen{M3_CambiosFrameworkMedicion1}{Patrones ``singleton'' y ``método fábrica'' sobre el \textit{framework} de medición}
 
-\imagen{M3_CambiosFrameworkMedicion2}{Añadido al framework de medición la evaluación de métricas}
+\imagen{M3_CambiosFrameworkMedicion2}{Añadido al \textit{framework} de medición la evaluación de métricas}

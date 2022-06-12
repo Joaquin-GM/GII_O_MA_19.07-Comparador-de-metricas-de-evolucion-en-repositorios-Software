@@ -52,22 +52,22 @@ Podemos obtener la versión más reciente en: \url{https://www.eclipse.org/downl
 		\begin{itemize}
 			\item \textbf{\textit{Java EE}}. Es la vista por defecto de este paquete de \textit{Eclipse}. Facilita el trabajo de aplicaciones web y es la vista utilizada para escribir código. Ofrece, entre otras cosas, un explorador de paquetes y vistas para trabajar con \textit{Java}.
 			\item \textbf{\textit{Debug}}. La vista utilizada para depurar el programa. Sirve para ejecutar la aplicación instrucción a instrucción y detectar así un problema o \textit{bug}.
-			\item \textbf{\textit{Git}}. Esta vista permite trabajar con el sistema de control de versiones \textit{Git}. Mantiene una vista con un listado de repositorios, otra que visualiza el historial de cambios de un archivo seleccionado y, la más importante, una ventana que permite visualizar los cambios realizados, indexarlos, realizar \textit{commits} y publicarlos en el repositorio remoto. Eclipse permite la integración con cualquier otra forja de repositorios como textit{GitHub} o textit{GitLab}.
-			De forma adicional se ha trabajado con la consola de textit{Git} para textit{Windows} \textit{GitBash}.
+			\item \textbf{\textit{Git}}. Esta vista permite trabajar con el sistema de control de versiones \textit{Git}. Mantiene una vista con un listado de repositorios, otra que visualiza el historial de cambios de un archivo seleccionado y, la más importante, una ventana que permite visualizar los cambios realizados, indexarlos, realizar \textit{commits} y publicarlos en el repositorio remoto. Eclipse permite la integración con cualquier otra forja de repositorios como \textit{GitHub} o \textit{GitLab}.
+			De forma adicional se ha trabajado con la consola de \textit{Git} para \textit{Windows} \textit{GitBash}.
 		\end{itemize}
 		
-	\item[textit{Java SE 11 (JDK)}.] \textit{Java Development Kit}. Conjunto de herramientas software útiles para el desarrollo de aplicaciones en textit{Java} entre las que se incluyen \textit{javac.exe}, el compilador de textit{Java}; \textit{javadoc.exe}, el generador de documentación; y \textit{java.exe}, el intérprete de textit{Java}.
+	\item[\textit{Java SE 11 (JDK)}.] \textit{Java Development Kit}. Conjunto de herramientas software útiles para el desarrollo de aplicaciones en \textit{Java} entre las que se incluyen \textit{javac.exe}, el compilador de \textit{Java}; \textit{javadoc.exe}, el generador de documentación; y \textit{java.exe}, el intérprete de \textit{Java}.
 	
 		Se ha utilizado la versión  v11.0.1. Enlace a página de descarga:
 		
 		\url{https://www.oracle.com/java/technologies/downloads/}
 	
-		A pesar de haber utilizado la versión \textit{Java SE 11.0.2} \footnote{Actualmente ha sido lanzada la versión \textit{Java SE 17.0.2} y se esperan actualizaciones cada 6 meses.} de textit{Java}. Sin embargo, ha sido posible compilar y ejecutar tanto las pruebas como la aplicación web con textit{Java 8} realizando dos pequeñas modificaciones:
+		A pesar de haber utilizado la versión \textit{Java SE 11.0.2} \footnote{Actualmente ha sido lanzada la versión \textit{Java SE 17.0.2} y se esperan actualizaciones cada 6 meses.} de \textit{Java}. Sin embargo, ha sido posible compilar y ejecutar tanto las pruebas como la aplicación web con \textit{Java 8} realizando dos pequeñas modificaciones:
 		\begin{itemize}
 			\item De la versión 11 se ha utilizado el método \textit{isBlank()} de la clase \textit{String}. Se diferencia de \textit{isEmpty()} en que no comprueba la longitud de la cadena y devuelve \textit{true} si es 0, sino que devuelve \textit{true} si la longitud es 0 o si no es 0 pero todos los caracteres de la cadena son espacios en blanco.
 			\item De la clase \textit{java.util.Optional} \footnote{\url{https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Optional.html}}, soportada desde la versión 1.8, se utiliza la función \textit{orElseThrow()}, que se soporta desde la versión 10, por tanto habría que buscar una alternativa para pasar a la versión 1.8. La versión 11 trae a esta clase la función \textit{isEmpty()}.
 		\end{itemize}
-	\item[textit{Apache Maven}.] Gestor de proyectos software que ayuda en la construcción del proyecto, la generación de documentación, generación de informes, gestión de dependencias, integración continua dentro de forjas de repositorios como textit{GitHub} y textit{GitLab}, etc. 
+	\item[\textit{Apache Maven}.] Gestor de proyectos software que ayuda en la construcción del proyecto, la generación de documentación, generación de informes, gestión de dependencias, integración continua dentro de forjas de repositorios como \textit{GitHub} y \textit{GitLab}, etc. 
 	
 		Se ha actualizado a la versión v3.8.0 desde la versión  v3.8.4 que utilizaba el proyecto original \cite{TFGPrevio}. Enlace a página de descarga:
 		
@@ -81,7 +81,7 @@ Podemos obtener la versión más reciente en: \url{https://www.eclipse.org/downl
 			\item Despliegue en servidor de \textit{Heroku}.
 		\end{itemize}
 	
-	\item[\textit{Maven Jetty Plugin}.] Contenedor de aplicaciones Web integrado con \textit{Maven} en forma de textit{plugin}.
+	\item[\textit{Maven Jetty Plugin}.] Contenedor de aplicaciones Web integrado con \textit{Maven} en forma de \textit{plugin}.
 	
 		Se ha utilizado la versión  v9.4.36 y se ha incluido en el proyecto en el \textit{pom.xml}:
 	
@@ -111,7 +111,7 @@ mvn jetty:run
 y gracias a la capacidad que tiene el \textit{plugin} de captar los cambios (cada dos segundos según podemos ver en la configuración previa) facilita mucho el desarrollo al recompilar automáticamente el proyecto.
 		
 \end{description}
-\subsection{textit{Logging}}
+\subsection{\textit{Logging}}
 El \textit{logging} es el proceso que permite ver lo que ocurre durante la ejecución de la aplicación para poder depurar errores y analizar comportamientos para solucionar diferentes problemas. Este proceso es útil tanto en la fase de desarrollo del proyecto como en la de producción una vez la aplicación está desplegada y en uso por usuarios finales.
 
 \begin{description}
@@ -122,7 +122,7 @@ El \textit{logging} es el proceso que permite ver lo que ocurre durante la ejecu
 	
 		\url{https://www.slf4j.org/download.html}
 	
-	\item[textit{Log4j 2}.] \textit{Logger}. Se ha utilizado actualizado la versión a la 2.17.2 desde v2.11.2 utilizada por el proyecto previo \cite{TFGPrevio} para evitar diferentes vulnerabilidades.
+	\item[\textit{Log4j 2}.] \textit{Logger}. Se ha utilizado actualizado la versión a la 2.17.2 desde v2.11.2 utilizada por el proyecto previo \cite{TFGPrevio} para evitar diferentes vulnerabilidades.
 
 	 	Enlace a página de descarga:
 	
@@ -229,11 +229,11 @@ add(emailField);
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.5]{M4_Vaadin_Input_1}
-	\caption{Input generado por \textit{Vaadin} vacío}\label{fig:M4_Vaadin_Input_1}
+	\caption{\textit{Input} generado por \textit{Vaadin} vacío}\label{fig:M4_Vaadin_Input_1}
 	
 	
 	\includegraphics[scale=0.5]{M4_Vaadin_Input_2}
-	\caption{Input generado por \textit{Vaadin} con texto}\label{fig:M4_Vaadin_Input_2}
+	\caption{\textit{Input} generado por \textit{Vaadin} con texto}\label{fig:M4_Vaadin_Input_2}
 \end{figure}
 \FloatBarrier
 
