@@ -5,8 +5,17 @@
 
 # GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software 
 
-Aplicación Java desarrollada empelada el framework Vaadin que toma como entrada un conjunto de direcciones de repositorios públicos o privados y calcula  medidas de la evolución que permiten comparar los repositorios. Versión actualizada de la aplicación original:
-[comparador-de-metricas-de-evolucion-en-repositorios-software](https://gitlab.com/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software)
+Aplicación Java desarrollada empelada el framework Vaadin que toma como entrada un conjunto de direcciones de repositorios públicos o privados y calcula  medidas de la evolución que permiten comparar los repositorios.</br>
+Segunda iteración del software **Evolution Metrics Gauge** donde se añaden nuevas métricas y se integra GitHub además de otras mejoras.
+
+### Autor
+
+- Joaquín García Molina - [jgm1009@alu.ubu.es](mailto:jgm1009@alu.ubu.es)
+
+### Tutor
+
+- Carlos López Nozal - [clopezno@ubu.es](mailto:clopezno@ubu.es)
+
 
 ## Metricas de evolución
 
@@ -26,61 +35,75 @@ Leyenda I=Issues C=Commits IC=Integración Continua DC=Despliegue Continuo
 
 *   TC3 change activity range per month: total number of commits divided by lifespan number of months. (6-26.4)
 
-*   C1 peak change: count number of commits in the peak month divided by total number of commits. (30%-40%)
+*   C1 peak change: count number of commits in the peak month divided by total number of commits. (0.25-0-55)
 
 *   IC1 total number of jobs executed (1-1000)
 
 *   IC2 number of jobs executed last year (1-200)
 
-*   IC3 number of executed job types (1-8)
+*   IC3 number of executed job types  (1-8)
 
-*   DC1 total number of releases
+*   DC1 total number of releases (1-10)
 
-*   DC2 number of releases released last year
+*   DC2 number of releases released last year (1-5)
 
 ## Trabajos previos
 
+*   [comparador-de-metricas-de-evolucion-en-repositorios-software](https://gitlab.com/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software)
+
 *   [Activity-Api](https://github.com/dba0010/Activiti-Api )
 
+*   [Software Project Assessment in the Course of Evolution -  Jacek Ratzinger](http://www.inf.usi.ch/jazayeri/docs/Thesis_Jacek_Ratzinger.pdf)
+   
 *   [Soporte de Métricas con Independencia del Lenguaje para la Inferencia de Refactorizaciones](https://www.researchgate.net/profile/Yania_Crespo/publication/221595114_Soporte_de_Metricas_con_Independencia_del_Lenguaje_para_la_Inferencia_de_Refactorizaciones/links/09e4150b5f06425e32000000/Soporte-de-Metricas-con-Independencia-del-Lenguaje-para-la-Inferencia-de-Refactorizaciones.pdf)
 
-*   [Software Project Assessment in the Course of Evolution -  Jacek Ratzinger](http://www.inf.usi.ch/jazayeri/docs/Thesis_Jacek_Ratzinger.pdf)
 
 ## Datos de estudio experimental
 
 *   [Datos experimentales: Métricas de evolución en TFGs](https://github.com/clopezno/clopezno.github.io/blob/master/agile_practices_experiment/DataSet_EvolutionSoftwareMetrics_FYP.csv)
 
+*  [TFGs previos](https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software/tree/0032466f20aba15fe562f90fa7d8a7300673af15/utils-analysis)
+
 ## Repositorios para pruebas
 
-*   https://gitlab.com/mlb0029/privatetestproject
+*  https://github.com/alejandrolampreave/GPS
+*  https://github.com/Victoracha/TFG-Reglas-de-prioridad
+*  https://github.com/CarolinaCCZ/LucErik/
+*  https://github.com/masantamario/Geslab-2.0
+*  https://github.com/EduardoRisco/SurveyingPointCode
+*  https://github.com/ysi0000/-FatigaMasPR
+*  https://github.com/alejandrolampreave/GPS
+*  https://gitlab.com/mlb0029/publictestproject
+*  https://gitlab.com/mlb0029/ListaCompra
+*  https://gitlab.com/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software
 
-*   https://gitlab.com/mlb0029/publictestproject
 
-*   https://gitlab.com/mlb0029/ListaCompra
+## APIs de conexión 
+Estas APIs de envoltura nos ahorran trabajo adaptando [GitHub REST API](https://docs.github.com/es/rest) y [GitLab REST API](https://docs.gitlab.com/ee/api/) a Java.
 
-## APIs Investigadas para consexión con GitLab
-Estas APIs de envoltura nos ahorran trabajo adaptando [GitLab REST API](https://docs.gitlab.com/ee/api/) a Java.
-
-*   [java-gitlab-api](https://github.com/timols/java-gitlab-api)
+*   [github-api.kohsuke](https://github-api.kohsuke.org/)
 
 *   [gitlab4j-api](https://github.com/gmessner/gitlab4j-api)
 
 ## Herramientas utilizadas
 
-*   [Eclipse IDE for Java EE Developers. Version: 2018-09 (4.9.0)](https://www.eclipse.org/)
+*   [Eclipse IDE for Java EE Developers. Version: 2019-03](https://www.eclipse.org/)
 
 *   [Apache Maven v3.8.4](https://maven.apache.org/)
 
-*   [Apache Tomcat v9.0.13](http://tomcat.apache.org/)
+*   [Maven Jetty Plugin](https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-maven-plugin/9.4.36.v20210114)
 
 *   [Java SE 11 (JDK)](https://www.oracle.com/technetwork/java/javase/overview/index.html)
+
+*   [github-api.kohsuke](https://github-api.kohsuke.org/)
 
 *   [gitlab4j-api v4.9.14](https://github.com/gmessner/gitlab4j-api)
 
 *   [JUnit5 v5.3.1](https://junit.org/junit5/)
 
-*   [Codacy](https://www.codacy.com/)
-
 *   [Heroku](https://www.heroku.com/)
 
 *   [Vaadin 13.0.0](https://vaadin.com/)
+
+## Licencia
+[<img src="https://www.gnu.org/graphics/gplv3-with-text-136x68.png" alt="gplv3license" width="100"  />](https://www.gnu.org/licenses/gpl-3.0.html)
