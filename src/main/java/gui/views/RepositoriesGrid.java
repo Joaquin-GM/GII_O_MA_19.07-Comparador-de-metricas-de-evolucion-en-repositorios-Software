@@ -227,7 +227,7 @@ public class RepositoriesGrid extends Grid<Repository> {
 		tooltip.attachToComponent(questionIcon);
 		tooltip.setClassName("custom-tooltip");
 		tooltip.add(new Paragraph(
-				"CI/CD related metrics need authenticated connection of GiLab (username and password or personal access token)"));
+				"CI/CD related metrics for GitLab projects need authenticated connection (username and password or personal access token)"));
 
 		CICDHeader.add(questionIcon, tooltip);
 
