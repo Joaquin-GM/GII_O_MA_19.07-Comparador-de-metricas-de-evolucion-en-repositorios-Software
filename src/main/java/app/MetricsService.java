@@ -206,7 +206,7 @@ public class MetricsService implements Serializable {
 	 * 
 	 * @author Miguel Ángel León Bardavío - mlb0029
 	 * @return An input stream that contains the current metric profile.
-	 * @throws MetricsServiceException When error ocurrs.
+	 * @throws MetricsServiceException When error occurs.
 	 */
 	public InputStream exportCurrentMetricProfile() throws MetricsServiceException {
 		try (
